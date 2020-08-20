@@ -1,0 +1,10 @@
+html, body {
+    height: 100%;
+    overflow: auto;
+    font-family: 'Poppins', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
