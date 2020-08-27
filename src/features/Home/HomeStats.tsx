@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             display: 'flex',
-            // flexWrap: 'wrap',
+            flexWrap: 'wrap',
             maxHeight: '175px',
             marginLeft: theme.spacing(2),
 
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
                 color: '#192949',
                 backgroundColor: '#E7ECF6',
                 margin: theme.spacing(6),
-                marginTop: theme.spacing(10),
+                marginTop: theme.spacing(3),
                 width: theme.spacing(16),
                 height: theme.spacing(14),
                 fontWeight: theme.typography.fontWeightBold,
