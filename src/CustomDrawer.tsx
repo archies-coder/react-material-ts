@@ -100,7 +100,16 @@ const mappableRoutes: MappableRoutesDictionary = {
     },
     'Settings': {
         path: '/settings',
-        icon: <SettingsIcon className="white-text" />
+        icon: <SettingsIcon className="white-text" />,
+        children: [{
+            title: 'Devices'
+        }, {
+            title: 'Agreement'
+        }, {
+            title: 'Visitor\'s Form'
+        }, {
+            title: 'Notification'
+        }]
     }
 }
 
