@@ -7,10 +7,11 @@ import NavigationBar from "./NavigationBar";
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         fullHeightContainer: {
-            height: '100vh'
+            height: '100%',
+            overflow: 'auto'
         },
         nav: {
-            height: '86px',
+            height: '80px',
             // backgroundColor: '#eee',
             marginBottom: 0
         }

@@ -16,6 +16,9 @@ const theme = createMuiTheme({
     background: {
       default: '#fff',
     },
+    text: {
+      primary: '#192949'
+    }
   },
   shape: {
      borderRadius: 15

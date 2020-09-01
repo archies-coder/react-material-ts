@@ -174,7 +174,7 @@ const InviteView: FunctionComponent<Props> = (props) => {
                                 // padding: '0 10px',
                                 // height: '100%',
                                 position: 'absolute',
-                                top: '18px',
+                                top: '20px',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',

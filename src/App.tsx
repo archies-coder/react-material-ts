@@ -8,6 +8,7 @@ import CustomDrawer from "./CustomDrawer";
 import HomeView from "./features/Home/HomeView";
 import NavGridContainer from "./components/NavGridContainer";
 import InviteView from "./features/Invites/InviteView";
+import VisitorDetailsView from "./features/Home/VisitorDetailsView";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -48,6 +49,7 @@ export default function App() {
                             <Switch>
                                 <Route exact path="/" component={HomeView}/>
                                 <Route path="/invites" component={InviteView}/>
+                                <Route path="/visitor/:visitorId" component={VisitorDetailsView}/>
                             </Switch>
                         </NavGridContainer>
                     </Grid>
