@@ -1,16 +1,22 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent, useState} from 'react';
 import {
-    Avatar, createStyles, fade,
+    Avatar,
+    Box, Button,
+    createStyles,
+    fade,
     Grid,
-    InputBase, InputLabel,
+    InputBase,
+    InputLabel, Menu,
     MenuItem,
     Paper,
     Select,
-    Table, TableBody,
+    Table,
+    TableBody,
     TableCell,
     TableContainer,
     TableHead,
-    TableRow, Theme
+    TableRow,
+    Theme
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
@@ -33,31 +39,27 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         inputContainer: {
             padding: 15,
-            marginRight: 20
+            marginRight: 20,
         },
         search: {
             position: 'relative',
-            display: 'inline-block',
+            width: '300px',
             borderRadius: theme.shape.borderRadius,
             backgroundColor: fade(theme.palette.common.white, 0.5),
             '&:hover': {
                 backgroundColor: fade(theme.palette.common.white, 0.75),
             },
-            width: '25%',
-            // [theme.breakpoints.up('sm')]: {
-            //     marginLeft: theme.spacing(1),
-            //     width: 'auto',
-            // },
+
         },
         select: {
             position: 'relative',
-            display: 'inline-block',
+            width: '200px',
             borderRadius: theme.shape.borderRadius,
             backgroundColor: fade(theme.palette.common.white, 0.5),
             '&:hover': {
                 backgroundColor: fade(theme.palette.common.white, 0.75),
             },
-            width: '20%',
+            padding: '12px'
         },
         searchIcon: {
             padding: theme.spacing(0, 2),
@@ -70,16 +72,16 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         inputRoot: {
             color: '#000',
-            // padding: 4
+            width: '100%'
         },
         inputInput: {
             padding: theme.spacing(2, 2, 2, 2),
             // vertical padding + font size from searchIcon
-            width: '100%',
+            // width: 'inherit',
             paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
             transition: theme.transitions.create('width'),
             [theme.breakpoints.up('sm')]: {
-                width: '12ch',
+                width: '100%',
                 '&:focus': {
                     width: '20ch',
                 },
@@ -98,161 +100,172 @@ const data = {
     outTime: '2:30 pm',
 }
 
-interface OwnProps {}
+interface OwnProps {
+}
 
 type Props = OwnProps;
 
 const InviteView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
-  return (
-          <Grid item xs style={{height: "100%", marginTop: '22px'}}>
-              <Paper className={classes.paper}>
-                  <div className={classes.inputContainer}>
-                      <div className={classes.search}>
-                          <div className={classes.searchIcon}>
-                              <SearchIcon/>
-                          </div>
-                          <InputBase
-                              placeholder="Search visitor"
-                              classes={{
-                                  root: classes.inputRoot,
-                                  input: classes.inputInput,
-                              }}
-                              inputProps={{'aria-label': 'search'}}
-                          />
-                      </div>
-                      {/*<div className={classes.inputContainer}>*/}
-                          <div className={classes.select}>
-                              <InputLabel id="demo-simple-select-label">In Office</InputLabel>
-                              <Select
-                                  labelId="demo-simple-select-label"
-                                  disableUnderline
-                                  className={classes.inputRoot}
-                                  style={{
-                                      borderBottom: 'none',
-                                      // padding: '12px',
-                                      width: '100%'
-                                  }}
-                              >
-                                  <MenuItem>1</MenuItem>
-                              </Select>
-                          </div>
-                      </div>
-                  {/*</div>*/}
-                  <TableContainer>
-                      <Table>
-                          <TableHead>
-                              <TableRow className={classes.header}>
-                                  <TableCell className={classes.cell}></TableCell>
-                                  <TableCell className={classes.cell}>Visitor Name</TableCell>
-                                  <TableCell className={classes.cell}>Mobile No.</TableCell>
-                                  <TableCell className={classes.cell}>Person to meet</TableCell>
-                                  <TableCell className={classes.cell}>Purpose</TableCell>
-                                  <TableCell className={classes.cell}>In time</TableCell>
-                                  <TableCell className={classes.cell}>Out time</TableCell>
-                                  <TableCell className={classes.cell}></TableCell>
-                              </TableRow>
-                          </TableHead>
-                          <TableBody>
-                              <TableRow>
-                                  <TableCell className={classes.cell}><Avatar>N</Avatar></TableCell>
-                                  <TableCell className={classes.cell}>{data.name}</TableCell>
-                                  <TableCell className={classes.cell}>{data.mobileNo}</TableCell>
-                                  <TableCell className={classes.cell}>{data.personToMeet}</TableCell>
-                                  <TableCell className={classes.cell}>{data.purpose}</TableCell>
-                                  <TableCell className={classes.cell}>{data.inTime}</TableCell>
-                                  <TableCell className={classes.cell}>{data.outTime}</TableCell>
-                                  <TableCell className={classes.cell}><MoreHorizIcon /></TableCell>
-                              </TableRow><TableRow>
-                                  <TableCell className={classes.cell}><Avatar>N</Avatar></TableCell>
-                                  <TableCell className={classes.cell}>{data.name}</TableCell>
-                                  <TableCell className={classes.cell}>{data.mobileNo}</TableCell>
-                                  <TableCell className={classes.cell}>{data.personToMeet}</TableCell>
-                                  <TableCell className={classes.cell}>{data.purpose}</TableCell>
-                                  <TableCell className={classes.cell}>{data.inTime}</TableCell>
-                                  <TableCell className={classes.cell}>{data.outTime}</TableCell>
-                                  <TableCell className={classes.cell}><MoreHorizIcon /></TableCell>
-                              </TableRow><TableRow>
-                                  <TableCell className={classes.cell}><Avatar>N</Avatar></TableCell>
-                                  <TableCell className={classes.cell}>{data.name}</TableCell>
-                                  <TableCell className={classes.cell}>{data.mobileNo}</TableCell>
-                                  <TableCell className={classes.cell}>{data.personToMeet}</TableCell>
-                                  <TableCell className={classes.cell}>{data.purpose}</TableCell>
-                                  <TableCell className={classes.cell}>{data.inTime}</TableCell>
-                                  <TableCell className={classes.cell}>{data.outTime}</TableCell>
-                                  <TableCell className={classes.cell}><MoreHorizIcon /></TableCell>
-                              </TableRow><TableRow>
-                                  <TableCell className={classes.cell}><Avatar>N</Avatar></TableCell>
-                                  <TableCell className={classes.cell}>{data.name}</TableCell>
-                                  <TableCell className={classes.cell}>{data.mobileNo}</TableCell>
-                                  <TableCell className={classes.cell}>{data.personToMeet}</TableCell>
-                                  <TableCell className={classes.cell}>{data.purpose}</TableCell>
-                                  <TableCell className={classes.cell}>{data.inTime}</TableCell>
-                                  <TableCell className={classes.cell}>{data.outTime}</TableCell>
-                                  <TableCell className={classes.cell}><MoreHorizIcon /></TableCell>
-                              </TableRow><TableRow>
-                                  <TableCell className={classes.cell}><Avatar>N</Avatar></TableCell>
-                                  <TableCell className={classes.cell}>{data.name}</TableCell>
-                                  <TableCell className={classes.cell}>{data.mobileNo}</TableCell>
-                                  <TableCell className={classes.cell}>{data.personToMeet}</TableCell>
-                                  <TableCell className={classes.cell}>{data.purpose}</TableCell>
-                                  <TableCell className={classes.cell}>{data.inTime}</TableCell>
-                                  <TableCell className={classes.cell}>{data.outTime}</TableCell>
-                                  <TableCell className={classes.cell}><MoreHorizIcon /></TableCell>
-                              </TableRow><TableRow>
-                                  <TableCell className={classes.cell}><Avatar>N</Avatar></TableCell>
-                                  <TableCell className={classes.cell}>{data.name}</TableCell>
-                                  <TableCell className={classes.cell}>{data.mobileNo}</TableCell>
-                                  <TableCell className={classes.cell}>{data.personToMeet}</TableCell>
-                                  <TableCell className={classes.cell}>{data.purpose}</TableCell>
-                                  <TableCell className={classes.cell}>{data.inTime}</TableCell>
-                                  <TableCell className={classes.cell}>{data.outTime}</TableCell>
-                                  <TableCell className={classes.cell}><MoreHorizIcon /></TableCell>
-                              </TableRow><TableRow>
-                                  <TableCell className={classes.cell}><Avatar>N</Avatar></TableCell>
-                                  <TableCell className={classes.cell}>{data.name}</TableCell>
-                                  <TableCell className={classes.cell}>{data.mobileNo}</TableCell>
-                                  <TableCell className={classes.cell}>{data.personToMeet}</TableCell>
-                                  <TableCell className={classes.cell}>{data.purpose}</TableCell>
-                                  <TableCell className={classes.cell}>{data.inTime}</TableCell>
-                                  <TableCell className={classes.cell}>{data.outTime}</TableCell>
-                                  <TableCell className={classes.cell}><MoreHorizIcon /></TableCell>
-                              </TableRow><TableRow>
-                                  <TableCell className={classes.cell}><Avatar>N</Avatar></TableCell>
-                                  <TableCell className={classes.cell}>{data.name}</TableCell>
-                                  <TableCell className={classes.cell}>{data.mobileNo}</TableCell>
-                                  <TableCell className={classes.cell}>{data.personToMeet}</TableCell>
-                                  <TableCell className={classes.cell}>{data.purpose}</TableCell>
-                                  <TableCell className={classes.cell}>{data.inTime}</TableCell>
-                                  <TableCell className={classes.cell}>{data.outTime}</TableCell>
-                                  <TableCell className={classes.cell}><MoreHorizIcon /></TableCell>
-                              </TableRow><TableRow>
-                                  <TableCell className={classes.cell}><Avatar>N</Avatar></TableCell>
-                                  <TableCell className={classes.cell}>{data.name}</TableCell>
-                                  <TableCell className={classes.cell}>{data.mobileNo}</TableCell>
-                                  <TableCell className={classes.cell}>{data.personToMeet}</TableCell>
-                                  <TableCell className={classes.cell}>{data.purpose}</TableCell>
-                                  <TableCell className={classes.cell}>{data.inTime}</TableCell>
-                                  <TableCell className={classes.cell}>{data.outTime}</TableCell>
-                                  <TableCell className={classes.cell}><MoreHorizIcon /></TableCell>
-                              </TableRow><TableRow>
-                                  <TableCell className={classes.cell}><Avatar>N</Avatar></TableCell>
-                                  <TableCell className={classes.cell}>{data.name}</TableCell>
-                                  <TableCell className={classes.cell}>{data.mobileNo}</TableCell>
-                                  <TableCell className={classes.cell}>{data.personToMeet}</TableCell>
-                                  <TableCell className={classes.cell}>{data.purpose}</TableCell>
-                                  <TableCell className={classes.cell}>{data.inTime}</TableCell>
-                                  <TableCell className={classes.cell}>{data.outTime}</TableCell>
-                                  <TableCell className={classes.cell}><MoreHorizIcon /></TableCell>
-                              </TableRow>
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-                          </TableBody>
-                      </Table>
-                  </TableContainer>
-              </Paper>
-          </Grid>
-  );
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+     const tableRows = []
+
+    for (let i = 0; i < 10; i++) {
+        tableRows.push(
+            <TableRow>
+                <TableCell className={classes.cell}><Avatar>N</Avatar></TableCell>
+                <TableCell className={classes.cell}>{data.name}</TableCell>
+                <TableCell className={classes.cell}>{data.mobileNo}</TableCell>
+                <TableCell className={classes.cell}>{data.personToMeet}</TableCell>
+                <TableCell className={classes.cell}>{data.purpose}</TableCell>
+                <TableCell className={classes.cell}>{data.inTime}</TableCell>
+                <TableCell className={classes.cell}>{data.outTime}</TableCell>
+                <TableCell className={classes.cell}>
+                    <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                        <MoreHorizIcon />
+                    </Button>
+                    <Menu
+                        id="simple-menu"
+                        anchorEl={anchorEl}
+                        keepMounted
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                    >
+                        <MenuItem onClick={handleClose}>Check Out</MenuItem>
+                        <MenuItem onClick={handleClose}>Resend Code</MenuItem>
+                        <MenuItem onClick={handleClose}>View Details</MenuItem>
+                    </Menu>
+                </TableCell>
+            </TableRow>
+        )
+    }
+    return (
+        <Grid item xs style={{height: "100%", marginTop: '22px'}}>
+            <Paper className={classes.paper}>
+                <Box display="flex" justifyContent="start">
+                    <div className={classes.inputContainer}>
+                        <div className={classes.search}>
+                            <div className={classes.searchIcon}>
+                                <SearchIcon/>
+                            </div>
+                            <InputBase
+                                placeholder="Search visitor"
+                                classes={{
+                                    root: classes.inputRoot,
+                                    input: classes.inputInput,
+                                }}
+                                inputProps={{'aria-label': 'search'}}
+                            />
+                        </div>
+                    </div>
+                    <div className={classes.inputContainer}>
+                        <div className={classes.select}>
+                            <InputLabel id="demo-simple-select-label" style={{
+                                // padding: '0 10px',
+                                // height: '100%',
+                                position: 'absolute',
+                                top: '18px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}>In Office</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                disableUnderline
+                                className={classes.inputRoot}
+                                style={{
+                                    borderBottom: 'none',
+                                    // padding: '12px',
+                                    width: '100%'
+                                }}
+                            >
+                                <MenuItem>1</MenuItem>
+                            </Select>
+                        </div>
+                    </div>
+                    <div className={classes.inputContainer}>
+                        <div className={classes.select}>
+                            <InputLabel id="demo-simple-select-label" style={{
+                                // padding: '0 10px',
+                                // height: '100%',
+                                position: 'absolute',
+                                top: '18px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}>All Purpose</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                disableUnderline
+                                className={classes.inputRoot}
+                                style={{
+                                    borderBottom: 'none',
+                                    // padding: '12px',
+                                    width: '100%'
+                                }}
+                            >
+                                <MenuItem>1</MenuItem>
+                            </Select>
+                        </div>
+                    </div>
+                    <div className={classes.inputContainer}>
+                        <div className={classes.select}>
+                            <InputLabel id="demo-simple-select-label" style={{
+                                // padding: '0 10px',
+                                // height: '100%',
+                                position: 'absolute',
+                                top: '18px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}>All Sites</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                disableUnderline
+                                className={classes.inputRoot}
+                                style={{
+                                    borderBottom: 'none',
+                                    // padding: '12px',
+                                    width: '100%'
+                                }}
+                            >
+                                <MenuItem>1</MenuItem>
+                            </Select>
+                        </div>
+                    </div>
+                </Box>
+                <TableContainer>
+                    <Table>
+                        <TableHead>
+                            <TableRow className={classes.header}>
+                                <TableCell className={classes.cell}/>
+                                <TableCell className={classes.cell}>Visitor Name</TableCell>
+                                <TableCell className={classes.cell}>Mobile No.</TableCell>
+                                <TableCell className={classes.cell}>Person to meet</TableCell>
+                                <TableCell className={classes.cell}>Purpose</TableCell>
+                                <TableCell className={classes.cell}>In time</TableCell>
+                                <TableCell className={classes.cell}>Out time</TableCell>
+                                <TableCell className={classes.cell}></TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {tableRows}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Paper>
+        </Grid>
+    );
 };
 
 export default InviteView;
