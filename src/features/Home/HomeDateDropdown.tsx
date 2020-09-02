@@ -2,7 +2,9 @@ import React, {FunctionComponent} from 'react';
 import {Box, createStyles, Grid, Theme} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import DateFnsUtils from '@date-io/date-fns';
-import {KeyboardDatePicker, MuiPickersUtilsProvider,} from '@material-ui/pickers';
+import EventIcon from '@material-ui/icons/Event';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import {DatePicker, MuiPickersUtilsProvider,} from '@material-ui/pickers';
 
 interface OwnProps {
 }
@@ -53,20 +55,23 @@ const HomeDateDropdown: FunctionComponent<Props> = (props) => {
     };
     return (
         <Box className={classes.container}>
+            <span className={classes.icon}><EventIcon /></span>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker
+                    <DatePicker
                         disableToolbar
                         variant="inline"
-                        format="MM/dd/yyyy"
+                        format="MMM dd, yyyy"
                         margin="normal"
                         id="date-picker-inline"
-
+                        autoOk
                         value={selectedDate}
                         onChange={handleDateChange}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                        }}
+                        // KeyboardButtonProps={{
+                        //     'aria-label': 'change date',
+                        //     edge: 'start'
+                        // }}
                     />
+                    <span className={classes.expandIcon}><ExpandMoreIcon /></span>
             </MuiPickersUtilsProvider>
             {/*<span className={classes.icon}><EventIcon /></span>*/}
             {/*<span className={classes.date}>June 23, 2020</span>*/}
