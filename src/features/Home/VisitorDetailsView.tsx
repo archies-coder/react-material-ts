@@ -10,7 +10,7 @@ import CustomButton from "../../components/Button";
 const useStyles = makeStyles((theme: Theme) => createStyles({
     paper: {
         backgroundColor: '#E7ECF6',
-        borderRadius: theme.shape.borderRadius - 10,
+        borderRadius: theme.shape.borderRadius - 5,
         marginRight: 30,
         height: '100%',
     },

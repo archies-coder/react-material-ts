@@ -26,12 +26,13 @@ import HomeDateDropdown from "./HomeDateDropdown";
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import SearchIcon from '@material-ui/icons/Search';
 import {Link} from "react-router-dom";
+import TableWrapper from "../../components/TableWrapper";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         paper: {
             backgroundColor: '#E7ECF6',
-            borderRadius: theme.shape.borderRadius - 10,
+            borderRadius: theme.shape.borderRadius - 5,
             marginRight: 30
         },
         cell: {
@@ -54,10 +55,6 @@ const useStyles = makeStyles((theme: Theme) =>
                 backgroundColor: fade(theme.palette.common.white, 0.75),
             },
             width: '300px',
-            // [theme.breakpoints.up('sm')]: {
-            //     marginLeft: theme.spacing(1),
-            //     width: 'auto',
-            // },
         },
         select: {
             position: 'relative',
@@ -84,7 +81,6 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         inputInput: {
             padding: theme.spacing(2, 2, 2, 2),
-            // vertical padding + font size from searchIcon
             paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
             transition: theme.transitions.create('width'),
 
@@ -111,6 +107,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
     };
 
     const data = {
+        avatar: '',
         name: 'Vijaya Tondon',
         mobileNo: 9754821630,
         personToMeet: 'Ramesh Chawla',
@@ -118,6 +115,8 @@ const HomeView: FunctionComponent<Props> = (props) => {
         inTime: '11:30 am',
         outTime: '2:30 pm',
     }
+
+    const columns = ['','Visitor name', 'Mobile No.', 'Person to meet', 'Purpose', 'In Time', 'Out Time']
 
     let tableRows: any = []
 
@@ -145,7 +144,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
                     <MenuItem onClick={handleClose}>Check Out</MenuItem>
                     <MenuItem onClick={handleClose}>Resend Code</MenuItem>
                     <MenuItem onClick={handleClose}>
-                        <Link to={"/visitor/" + i}>
+                        <Link to={"/visitor/" + i} style={{textDecoration: "none", color: "black"}}>
                             View Details
                         </Link>
                     </MenuItem>
@@ -153,9 +152,8 @@ const HomeView: FunctionComponent<Props> = (props) => {
             </TableCell>
         </TableRow>
 
-        tableRows = [newRow, ...copy]
+        tableRows = [data, ...copy]
     }
-
 
     return (
         <>
@@ -260,23 +258,24 @@ const HomeView: FunctionComponent<Props> = (props) => {
                         </div>
                     </Box>
                     <TableContainer>
-                        <Table>
-                            <TableHead>
-                                <TableRow className={classes.header}>
-                                    <TableCell className={classes.cell}></TableCell>
-                                    <TableCell className={classes.cell}>Visitor Name</TableCell>
-                                    <TableCell className={classes.cell}>Mobile No.</TableCell>
-                                    <TableCell className={classes.cell}>Person to meet</TableCell>
-                                    <TableCell className={classes.cell}>Purpose</TableCell>
-                                    <TableCell className={classes.cell}>In time</TableCell>
-                                    <TableCell className={classes.cell}>Out time</TableCell>
-                                    <TableCell className={classes.cell}></TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {tableRows}
-                            </TableBody>
-                        </Table>
+                        <TableWrapper columns={columns} data={tableRows}/>
+                        {/*<Table>*/}
+                        {/*    <TableHead>*/}
+                        {/*        <TableRow className={classes.header}>*/}
+                        {/*            <TableCell className={classes.cell}></TableCell>*/}
+                        {/*            <TableCell className={classes.cell}>Visitor Name</TableCell>*/}
+                        {/*            <TableCell className={classes.cell}>Mobile No.</TableCell>*/}
+                        {/*            <TableCell className={classes.cell}>Person to meet</TableCell>*/}
+                        {/*            <TableCell className={classes.cell}>Purpose</TableCell>*/}
+                        {/*            <TableCell className={classes.cell}>In time</TableCell>*/}
+                        {/*            <TableCell className={classes.cell}>Out time</TableCell>*/}
+                        {/*            <TableCell className={classes.cell}></TableCell>*/}
+                        {/*        </TableRow>*/}
+                        {/*    </TableHead>*/}
+                        {/*    <TableBody>*/}
+                        {/*        {tableRows}*/}
+                        {/*    </TableBody>*/}
+                        {/*</Table>*/}
                     </TableContainer>
                 </Paper>
             </Grid>
