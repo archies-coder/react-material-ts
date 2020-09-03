@@ -1,16 +1,14 @@
 import './CustomDrawer.scss'
-import React, { FunctionComponent, useState } from 'react';
-import { createStyles, Paper, Theme, Typography, Collapse } from "@material-ui/core";
+import React, {FunctionComponent, useState} from 'react';
+import {Collapse, createStyles, Paper, Theme, Typography} from "@material-ui/core";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
-import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
-import { HomeOutlined, LibraryBooks, ExpandLess, ExpandMore, ChildCare } from '@material-ui/icons'
+import {makeStyles} from "@material-ui/core/styles";
+import {Link} from "react-router-dom";
+import {ExpandLess, ExpandMore, HomeOutlined, LibraryBooks} from '@material-ui/icons'
 import BusinessIcon from '@material-ui/icons/Business';
 import OrganizationIcon from "./assets/icons/OrganizationIcon";
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -69,40 +67,43 @@ type MappableRoutesDictionary = {
 const mappableRoutes: MappableRoutesDictionary = {
     'Home': {
         path: '/',
-        icon: <HomeOutlined className="white-text" />
+        icon: <HomeOutlined className="white-text"/>
     },
     'Invites': {
         path: '/invites',
-        icon: <PersonIcon className="white-text" />
+        icon: <PersonIcon className="white-text"/>
     },
     'Employees': {
         path: '/employees',
-        icon: <OrganizationIcon className="white-text" />
+        icon: <OrganizationIcon className="white-text"/>
     },
     'Sales & Organization': {
-        path: '/sales',
-        icon: <BusinessIcon className="white-text" />,
+        path: '/sites',
+        icon: <BusinessIcon className="white-text"/>,
         children: [{
-            title: 'Sites'
+            title: 'Sites',
+            path: '/sites'
         }, {
-            title: 'Check in points'
+            title: 'Check in points',
+            path: '/checkinpoints'
         }, {
             title: 'organisations'
         }]
     },
     'Reports': {
         path: '/reports',
-        icon: <LibraryBooks className="white-text" />
+        icon: <LibraryBooks className="white-text"/>
     },
     'User Management': {
         path: '/user',
-        icon: <LibraryBooks className="white-text" />
+        icon: <LibraryBooks className="white-text"/>
     },
     'Settings': {
         path: '/settings',
-        icon: <SettingsIcon className="white-text" />,
+        icon: <SettingsIcon className="white-text"/>,
         children: [{
-            title: 'Devices'
+            title: 'Devices',
+            path: '/devices'
         }, {
             title: 'Agreement'
         }, {
@@ -128,32 +129,33 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
         <Typography variant="h5" className={classes.logo} noWrap>
             Company Logo
         </Typography>
-        <Divider />
+        <Divider/>
         <List>
             {Object.keys(mappableRoutes).map((key, index) => (
                 mappableRoutes[key].children ? (
                     <>
-                        <ListItem button key={key} component={Link} to={mappableRoutes[key].path} onClick={handleClick}>
+                        <ListItem button onClick={handleClick}>
                             <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
-                            <ListItemText primary={key} />
-                            {open ? <ExpandLess /> : <ExpandMore />}
+                            <ListItemText primary={key}/>
+                            {open ? <ExpandLess/> : <ExpandMore/>}
                         </ListItem>
                         <Collapse in={open} timeout="auto" unmountOnExit>
                             <List component="div" disablePadding>
                                 {mappableRoutes[key].children.map(child => (
-                                    <ListItem key={child.title} button className={classes.nested}>
-                                        <ListItemText primary={child.title} />
+                                    <ListItem key={child.title} component={Link} to={child.path}
+                                              button className={classes.nested}>
+                                        <ListItemText primary={child.title}/>
                                     </ListItem>
                                 ))}
                             </List>
                         </Collapse>
                     </>
                 ) : (
-                        <ListItem button key={key} component={Link} to={mappableRoutes[key].path}>
-                            <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
-                            <ListItemText primary={key} />
-                        </ListItem>
-                    )
+                    <ListItem button key={key} component={Link} to={mappableRoutes[key].path}>
+                        <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
+                        <ListItemText primary={key}/>
+                    </ListItem>
+                )
             ))}
         </List>
     </Paper>

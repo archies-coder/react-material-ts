@@ -9,6 +9,10 @@ import HomeView from "./features/Home/HomeView";
 import NavGridContainer from "./components/NavGridContainer";
 import InviteView from "./features/Invites/InviteView";
 import VisitorDetailsView from "./features/Home/VisitorDetailsView";
+import EmployeesView from "./features/Employees/EmployeesView";
+import SitesView from "./features/SalesAndOrganisation/SitesView";
+import CheckInPointsView from "./features/SalesAndOrganisation/CheckInPointsView";
+import DevicesView from "./features/Settings/DevicesView";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -50,6 +54,10 @@ export default function App() {
                                 <Route exact path="/" component={HomeView}/>
                                 <Route path="/invites" component={InviteView}/>
                                 <Route path="/visitor/:visitorId" component={VisitorDetailsView}/>
+                                <Route path="/employees" component={EmployeesView}/>
+                                <Route path="/sites" component={SitesView}/>
+                                <Route path="/checkinpoints" component={CheckInPointsView}/>
+                                <Route path="/devices" component={DevicesView}/>
                             </Switch>
                         </NavGridContainer>
                     </Grid>

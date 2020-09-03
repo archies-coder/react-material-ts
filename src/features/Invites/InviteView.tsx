@@ -21,6 +21,7 @@ import {
 import SearchIcon from "@material-ui/icons/Search";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import {makeStyles} from "@material-ui/core/styles";
+import TableWrapper from "../../components/TableWrapper";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -92,6 +93,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 const data = {
+    avatar: '',
     name: 'Vijaya Tondon',
     mobileNo: 9754821630,
     personToMeet: 'Ramesh Chawla',
@@ -99,6 +101,8 @@ const data = {
     inTime: '11:30 am',
     outTime: '2:30 pm',
 }
+
+const columns = ['', 'Visitor name', 'Mobile No.', 'Person to meet', 'Purpose', 'In Time', 'Out Time']
 
 interface OwnProps {
 }
@@ -118,37 +122,14 @@ const InviteView: FunctionComponent<Props> = (props) => {
         setAnchorEl(null);
     };
 
-     const tableRows = []
+     let tableRows: any = []
 
     for (let i = 0; i < 10; i++) {
-        tableRows.push(
-            <TableRow>
-                <TableCell className={classes.cell}><Avatar>N</Avatar></TableCell>
-                <TableCell className={classes.cell}>{data.name}</TableCell>
-                <TableCell className={classes.cell}>{data.mobileNo}</TableCell>
-                <TableCell className={classes.cell}>{data.personToMeet}</TableCell>
-                <TableCell className={classes.cell}>{data.purpose}</TableCell>
-                <TableCell className={classes.cell}>{data.inTime}</TableCell>
-                <TableCell className={classes.cell}>{data.outTime}</TableCell>
-                <TableCell className={classes.cell}>
-                    <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                        <MoreHorizIcon />
-                    </Button>
-                    <Menu
-                        id="simple-menu"
-                        anchorEl={anchorEl}
-                        keepMounted
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                    >
-                        <MenuItem onClick={handleClose}>Check Out</MenuItem>
-                        <MenuItem onClick={handleClose}>Resend Code</MenuItem>
-                        <MenuItem onClick={handleClose}>View Details</MenuItem>
-                    </Menu>
-                </TableCell>
-            </TableRow>
-        )
+        let copy: any = tableRows
+
+        tableRows = [data, ...copy]
     }
+
     return (
         <Grid item xs style={{height: "100%", marginTop: '22px'}}>
             <Paper className={classes.paper}>
@@ -244,25 +225,7 @@ const InviteView: FunctionComponent<Props> = (props) => {
                         </div>
                     </div>
                 </Box>
-                <TableContainer>
-                    <Table>
-                        <TableHead>
-                            <TableRow className={classes.header}>
-                                <TableCell className={classes.cell}/>
-                                <TableCell className={classes.cell}>Visitor Name</TableCell>
-                                <TableCell className={classes.cell}>Mobile No.</TableCell>
-                                <TableCell className={classes.cell}>Person to meet</TableCell>
-                                <TableCell className={classes.cell}>Purpose</TableCell>
-                                <TableCell className={classes.cell}>In time</TableCell>
-                                <TableCell className={classes.cell}>Out time</TableCell>
-                                <TableCell className={classes.cell}></TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {tableRows}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <TableWrapper columns={columns} data={tableRows}/>
             </Paper>
         </Grid>
     );

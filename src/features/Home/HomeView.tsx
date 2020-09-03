@@ -12,11 +12,7 @@ import {
     MenuItem,
     Paper,
     Select,
-    Table,
-    TableBody,
     TableCell,
-    TableContainer,
-    TableHead,
     TableRow,
     Theme
 } from "@material-ui/core";
@@ -26,12 +22,13 @@ import HomeDateDropdown from "./HomeDateDropdown";
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import SearchIcon from '@material-ui/icons/Search';
 import {Link} from "react-router-dom";
+import TableWrapper from "../../components/TableWrapper";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         paper: {
             backgroundColor: '#E7ECF6',
-            borderRadius: theme.shape.borderRadius - 10,
+            borderRadius: theme.shape.borderRadius - 5,
             marginRight: 30
         },
         cell: {
@@ -54,10 +51,6 @@ const useStyles = makeStyles((theme: Theme) =>
                 backgroundColor: fade(theme.palette.common.white, 0.75),
             },
             width: '300px',
-            // [theme.breakpoints.up('sm')]: {
-            //     marginLeft: theme.spacing(1),
-            //     width: 'auto',
-            // },
         },
         select: {
             position: 'relative',
@@ -84,7 +77,6 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         inputInput: {
             padding: theme.spacing(2, 2, 2, 2),
-            // vertical padding + font size from searchIcon
             paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
             transition: theme.transitions.create('width'),
 
@@ -111,6 +103,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
     };
 
     const data = {
+        avatar: '',
         name: 'Vijaya Tondon',
         mobileNo: 9754821630,
         personToMeet: 'Ramesh Chawla',
@@ -119,43 +112,15 @@ const HomeView: FunctionComponent<Props> = (props) => {
         outTime: '2:30 pm',
     }
 
+    const columns = ['', 'Visitor name', 'Mobile No.', 'Person to meet', 'Purpose', 'In Time', 'Out Time']
+
     let tableRows: any = []
 
     for (let i = 0; i < 10; i++) {
         let copy: any = tableRows
-        const newRow = <TableRow>
-            <TableCell className={classes.cell}><Avatar>N</Avatar></TableCell>
-            <TableCell className={classes.cell}>{data.name}</TableCell>
-            <TableCell className={classes.cell}>{data.mobileNo}</TableCell>
-            <TableCell className={classes.cell}>{data.personToMeet}</TableCell>
-            <TableCell className={classes.cell}>{data.purpose}</TableCell>
-            <TableCell className={classes.cell}>{data.inTime}</TableCell>
-            <TableCell className={classes.cell}>{data.outTime}</TableCell>
-            <TableCell className={classes.cell}>
-                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                    <MoreHorizIcon/>
-                </Button>
-                <Menu
-                    id="simple-menu"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                >
-                    <MenuItem onClick={handleClose}>Check Out</MenuItem>
-                    <MenuItem onClick={handleClose}>Resend Code</MenuItem>
-                    <MenuItem onClick={handleClose}>
-                        <Link to={"/visitor/" + i}>
-                            View Details
-                        </Link>
-                    </MenuItem>
-                </Menu>
-            </TableCell>
-        </TableRow>
 
-        tableRows = [newRow, ...copy]
+        tableRows = [data, ...copy]
     }
-
 
     return (
         <>
@@ -259,25 +224,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
                             </div>
                         </div>
                     </Box>
-                    <TableContainer>
-                        <Table>
-                            <TableHead>
-                                <TableRow className={classes.header}>
-                                    <TableCell className={classes.cell}></TableCell>
-                                    <TableCell className={classes.cell}>Visitor Name</TableCell>
-                                    <TableCell className={classes.cell}>Mobile No.</TableCell>
-                                    <TableCell className={classes.cell}>Person to meet</TableCell>
-                                    <TableCell className={classes.cell}>Purpose</TableCell>
-                                    <TableCell className={classes.cell}>In time</TableCell>
-                                    <TableCell className={classes.cell}>Out time</TableCell>
-                                    <TableCell className={classes.cell}></TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {tableRows}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                    <TableWrapper columns={columns} data={tableRows}/>
                 </Paper>
             </Grid>
         </>
