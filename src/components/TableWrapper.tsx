@@ -1,14 +1,14 @@
 import React, {FunctionComponent, useState} from 'react';
 import {
     Button,
-    createStyles, Menu, MenuItem,
+    createStyles, Menu, MenuItem, MenuProps,
     Table,
     TableBody,
     TableCell,
     TableContainer,
     TableHead,
     TableRow,
-    Theme
+    Theme, withStyles
 } from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
@@ -24,6 +24,37 @@ interface OwnProps {
 }
 
 type Props = OwnProps;
+
+const StyledMenu = withStyles({
+    paper: {
+        border: '1px solid #d3d4d5',
+    },
+})((props: MenuProps) => (
+    <Menu
+        elevation={1}
+        getContentAnchorEl={null}
+        anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+        }}
+        transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+        }}
+        {...props}
+    />
+));
+
+const StyledMenuItem = withStyles((theme) => ({
+    root: {
+        '&:focus': {
+            backgroundColor: theme.palette.primary.main,
+            '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+                color: theme.palette.common.white,
+            },
+        },
+    },
+}))(MenuItem);
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     header: {
@@ -69,21 +100,21 @@ const TableWrapper: FunctionComponent<Props> = (props) => {
                         <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                             <MoreHorizIcon/>
                         </Button>
-                        <Menu
+                        <StyledMenu
                             id="simple-menu"
                             anchorEl={anchorEl}
                             keepMounted
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
                         >
-                            <MenuItem onClick={handleClose}>Check Out</MenuItem>
-                            <MenuItem onClick={handleClose}>Resend Code</MenuItem>
-                            <MenuItem onClick={handleClose}>
+                            <StyledMenuItem onClick={handleClose}>Check Out</StyledMenuItem>
+                            <StyledMenuItem onClick={handleClose}>Resend Code</StyledMenuItem>
+                            <StyledMenuItem onClick={handleClose}>
                                 <Link to={"/visitor/" + i} style={{textDecoration: "none", color: "#192949"}}>
                                     View Details
                                 </Link>
-                            </MenuItem>
-                        </Menu>
+                            </StyledMenuItem>
+                        </StyledMenu>
                     </TableCell>
                 </TableRow>
             ))

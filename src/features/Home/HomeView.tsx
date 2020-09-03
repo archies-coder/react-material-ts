@@ -12,11 +12,7 @@ import {
     MenuItem,
     Paper,
     Select,
-    Table,
-    TableBody,
     TableCell,
-    TableContainer,
-    TableHead,
     TableRow,
     Theme
 } from "@material-ui/core";
@@ -116,41 +112,12 @@ const HomeView: FunctionComponent<Props> = (props) => {
         outTime: '2:30 pm',
     }
 
-    const columns = ['','Visitor name', 'Mobile No.', 'Person to meet', 'Purpose', 'In Time', 'Out Time']
+    const columns = ['', 'Visitor name', 'Mobile No.', 'Person to meet', 'Purpose', 'In Time', 'Out Time']
 
     let tableRows: any = []
 
     for (let i = 0; i < 10; i++) {
         let copy: any = tableRows
-        const newRow = <TableRow>
-            <TableCell className={classes.cell}><Avatar>N</Avatar></TableCell>
-            <TableCell className={classes.cell}>{data.name}</TableCell>
-            <TableCell className={classes.cell}>{data.mobileNo}</TableCell>
-            <TableCell className={classes.cell}>{data.personToMeet}</TableCell>
-            <TableCell className={classes.cell}>{data.purpose}</TableCell>
-            <TableCell className={classes.cell}>{data.inTime}</TableCell>
-            <TableCell className={classes.cell}>{data.outTime}</TableCell>
-            <TableCell className={classes.cell}>
-                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                    <MoreHorizIcon/>
-                </Button>
-                <Menu
-                    id="simple-menu"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                >
-                    <MenuItem onClick={handleClose}>Check Out</MenuItem>
-                    <MenuItem onClick={handleClose}>Resend Code</MenuItem>
-                    <MenuItem onClick={handleClose}>
-                        <Link to={"/visitor/" + i} style={{textDecoration: "none", color: "black"}}>
-                            View Details
-                        </Link>
-                    </MenuItem>
-                </Menu>
-            </TableCell>
-        </TableRow>
 
         tableRows = [data, ...copy]
     }
@@ -257,26 +224,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
                             </div>
                         </div>
                     </Box>
-                    <TableContainer>
-                        <TableWrapper columns={columns} data={tableRows}/>
-                        {/*<Table>*/}
-                        {/*    <TableHead>*/}
-                        {/*        <TableRow className={classes.header}>*/}
-                        {/*            <TableCell className={classes.cell}></TableCell>*/}
-                        {/*            <TableCell className={classes.cell}>Visitor Name</TableCell>*/}
-                        {/*            <TableCell className={classes.cell}>Mobile No.</TableCell>*/}
-                        {/*            <TableCell className={classes.cell}>Person to meet</TableCell>*/}
-                        {/*            <TableCell className={classes.cell}>Purpose</TableCell>*/}
-                        {/*            <TableCell className={classes.cell}>In time</TableCell>*/}
-                        {/*            <TableCell className={classes.cell}>Out time</TableCell>*/}
-                        {/*            <TableCell className={classes.cell}></TableCell>*/}
-                        {/*        </TableRow>*/}
-                        {/*    </TableHead>*/}
-                        {/*    <TableBody>*/}
-                        {/*        {tableRows}*/}
-                        {/*    </TableBody>*/}
-                        {/*</Table>*/}
-                    </TableContainer>
+                    <TableWrapper columns={columns} data={tableRows}/>
                 </Paper>
             </Grid>
         </>
