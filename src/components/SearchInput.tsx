@@ -59,7 +59,7 @@ const SearchInput: FunctionComponent<Props> = (props) => {
     const classes = useStyles(props)
 
     return (
-      <Box display="flex" justifyContent="start">
+      <Box>
           <div className={classes.inputContainer}>
               <div className={classes.search}>
                   <div className={classes.searchIcon}>

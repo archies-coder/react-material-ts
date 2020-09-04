@@ -38,6 +38,16 @@ const DevicesView: FunctionComponent<Props> = (props) => {
         tableRows = [data, ...copy]
     }
 
+    const TableConfig = {
+        columns: columns,
+        data: tableRows,
+        menuOptions: [{
+            title: 'View Details',
+            path: "/visitor/" + 2
+        }]
+    }
+
+
     return (
         <Grid item xs style={{height: "100%", marginTop: '22px'}}>
             <Paper className={classes.paper}>
@@ -46,7 +56,7 @@ const DevicesView: FunctionComponent<Props> = (props) => {
                     <SelectInput value="Action" />
                 </Box>
 
-                <TableWrapper columns={columns} data={tableRows}/>
+                <TableWrapper config={TableConfig}/>
             </Paper>
         </Grid>
     );

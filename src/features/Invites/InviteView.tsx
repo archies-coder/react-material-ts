@@ -22,6 +22,8 @@ import SearchIcon from "@material-ui/icons/Search";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import {makeStyles} from "@material-ui/core/styles";
 import TableWrapper from "../../components/TableWrapper";
+import SearchInput from "../../components/SearchInput";
+import SelectInput from "../../components/SelectInput";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -122,7 +124,7 @@ const InviteView: FunctionComponent<Props> = (props) => {
         setAnchorEl(null);
     };
 
-     let tableRows: any = []
+    let tableRows: any = []
 
     for (let i = 0; i < 10; i++) {
         let copy: any = tableRows
@@ -130,102 +132,26 @@ const InviteView: FunctionComponent<Props> = (props) => {
         tableRows = [data, ...copy]
     }
 
+    const TableConfig = {
+        columns: columns,
+        data: tableRows,
+        menuOptions: [{
+            title: 'View Details',
+            path: "/visitor/" + 2
+        }]
+    }
+
     return (
         <Grid item xs style={{height: "100%", marginTop: '22px'}}>
             <Paper className={classes.paper}>
                 <Box display="flex" justifyContent="start">
-                    <div className={classes.inputContainer}>
-                        <div className={classes.search}>
-                            <div className={classes.searchIcon}>
-                                <SearchIcon/>
-                            </div>
-                            <InputBase
-                                placeholder="Search visitor"
-                                classes={{
-                                    root: classes.inputRoot,
-                                    input: classes.inputInput,
-                                }}
-                                inputProps={{'aria-label': 'search'}}
-                            />
-                        </div>
-                    </div>
-                    <div className={classes.inputContainer}>
-                        <div className={classes.select}>
-                            <InputLabel id="demo-simple-select-label" style={{
-                                // padding: '0 10px',
-                                // height: '100%',
-                                position: 'absolute',
-                                top: '20px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}>In Office</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                disableUnderline
-                                className={classes.inputRoot}
-                                style={{
-                                    borderBottom: 'none',
-                                    // padding: '12px',
-                                    width: '100%'
-                                }}
-                            >
-                                <MenuItem>1</MenuItem>
-                            </Select>
-                        </div>
-                    </div>
-                    <div className={classes.inputContainer}>
-                        <div className={classes.select}>
-                            <InputLabel id="demo-simple-select-label" style={{
-                                // padding: '0 10px',
-                                // height: '100%',
-                                position: 'absolute',
-                                top: '18px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}>All Purpose</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                disableUnderline
-                                className={classes.inputRoot}
-                                style={{
-                                    borderBottom: 'none',
-                                    // padding: '12px',
-                                    width: '100%'
-                                }}
-                            >
-                                <MenuItem>1</MenuItem>
-                            </Select>
-                        </div>
-                    </div>
-                    <div className={classes.inputContainer}>
-                        <div className={classes.select}>
-                            <InputLabel id="demo-simple-select-label" style={{
-                                // padding: '0 10px',
-                                // height: '100%',
-                                position: 'absolute',
-                                top: '18px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}>All Sites</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                disableUnderline
-                                className={classes.inputRoot}
-                                style={{
-                                    borderBottom: 'none',
-                                    // padding: '12px',
-                                    width: '100%'
-                                }}
-                            >
-                                <MenuItem>1</MenuItem>
-                            </Select>
-                        </div>
-                    </div>
+                    <SearchInput placeholder="Search visitor"/>
+                    <SelectInput value="In Office"/>
+                    <SelectInput value="All Purpose"/>
+                    <SelectInput value="All Sites"/>
+
                 </Box>
-                <TableWrapper columns={columns} data={tableRows}/>
+                <TableWrapper config={TableConfig}/>
             </Paper>
         </Grid>
     );

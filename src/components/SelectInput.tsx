@@ -1,15 +1,21 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import {createStyles, fade, InputLabel, MenuItem, Select, Theme} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import theme from "../theme";
+import {RouteComponentProps} from "react-router-dom";
 
-interface OwnProps {
+interface OwnProps extends React.HTMLAttributes<any>{
     value: string;
+    padding?: number;
 }
 
 type Props = OwnProps;
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
+    inputContainer: {
+        padding: (props: Props) => props.padding ? props.padding : 15,
+        marginRight: 20,
+    },
     select: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -26,32 +32,33 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
 }))
 
 const SelectInput: FunctionComponent<Props> = (props) => {
-  const classes = useStyles()
-  return (
-      <div className={classes.select} {...props}>
-          <InputLabel id="demo-simple-select-label" style={{
-              // padding: '0 10px',
-              // height: '100%',
-              position: 'absolute',
-              top: '18px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-          }}>{props.value}</InputLabel>
-          <Select
-              labelId="demo-simple-select-label"
-              disableUnderline
-              className={classes.inputRoot}
-              style={{
-                  borderBottom: 'none',
-                  // padding: '12px',
-                  width: '100%'
-              }}
-          >
-              <MenuItem>1</MenuItem>
-          </Select>
-      </div>
-  );
+    const classes = useStyles(props)
+    return (
+        <div className={classes.inputContainer}>
+            <div className={classes.select} {...props}>
+                <InputLabel id="demo-simple-select-label" style={{
+                    // padding: '0 10px',
+                    position: 'absolute',
+                    top: '18px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}>{props.value}</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    disableUnderline
+                    className={classes.inputRoot}
+                    style={{
+                        borderBottom: 'none',
+                        // padding: '12px',
+                        width: '100%'
+                    }}
+                >
+                    <MenuItem>1</MenuItem>
+                </Select>
+            </div>
+        </div>
+    );
 };
 
 export default SelectInput;

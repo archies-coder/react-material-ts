@@ -8,7 +8,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import {makeStyles} from "@material-ui/core/styles";
 import {Link} from "react-router-dom";
-import {ExpandLess, ExpandMore, HomeOutlined, LibraryBooks} from '@material-ui/icons'
+import {ExpandLess, ExpandMore, HomeSharp, LibraryBooks} from '@material-ui/icons'
 import BusinessIcon from '@material-ui/icons/Business';
 import OrganizationIcon from "./assets/icons/OrganizationIcon";
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -41,6 +41,11 @@ const useStyles = makeStyles((theme: Theme) =>
         nested: {
             paddingLeft: theme.spacing(10),
         },
+        listItemText: {
+            '& > *': {
+                fontWeight: 600
+            }
+        }
     }),
 );
 
@@ -67,7 +72,7 @@ type MappableRoutesDictionary = {
 const mappableRoutes: MappableRoutesDictionary = {
     'Home': {
         path: '/',
-        icon: <HomeOutlined className="white-text"/>
+        icon: <HomeSharp className="white-text"/>
     },
     'Invites': {
         path: '/invites',
@@ -136,7 +141,7 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
                     <>
                         <ListItem button onClick={handleClick}>
                             <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
-                            <ListItemText primary={key}/>
+                            <ListItemText className={classes.listItemText} primary={key}/>
                             {open ? <ExpandLess/> : <ExpandMore/>}
                         </ListItem>
                         <Collapse in={open} timeout="auto" unmountOnExit>
@@ -144,7 +149,7 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
                                 {mappableRoutes[key].children.map(child => (
                                     <ListItem key={child.title} component={Link} to={child.path}
                                               button className={classes.nested}>
-                                        <ListItemText primary={child.title}/>
+                                        <ListItemText className={classes.listItemText} primary={child.title}/>
                                     </ListItem>
                                 ))}
                             </List>
@@ -153,7 +158,7 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
                 ) : (
                     <ListItem button key={key} component={Link} to={mappableRoutes[key].path}>
                         <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
-                        <ListItemText primary={key}/>
+                        <ListItemText className={classes.listItemText} primary={key}/>
                     </ListItem>
                 )
             ))}

@@ -15,19 +15,29 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import {Link} from "react-router-dom";
 
 interface IRow {
-    [x: string]: string | number;
+    [x: string]: any;
+}
+
+interface IMenuItem {
+    path: string;
+    title: string;
+}
+
+interface IConfigObject {
+    columns: string[];
+    data: IRow[];
+    menuOptions: IMenuItem[];
 }
 
 interface OwnProps {
-    columns: string[];
-    data?: IRow[];
+    config: IConfigObject;
 }
 
 type Props = OwnProps;
 
 const StyledMenu = withStyles({
     paper: {
-        border: '1px solid #d3d4d5',
+        // border: '1px solid #d3d4d5',
     },
 })((props: MenuProps) => (
     <Menu
@@ -67,7 +77,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
 }))
 
-const TableWrapper: FunctionComponent<Props> = (props) => {
+const TableWrapper: FunctionComponent<Props> = ({config, ...props}) => {
     const classes = useStyles()
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -82,7 +92,7 @@ const TableWrapper: FunctionComponent<Props> = (props) => {
 
     const TableHeader = <TableHead className={classes.header}>
         {
-            props.columns.map(column => (
+            config.columns.map(column => (
                 <TableCell key={column}>{column}</TableCell>
             ))
         }
@@ -91,7 +101,7 @@ const TableWrapper: FunctionComponent<Props> = (props) => {
 
     const body = <TableBody>
         {
-            props.data.map((value, i) => (
+            config.data.map((value, i) => (
                 <TableRow key={i}>
                     {
                         Object.keys(value).map((key, i) => <TableCell key={i}>{value[key]}</TableCell>)

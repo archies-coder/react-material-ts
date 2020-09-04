@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme: Theme) =>
         navItem: {
             verticalAlign: 'text-bottom',
             color:  theme.palette.text.primary ,
-
         },
         profileName: {
             verticalAlign: 'text-bottom',

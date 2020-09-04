@@ -41,11 +41,21 @@ const EmployeesView: FunctionComponent<Props> = (props) => {
         tableRows = [data, ...copy]
     }
 
+
+    const TableConfig = {
+        columns: columns,
+        data: tableRows,
+        menuOptions: [{
+            title: 'View Details',
+            path: "/visitor/" + 2
+        }]
+    }
+
     return (
         <Grid item xs style={{height: "100%", marginTop: '22px'}}>
             <Paper className={classes.paper}>
             <SearchInput placeholder="Search Employees by name, email or mobile" width={500}/>
-                <TableWrapper columns={columns} data={tableRows}/>
+                <TableWrapper config={TableConfig}/>
             </Paper>
         </Grid>
     );

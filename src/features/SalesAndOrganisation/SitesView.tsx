@@ -14,7 +14,8 @@ const useStyles = makeStyles((theme: Theme) =>
         paper: {
             backgroundColor: '#E7ECF6',
             borderRadius: theme.shape.borderRadius - 5,
-            marginRight: 30
+            marginRight: 30,
+            paddingRight: 150
         },
     })
 )
@@ -37,7 +38,17 @@ const SitesView: FunctionComponent<Props> = (props) => {
         tableRows = [data, ...copy]
     }
 
-  return (
+    const TableConfig = {
+        columns: columns,
+        data: tableRows,
+        menuOptions: [{
+            title: 'View Details',
+            path: "/visitor/" + 2
+        }]
+    }
+
+
+    return (
       <Grid item xs style={{height: "100%", marginTop: '22px'}}>
           <Paper className={classes.paper}>
               <Box display="flex" justifyContent="space-between">
@@ -45,7 +56,7 @@ const SitesView: FunctionComponent<Props> = (props) => {
                   <SelectInput value="Action" />
               </Box>
 
-              <TableWrapper columns={columns} data={tableRows}/>
+              <TableWrapper config={TableConfig}/>
           </Paper>
       </Grid>
   );
