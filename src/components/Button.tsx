@@ -1,8 +1,9 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import {Theme, withStyles} from "@material-ui/core";
 import Button from '@material-ui/core/Button'
 
-interface OwnProps {}
+interface OwnProps {
+}
 
 type Props = OwnProps;
 
@@ -15,14 +16,18 @@ const GradientButton = withStyles((theme: Theme) => ({
         padding: theme.spacing(1.5, 10),
         borderRadius: 50,
         height: '56px'
-    }
+    },
+    inputContainer: {
+        padding: 15,
+        marginRight: 20,
+    },
 }))(Button)
 
 const CustomButton: FunctionComponent<Props> = (props) => {
 
-  return (
-    <GradientButton {...props} />
-  );
+    return (
+            <GradientButton {...props} />
+    );
 };
 
 export default CustomButton;

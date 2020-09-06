@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
                 fontSize: '20px',
                 letterSpacing: '0.5px',
                 cursor: 'pointer !important',
+                // width: '400px',
             }
         },
         icon: {
@@ -48,11 +49,11 @@ const useStyles = makeStyles((theme: Theme) =>
         expandIcon: {
             '& > *': {
                 fontSize: '35px',
-                marginTop: '-6px',
-                verticalAlign: 'bottom',
+                marginTop: '-30px',
                 marginLeft: '-120px',
-                position: 'absolute',
-                top: '116px',
+                verticalAlign: '-webkit-baseline-middle',
+                position: 'relative',
+                // top: '116px',
                 color: theme.palette.text.primary,
                 cursor: 'pointer'
             },
@@ -73,8 +74,8 @@ const HomeDateDropdown: FunctionComponent<Props> = (props) => {
     };
     return (
         <Box className={classes.container}>
-            <span className={classes.icon}><EventIcon /></span>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <span className={classes.icon}><EventIcon /></span>
                 <DatePicker
                     disableToolbar
                     variant="inline"
@@ -84,6 +85,7 @@ const HomeDateDropdown: FunctionComponent<Props> = (props) => {
                     autoOk
                     value={selectedDate}
                     onChange={handleDateChange}
+
                 // KeyboardButtonProps={{
                 //     'aria-label': 'change date',
                 //     edge: 'start'

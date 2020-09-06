@@ -14,7 +14,8 @@ const useStyles = makeStyles((theme: Theme) =>
         paper: {
             backgroundColor: '#E7ECF6',
             borderRadius: theme.shape.borderRadius - 5,
-            marginRight: 30
+            marginRight: 30,
+            paddingRight: 100
         },
     })
 )
@@ -48,6 +49,8 @@ const EmployeesView: FunctionComponent<Props> = (props) => {
         menuOptions: [{
             title: 'View Details',
             path: "/visitor/" + 2
+        }, {
+            title: 'Delete'
         }]
     }
 

@@ -1,4 +1,3 @@
-import './CustomDrawer.scss'
 import React, {FunctionComponent, useState} from 'react';
 import {Collapse, createStyles, Paper, Theme, Typography} from "@material-ui/core";
 import List from "@material-ui/core/List";
@@ -7,7 +6,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import {makeStyles} from "@material-ui/core/styles";
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {ExpandLess, ExpandMore, HomeSharp, LibraryBooks} from '@material-ui/icons'
 import BusinessIcon from '@material-ui/icons/Business';
 import OrganizationIcon from "./assets/icons/OrganizationIcon";
@@ -28,7 +27,31 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(0),
             textAlign: 'center',
             color: '#A6ACB8',
-            backgroundColor: '#192949',
+            backgroundColor: theme.palette.text.primary,
+
+            '& .MuiSvgIcon-root': {
+                color: '#158594'
+            },
+
+            '& .listItem': {
+                backgroundColor: theme.palette.text.primary,
+                color: '#A6ACB8',
+                letterSpacing: '0.5px',
+            },
+
+            '& .active-navlink': {
+                backgroundImage: 'linear-gradient(to right, #2C578A, #20849C)',
+                color: theme.palette.common.white,
+
+                '& .MuiSvgIcon-root': {
+                    color: theme.palette.common.white,
+                }
+            },
+
+            '& .active-navlink-menuItem': {
+                color: theme.palette.common.white,
+
+            }
         },
         fullHeight: {
             height: '100vh',
@@ -139,7 +162,7 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
             {Object.keys(mappableRoutes).map((key, index) => (
                 mappableRoutes[key].children ? (
                     <>
-                        <ListItem button onClick={handleClick}>
+                        <ListItem button onClick={handleClick} className="listItem">
                             <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
                             <ListItemText className={classes.listItemText} primary={key}/>
                             {open ? <ExpandLess/> : <ExpandMore/>}
@@ -147,8 +170,13 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
                         <Collapse in={open} timeout="auto" unmountOnExit>
                             <List component="div" disablePadding>
                                 {mappableRoutes[key].children.map(child => (
-                                    <ListItem key={child.title} component={Link} to={child.path}
-                                              button className={classes.nested}>
+                                    <ListItem
+                                        key={child.title}
+                                        component={NavLink}
+                                        exact
+                                        activeClassName={"active-navlink-menuItem"}
+                                        to={child.path ? child.path : ''}
+                                        button className={classes.nested}>
                                         <ListItemText className={classes.listItemText} primary={child.title}/>
                                     </ListItem>
                                 ))}
@@ -156,7 +184,8 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
                         </Collapse>
                     </>
                 ) : (
-                    <ListItem button key={key} component={Link} to={mappableRoutes[key].path}>
+                    <ListItem button key={key} component={NavLink} exact className="listItem"
+                              activeClassName={"active-navlink"} to={mappableRoutes[key].path}>
                         <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
                         <ListItemText className={classes.listItemText} primary={key}/>
                     </ListItem>

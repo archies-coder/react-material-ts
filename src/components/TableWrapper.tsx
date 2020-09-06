@@ -19,7 +19,7 @@ interface IRow {
 }
 
 interface IMenuItem {
-    path: string;
+    path?: string;
     title: string;
 }
 
@@ -117,13 +117,21 @@ const TableWrapper: FunctionComponent<Props> = ({config, ...props}) => {
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
                         >
-                            <StyledMenuItem onClick={handleClose}>Check Out</StyledMenuItem>
-                            <StyledMenuItem onClick={handleClose}>Resend Code</StyledMenuItem>
-                            <StyledMenuItem onClick={handleClose}>
-                                <Link to={"/visitor/" + i} style={{textDecoration: "none", color: "#192949"}}>
-                                    View Details
-                                </Link>
-                            </StyledMenuItem>
+                            {config.menuOptions.map(({title, path}) => (
+                                <StyledMenuItem key={title} onClick={handleClose}>
+                                    <Link to={path} style={{textDecoration: "none", color: "#192949"}}>
+                                        {title}
+                                    </Link>
+                                </StyledMenuItem>
+
+                            ))}
+                            {/*<StyledMenuItem onClick={handleClose}>Check Out</StyledMenuItem>*/}
+                            {/*<StyledMenuItem onClick={handleClose}>Resend Code</StyledMenuItem>*/}
+                            {/*<StyledMenuItem onClick={handleClose}>*/}
+                            {/*    <Link to={"/visitor/" + i} style={{textDecoration: "none", color: "#192949"}}>*/}
+                            {/*        View Details*/}
+                            {/*    </Link>*/}
+                            {/*</StyledMenuItem>*/}
                         </StyledMenu>
                     </TableCell>
                 </TableRow>
