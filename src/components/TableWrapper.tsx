@@ -14,19 +14,24 @@ import {makeStyles} from "@material-ui/core/styles";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import {Link} from "react-router-dom";
 
-interface IRow {
+interface IRowProps {
     [x: string]: any;
 }
 
-interface IMenuItem {
+interface IMenuItemProps {
     path?: string;
     title: string;
 }
 
+interface ITableCellProps {
+    padding?: number;
+}
+
 interface IConfigObject {
     columns: string[];
-    data: IRow[];
-    menuOptions: IMenuItem[];
+    data: IRowProps[];
+    menuOptions: IMenuItemProps[];
+    cellOptions?: ITableCellProps;
 }
 
 interface OwnProps {
@@ -67,18 +72,22 @@ const StyledMenuItem = withStyles((theme) => ({
 }))(MenuItem);
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
+    root: {
+        padding: 30
+    },
     header: {
         '& > *': {
             fontWeight: 600
         }
     },
     cell: {
-        borderBottom: 'none'
+        borderBottom: 'none',
+        padding: (config: IConfigObject) => config.cellOptions ? config.cellOptions.padding : 'auto'
     },
 }))
 
 const TableWrapper: FunctionComponent<Props> = ({config, ...props}) => {
-    const classes = useStyles()
+    const classes = useStyles(config)
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -140,7 +149,9 @@ const TableWrapper: FunctionComponent<Props> = ({config, ...props}) => {
     </TableBody>
 
     return (
-        <TableContainer>
+        <TableContainer classes={{
+            root: classes.root
+        }}>
             <Table>
                 {TableHeader}
                 {body}
