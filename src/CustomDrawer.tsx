@@ -88,7 +88,8 @@ type MappableRoutesDictionary = {
     [key: string]: {
         path: string,
         icon: JSX.Element,
-        children?: Child[]
+        children?: Child[],
+        name?: string
     }
 }
 
@@ -107,6 +108,7 @@ const mappableRoutes: MappableRoutesDictionary = {
     },
     'Sales & Organization': {
         path: '/sites',
+        name: 'sales',
         icon: <BusinessIcon className="white-text"/>,
         children: [{
             title: 'Sites',
@@ -128,6 +130,7 @@ const mappableRoutes: MappableRoutesDictionary = {
     },
     'Settings': {
         path: '/settings',
+        name: 'settings',
         icon: <SettingsIcon className="white-text"/>,
         children: [{
             title: 'Devices',
@@ -146,11 +149,21 @@ const mappableRoutes: MappableRoutesDictionary = {
 const CustomDrawer: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
-    const [open, setOpen] = useState(false)
+    const dropDownState = {
+        settings: false,
+        sales: false
+    }
+
+    const [open, setOpen] = useState(dropDownState)
 
 
-    const handleClick = () => {
-        setOpen(!open);
+    const handleClick = (name: string) => {
+        // @ts-ignore
+        const old = open[name]
+        setOpen({
+            ...open,
+            [name]: !old
+        });
     };
 
     return <Paper className={classes.paper}>
@@ -162,12 +175,27 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
             {Object.keys(mappableRoutes).map((key, index) => (
                 mappableRoutes[key].children ? (
                     <>
-                        <ListItem button onClick={handleClick} className="listItem">
-                            <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
-                            <ListItemText className={classes.listItemText} primary={key}/>
-                            {open ? <ExpandLess/> : <ExpandMore/>}
-                        </ListItem>
-                        <Collapse in={open} timeout="auto" unmountOnExit>
+                        {
+                            // @ts-ignore
+                            open[mappableRoutes[key].name] ?
+                                <ListItem button onClick={() => handleClick(mappableRoutes[key].name)}
+                                          className="listItem active-navlink">
+                                    <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
+                                    <ListItemText className={classes.listItemText} primary={key}/>
+                                    {/*@ts-ignore*/}
+                                    {open[mappableRoutes[key].name] ? <ExpandLess/> : <ExpandMore/>}
+                                </ListItem>
+                                :
+                                <ListItem button onClick={() => handleClick(mappableRoutes[key].name)}
+                                          className="listItem">
+                                    <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
+                                    <ListItemText className={classes.listItemText} primary={key}/>
+                                    {/*@ts-ignore*/}
+                                    {open[mappableRoutes[key].name] ? <ExpandLess/> : <ExpandMore/>}
+                                </ListItem>
+                        }
+                        {/*@ts-ignore*/}
+                        <Collapse in={open[mappableRoutes[key].name]} timeout="auto" unmountOnExit>
                             <List component="div" disablePadding>
                                 {mappableRoutes[key].children.map(child => (
                                     <ListItem
