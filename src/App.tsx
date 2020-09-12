@@ -14,6 +14,7 @@ import SitesView from "./features/SalesAndOrganisation/SitesView";
 import CheckInPointsView from "./features/SalesAndOrganisation/CheckInPointsView";
 import DevicesView from "./features/Settings/DevicesView";
 import UserManagementView from "./features/UserManagement/UserManagementView";
+import AgreementView from "./features/Settings/AgreementView";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -62,8 +63,9 @@ export default function App() {
                                 <Route path="/employees" component={EmployeesView}/>
                                 <Route path="/sites" component={SitesView}/>
                                 <Route path="/checkinpoints" component={CheckInPointsView}/>
-                                <Route path="/devices" component={DevicesView}/>
                                 <Route path="/user" component={UserManagementView}/>
+                                <Route path="/devices" component={DevicesView}/>
+                                <Route path="/agreement" component={AgreementView}/>
                             </Switch>
                         </NavGridContainer>
                     </Grid>

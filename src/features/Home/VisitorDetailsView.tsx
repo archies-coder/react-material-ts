@@ -68,6 +68,14 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     }
 }))
 
+const selectInputMenu = [{
+    title: 'Check Out'
+}, {
+    title: 'Alert'
+}, {
+    title: 'Delete'
+}]
+
 interface OwnProps extends RouteComponentProps<any> {
 }
 
@@ -93,7 +101,7 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                         </Grid>
                         <Grid item xs={6}>
                             <Box display="flex" justifyContent="flex-end">
-                                <SelectInput value="Actions" style={{marginTop: '-15px'}}/>
+                                <SelectInput value="Actions" style={{marginTop: '-15px'}} menuOptions={selectInputMenu}/>
                                 <Box className={classes.button}>
                                     <CustomButton>Save</CustomButton>
                                 </Box>

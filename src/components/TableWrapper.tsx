@@ -34,7 +34,7 @@ interface IConfigObject {
     cellOptions?: ITableCellProps;
 }
 
-interface OwnProps {
+interface OwnProps extends React.HTMLAttributes<any> {
     config: IConfigObject;
 }
 

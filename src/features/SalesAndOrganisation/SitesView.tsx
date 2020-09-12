@@ -28,6 +28,14 @@ const data = {
 
 const columns = ['Site name', 'Address', 'CheckPoints']
 
+const selectInputMenu = [{
+    title: 'Add'
+}, {
+    title: 'Delete'
+}, {
+    title: 'Disable'
+}]
+
 const SitesView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
@@ -53,7 +61,7 @@ const SitesView: FunctionComponent<Props> = (props) => {
           <Paper className={classes.paper}>
               <Box display="flex" justifyContent="space-between">
                   <SearchInput placeholder="Search Employees by name, email or mobile" width={500}/>
-                  <SelectInput value="Action" />
+                  <SelectInput value="Action" menuOptions={selectInputMenu} />
               </Box>
 
               <TableWrapper config={TableConfig}/>

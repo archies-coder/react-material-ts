@@ -136,7 +136,8 @@ const mappableRoutes: MappableRoutesDictionary = {
             title: 'Devices',
             path: '/devices'
         }, {
-            title: 'Agreement'
+            title: 'Agreement',
+            path: '/agreement'
         }, {
             title: 'Visitor\'s Form'
         }, {
