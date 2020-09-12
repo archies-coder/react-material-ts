@@ -9,6 +9,12 @@ import HomeView from "./features/Home/HomeView";
 import NavGridContainer from "./components/NavGridContainer";
 import InviteView from "./features/Invites/InviteView";
 import VisitorDetailsView from "./features/Home/VisitorDetailsView";
+import EmployeesView from "./features/Employees/EmployeesView";
+import SitesView from "./features/SalesAndOrganisation/SitesView";
+import CheckInPointsView from "./features/SalesAndOrganisation/CheckInPointsView";
+import DevicesView from "./features/Settings/DevicesView";
+import UserManagementView from "./features/UserManagement/UserManagementView";
+import AgreementView from "./features/Settings/AgreementView";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -19,8 +25,12 @@ const useStyles = makeStyles((theme: Theme) =>
             height: 'inherit',
             overflow: 'hidden'
         },
-        paper: {
+        fullHeightContainer: {
             height: '100%',
+            // overflow: 'auto'
+        },
+        paper: {
+            height: '100vh',
             padding: theme.spacing(0),
             textAlign: 'center',
             backgroundColor: '#192949',
@@ -38,7 +48,7 @@ export default function App() {
     return (
         <Box height="100vh">
             <Container maxWidth={"xl"} className={classes.root}>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} className={classes.fullHeightContainer}>
                     <Grid item md={2}>
                         <Box className={classes.paper}>
                             <CustomDrawer/>
@@ -50,6 +60,12 @@ export default function App() {
                                 <Route exact path="/" component={HomeView}/>
                                 <Route path="/invites" component={InviteView}/>
                                 <Route path="/visitor/:visitorId" component={VisitorDetailsView}/>
+                                <Route path="/employees" component={EmployeesView}/>
+                                <Route path="/sites" component={SitesView}/>
+                                <Route path="/checkinpoints" component={CheckInPointsView}/>
+                                <Route path="/user" component={UserManagementView}/>
+                                <Route path="/devices" component={DevicesView}/>
+                                <Route path="/agreement" component={AgreementView}/>
                             </Switch>
                         </NavGridContainer>
                     </Grid>

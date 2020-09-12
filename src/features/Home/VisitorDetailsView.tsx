@@ -6,11 +6,12 @@ import {ArrowBackIos, CameraAlt} from "@material-ui/icons";
 import TextInput from "../../components/TextInput";
 import SelectInput from "../../components/SelectInput";
 import CustomButton from "../../components/Button";
+import {BrowserRouterProps, Redirect, RouteComponentProps} from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     paper: {
         backgroundColor: '#E7ECF6',
-        borderRadius: theme.shape.borderRadius - 10,
+        borderRadius: theme.shape.borderRadius - 5,
         marginRight: 30,
         height: '100%',
     },
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     arrowBack: {
         height: '30px',
         verticalAlign: 'bottom',
+        cursor: 'pointer',
     },
     imageContainer: {
         padding: theme.spacing(3, 0, 0, 8),
@@ -41,7 +43,6 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         textAlign: 'center',
         borderRadius: theme.shape.borderRadius,
         '& > svg': {
-            // position: 'absolute',
             height: '100%',
             opacity: 0.7,
             fontSize: '44px'
@@ -59,10 +60,23 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
     button: {
         marginRight: 20
+    },
+    selectInput:{
+        '& > .makeStyles-inputContainer-32': {
+            // padding: 0
+        }
     }
 }))
 
-interface OwnProps {
+const selectInputMenu = [{
+    title: 'Check Out'
+}, {
+    title: 'Alert'
+}, {
+    title: 'Delete'
+}]
+
+interface OwnProps extends RouteComponentProps<any> {
 }
 
 type Props = OwnProps;
@@ -74,22 +88,20 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
             <Paper className={classes.paper}>
                 <form>
                     <div className={classes.header}>
-                        <ArrowBackIos className={classes.arrowBack}/>
+                        <ArrowBackIos className={classes.arrowBack} onClick={() => props.history.push('/')}/>
                         <span> Visitor's Details</span>
                     </div>
                     <Grid container>
                         <Grid item xs={6}>
                             <div className={classes.imageContainer}>
-                            <div className={classes.imageUpload}>
-                                <CameraAlt alignmentBaseline={"central"} color={"disabled"} fontSize={"large"}/>
-                            </div>
+                                <div className={classes.imageUpload}>
+                                    <CameraAlt alignmentBaseline={"central"} color={"disabled"} fontSize={"large"}/>
+                                </div>
                             </div>
                         </Grid>
                         <Grid item xs={6}>
                             <Box display="flex" justifyContent="flex-end">
-                                <Box className={classes.button}>
-                                    <SelectInput value="Actions"/>
-                                </Box>
+                                <SelectInput value="Actions" style={{marginTop: '-15px'}} menuOptions={selectInputMenu}/>
                                 <Box className={classes.button}>
                                     <CustomButton>Save</CustomButton>
                                 </Box>
@@ -111,43 +123,44 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                                     </Grid>
                                 </Grid>
                                 <TextInput label="Visitor Name" onChange={(e) => console.log(e)}
-                                           value="" />
+                                           value=""/>
                                 <TextInput label="Mobile Number" onChange={(e) => console.log(e)}
-                                           value="" />
+                                           value=""/>
                                 <TextInput label="Visitor type" onChange={(e) => console.log(e)}
-                                           value="" />
+                                           value=""/>
                                 <TextInput label="No. of visitors" onChange={(e) => console.log(e)}
-                                           value="" />
+                                           value=""/>
                                 <TextInput label="City" onChange={(e) => console.log(e)}
-                                           value="" />
+                                           value=""/>
                             </div>
                         </Grid>
                         <Grid item xs={6} className={classes.rightInputs}>
                             <TextInput label="Gender" onChange={(e) => console.log(e)}
-                                       value="" />
+                                       value=""/>
                             <TextInput label="Email" onChange={(e) => console.log(e)}
-                                       value="" />
+                                       value=""/>
                             <TextInput label="Purpose to visit" onChange={(e) => console.log(e)}
-                                       value="" />
+                                       value=""/>
                             <TextInput label="Visitor's Company" onChange={(e) => console.log(e)}
-                                       value="" />
+                                       value=""/>
                             <TextInput label="Country / Nationality" onChange={(e) => console.log(e)}
-                                       value="" />
+                                       value=""/>
                         </Grid>
                     </Grid>
                     <Grid container>
                         <Grid item xs={6}>
                             <div className={classes.appointment}>
                                 <span className={classes.headerSecondary}>Appointments requests</span>
-                                <TextInput label="Person to Visit" style={{marginTop: '16px'}} onChange={(e) => console.log(e)}
-                                           value="" />
+                                <TextInput label="Person to Visit" style={{marginTop: '16px'}}
+                                           onChange={(e) => console.log(e)}
+                                           value=""/>
                                 <TextInput label="Site" onChange={(e) => console.log(e)}
-                                           value="" />
+                                           value=""/>
                             </div>
                         </Grid>
                         <Grid item xs={6} style={{marginTop: '52px'}}>
                             <TextInput label="Host / Organization" onChange={(e) => console.log(e)}
-                                       value="" />
+                                       value=""/>
                         </Grid>
                     </Grid>
                 </form>
