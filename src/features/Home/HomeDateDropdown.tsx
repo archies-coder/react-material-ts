@@ -14,7 +14,7 @@ type Props = OwnProps;
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         container: {
-            display: 'inline-block',
+            // display: 'inline-block',
             // marginTop: '15px',
             cursor: 'pointer',
 
@@ -49,8 +49,8 @@ const useStyles = makeStyles((theme: Theme) =>
         expandIcon: {
             '& > *': {
                 fontSize: '35px',
-                marginTop: '-30px',
-                marginLeft: '-120px',
+                top: '3px',
+                marginLeft: '-100px',
                 verticalAlign: '-webkit-baseline-middle',
                 position: 'relative',
                 // top: '116px',

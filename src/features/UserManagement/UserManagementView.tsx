@@ -17,9 +17,27 @@ const useStyles = makeStyles((theme: Theme) =>
             height: '100%',
             borderRadius: theme.shape.borderRadius - 5,
             marginRight: 30,
-            paddingRight: 100
+            paddingRight: 200,
+
+            '&  .MuiTableCell-root': {
+                borderBottom: '1px solid #192949',
+                padding: '20px auto'
+            },
+
+            '& .MuiTableRow-root:last-child': {
+                '&  .MuiTableCell-root': {
+                    borderBottom: 'none',
+                    padding: '20px auto'
+                }
+            }
         },
         header: {
+            fontSize: '22px',
+            fontWeight: 'bold',
+            padding: theme.spacing(2, 0, 0, 4),
+            color: theme.palette.text.primary
+        },
+        footer: {
             fontSize: '22px',
             fontWeight: 'bold',
             padding: theme.spacing(2, 0, 0, 4),
@@ -30,6 +48,9 @@ const useStyles = makeStyles((theme: Theme) =>
             verticalAlign: 'bottom',
             cursor: 'pointer',
         },
+        footerText: {
+            marginRight: 50
+        }
     })
 )
 
@@ -39,7 +60,7 @@ const data = {
     mobileNo: 9754821630
 }
 
-const columns = ['Roles', 'Status']
+const columns = ['Roles', 'Status', '']
 
 const UserManagementView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
@@ -59,13 +80,13 @@ const UserManagementView: FunctionComponent<Props> = (props) => {
         data: [{
             role: 'Reception',
             status: 'Assigned'
-        },{
+        }, {
             role: 'Admin',
             status: 'Not Assigned'
-        },{
+        }, {
             role: 'Security',
             status: 'Assigned'
-        },{
+        }, {
             role: 'HR',
             status: 'Assigned'
         }],
@@ -76,7 +97,7 @@ const UserManagementView: FunctionComponent<Props> = (props) => {
     }
 
     return (
-        <Grid item xs style={{height: "100%", marginTop: '22px'}}>
+        <Grid item xs style={{height: "inherit", marginTop: '22px'}}>
             <Paper className={classes.paper}>
                 <div className={classes.header}>
                     <ArrowBackIos className={classes.arrowBack}/>
@@ -84,6 +105,11 @@ const UserManagementView: FunctionComponent<Props> = (props) => {
                 </div>
                 <SearchInput placeholder="Search Roles"/>
                 <TableWrapper config={TableConfig}/>
+                <div className={classes.footer}>
+                    <span className={classes.footerText}>Gate 11</span>
+                    <span className={classes.footerText}>33 Narscicco Station</span>
+                    <span className={classes.footerText}>Ipad mini 45871</span>
+                </div>
             </Paper>
         </Grid>
     );

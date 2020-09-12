@@ -34,7 +34,7 @@ interface IConfigObject {
     cellOptions?: ITableCellProps;
 }
 
-interface OwnProps {
+interface OwnProps extends React.HTMLAttributes<any> {
     config: IConfigObject;
 }
 
@@ -115,7 +115,7 @@ const TableWrapper: FunctionComponent<Props> = ({config, ...props}) => {
                     {
                         Object.keys(value).map((key, i) => <TableCell key={i}>{value[key]}</TableCell>)
                     }
-                    <TableCell className={classes.cell}>
+                    <TableCell className={classes.cell} align="center">
                         <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                             <MoreHorizIcon/>
                         </Button>
