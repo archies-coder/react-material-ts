@@ -3,6 +3,7 @@ import TableWrapper from "../../components/TableWrapper";
 import {createStyles, fade, Grid, Paper, Theme} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import SearchInput from "../../components/SearchInput";
+import {ArrowBackIos} from "@material-ui/icons";
 
 interface OwnProps {
 }
@@ -13,9 +14,21 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         paper: {
             backgroundColor: '#E7ECF6',
+            height: '100%',
             borderRadius: theme.shape.borderRadius - 5,
             marginRight: 30,
             paddingRight: 100
+        },
+        header: {
+            fontSize: '22px',
+            fontWeight: 'bold',
+            padding: theme.spacing(2, 0, 0, 4),
+            color: theme.palette.text.primary
+        },
+        arrowBack: {
+            height: '30px',
+            verticalAlign: 'bottom',
+            cursor: 'pointer',
         },
     })
 )
@@ -23,14 +36,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const data = {
     name: 'Vijaya Tondon',
-    mobileNo: 9754821630,
-    email: 'Vijaytandon@gmail.com',
-    organization: 'Company Name'
+    mobileNo: 9754821630
 }
 
-const columns = ['Visitor name', 'Mobile No.', 'Email', 'Organization']
+const columns = ['Roles', 'Status']
 
-const EmployeesView: FunctionComponent<Props> = (props) => {
+const UserManagementView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
 
@@ -45,23 +56,37 @@ const EmployeesView: FunctionComponent<Props> = (props) => {
 
     const TableConfig = {
         columns: columns,
-        data: tableRows,
+        data: [{
+            role: 'Reception',
+            status: 'Assigned'
+        },{
+            role: 'Admin',
+            status: 'Not Assigned'
+        },{
+            role: 'Security',
+            status: 'Assigned'
+        },{
+            role: 'HR',
+            status: 'Assigned'
+        }],
         menuOptions: [{
             title: 'View Details',
             path: "/visitor/" + 2
-        }, {
-            title: 'Delete'
         }]
     }
 
     return (
         <Grid item xs style={{height: "100%", marginTop: '22px'}}>
             <Paper className={classes.paper}>
-            <SearchInput placeholder="Search Employees by name, email or mobile" width={500}/>
+                <div className={classes.header}>
+                    <ArrowBackIos className={classes.arrowBack}/>
+                    <span> Roles </span>
+                </div>
+                <SearchInput placeholder="Search Roles"/>
                 <TableWrapper config={TableConfig}/>
             </Paper>
         </Grid>
     );
 };
 
-export default EmployeesView;
+export default UserManagementView;

@@ -1,4 +1,3 @@
-import './CustomDrawer.scss'
 import React, {FunctionComponent, useState} from 'react';
 import {Collapse, createStyles, Paper, Theme, Typography} from "@material-ui/core";
 import List from "@material-ui/core/List";
@@ -7,8 +6,8 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import {makeStyles} from "@material-ui/core/styles";
-import {Link} from "react-router-dom";
-import {ExpandLess, ExpandMore, HomeOutlined, LibraryBooks} from '@material-ui/icons'
+import {NavLink} from "react-router-dom";
+import {ExpandLess, ExpandMore, HomeSharp, LibraryBooks} from '@material-ui/icons'
 import BusinessIcon from '@material-ui/icons/Business';
 import OrganizationIcon from "./assets/icons/OrganizationIcon";
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -28,7 +27,31 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(0),
             textAlign: 'center',
             color: '#A6ACB8',
-            backgroundColor: '#192949',
+            backgroundColor: theme.palette.text.primary,
+
+            '& .MuiSvgIcon-root': {
+                color: '#158594'
+            },
+
+            '& .listItem': {
+                backgroundColor: theme.palette.text.primary,
+                color: '#A6ACB8',
+                letterSpacing: '0.5px',
+            },
+
+            '& .active-navlink': {
+                backgroundImage: 'linear-gradient(to right, #2C578A, #20849C)',
+                color: theme.palette.common.white,
+
+                '& .MuiSvgIcon-root': {
+                    color: theme.palette.common.white,
+                }
+            },
+
+            '& .active-navlink-menuItem': {
+                color: theme.palette.common.white,
+
+            }
         },
         fullHeight: {
             height: '100vh',
@@ -41,6 +64,11 @@ const useStyles = makeStyles((theme: Theme) =>
         nested: {
             paddingLeft: theme.spacing(10),
         },
+        listItemText: {
+            '& > *': {
+                fontWeight: 600
+            }
+        }
     }),
 );
 
@@ -60,14 +88,15 @@ type MappableRoutesDictionary = {
     [key: string]: {
         path: string,
         icon: JSX.Element,
-        children?: Child[]
+        children?: Child[],
+        name?: string
     }
 }
 
 const mappableRoutes: MappableRoutesDictionary = {
     'Home': {
         path: '/',
-        icon: <HomeOutlined className="white-text"/>
+        icon: <HomeSharp className="white-text"/>
     },
     'Invites': {
         path: '/invites',
@@ -79,6 +108,7 @@ const mappableRoutes: MappableRoutesDictionary = {
     },
     'Sales & Organization': {
         path: '/sites',
+        name: 'sales',
         icon: <BusinessIcon className="white-text"/>,
         children: [{
             title: 'Sites',
@@ -100,6 +130,7 @@ const mappableRoutes: MappableRoutesDictionary = {
     },
     'Settings': {
         path: '/settings',
+        name: 'settings',
         icon: <SettingsIcon className="white-text"/>,
         children: [{
             title: 'Devices',
@@ -118,11 +149,21 @@ const mappableRoutes: MappableRoutesDictionary = {
 const CustomDrawer: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
-    const [open, setOpen] = useState(false)
+    const dropDownState = {
+        settings: false,
+        sales: false
+    }
+
+    const [open, setOpen] = useState(dropDownState)
 
 
-    const handleClick = () => {
-        setOpen(!open);
+    const handleClick = (name: string) => {
+        // @ts-ignore
+        const old = open[name]
+        setOpen({
+            ...open,
+            [name]: !old
+        });
     };
 
     return <Paper className={classes.paper}>
@@ -134,26 +175,47 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
             {Object.keys(mappableRoutes).map((key, index) => (
                 mappableRoutes[key].children ? (
                     <>
-                        <ListItem button onClick={handleClick}>
-                            <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
-                            <ListItemText primary={key}/>
-                            {open ? <ExpandLess/> : <ExpandMore/>}
-                        </ListItem>
-                        <Collapse in={open} timeout="auto" unmountOnExit>
+                        {
+                            // @ts-ignore
+                            open[mappableRoutes[key].name] ?
+                                <ListItem button onClick={() => handleClick(mappableRoutes[key].name)}
+                                          className="listItem active-navlink">
+                                    <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
+                                    <ListItemText className={classes.listItemText} primary={key}/>
+                                    {/*@ts-ignore*/}
+                                    {open[mappableRoutes[key].name] ? <ExpandLess/> : <ExpandMore/>}
+                                </ListItem>
+                                :
+                                <ListItem button onClick={() => handleClick(mappableRoutes[key].name)}
+                                          className="listItem">
+                                    <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
+                                    <ListItemText className={classes.listItemText} primary={key}/>
+                                    {/*@ts-ignore*/}
+                                    {open[mappableRoutes[key].name] ? <ExpandLess/> : <ExpandMore/>}
+                                </ListItem>
+                        }
+                        {/*@ts-ignore*/}
+                        <Collapse in={open[mappableRoutes[key].name]} timeout="auto" unmountOnExit>
                             <List component="div" disablePadding>
                                 {mappableRoutes[key].children.map(child => (
-                                    <ListItem key={child.title} component={Link} to={child.path}
-                                              button className={classes.nested}>
-                                        <ListItemText primary={child.title}/>
+                                    <ListItem
+                                        key={child.title}
+                                        component={NavLink}
+                                        exact
+                                        activeClassName={"active-navlink-menuItem"}
+                                        to={child.path ? child.path : ''}
+                                        button className={classes.nested}>
+                                        <ListItemText className={classes.listItemText} primary={child.title}/>
                                     </ListItem>
                                 ))}
                             </List>
                         </Collapse>
                     </>
                 ) : (
-                    <ListItem button key={key} component={Link} to={mappableRoutes[key].path}>
+                    <ListItem button key={key} component={NavLink} exact className="listItem"
+                              activeClassName={"active-navlink"} to={mappableRoutes[key].path}>
                         <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
-                        <ListItemText primary={key}/>
+                        <ListItemText className={classes.listItemText} primary={key}/>
                     </ListItem>
                 )
             ))}

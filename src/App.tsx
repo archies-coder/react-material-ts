@@ -13,6 +13,7 @@ import EmployeesView from "./features/Employees/EmployeesView";
 import SitesView from "./features/SalesAndOrganisation/SitesView";
 import CheckInPointsView from "./features/SalesAndOrganisation/CheckInPointsView";
 import DevicesView from "./features/Settings/DevicesView";
+import UserManagementView from "./features/UserManagement/UserManagementView";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -23,8 +24,12 @@ const useStyles = makeStyles((theme: Theme) =>
             height: 'inherit',
             overflow: 'hidden'
         },
-        paper: {
+        fullHeightContainer: {
             height: '100%',
+            // overflow: 'auto'
+        },
+        paper: {
+            height: '100vh',
             padding: theme.spacing(0),
             textAlign: 'center',
             backgroundColor: '#192949',
@@ -42,7 +47,7 @@ export default function App() {
     return (
         <Box height="100vh">
             <Container maxWidth={"xl"} className={classes.root}>
-                <Grid container spacing={3}>
+                <Grid container spacing={3} className={classes.fullHeightContainer}>
                     <Grid item md={2}>
                         <Box className={classes.paper}>
                             <CustomDrawer/>
@@ -58,6 +63,7 @@ export default function App() {
                                 <Route path="/sites" component={SitesView}/>
                                 <Route path="/checkinpoints" component={CheckInPointsView}/>
                                 <Route path="/devices" component={DevicesView}/>
+                                <Route path="/user" component={UserManagementView}/>
                             </Switch>
                         </NavGridContainer>
                     </Grid>

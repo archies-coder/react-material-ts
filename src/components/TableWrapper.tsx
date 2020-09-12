@@ -14,20 +14,35 @@ import {makeStyles} from "@material-ui/core/styles";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import {Link} from "react-router-dom";
 
-interface IRow {
-    [x: string]: string | number;
+interface IRowProps {
+    [x: string]: any;
+}
+
+interface IMenuItemProps {
+    path?: string;
+    title: string;
+}
+
+interface ITableCellProps {
+    padding?: number;
+}
+
+interface IConfigObject {
+    columns: string[];
+    data: IRowProps[];
+    menuOptions: IMenuItemProps[];
+    cellOptions?: ITableCellProps;
 }
 
 interface OwnProps {
-    columns: string[];
-    data?: IRow[];
+    config: IConfigObject;
 }
 
 type Props = OwnProps;
 
 const StyledMenu = withStyles({
     paper: {
-        border: '1px solid #d3d4d5',
+        // border: '1px solid #d3d4d5',
     },
 })((props: MenuProps) => (
     <Menu
@@ -57,18 +72,22 @@ const StyledMenuItem = withStyles((theme) => ({
 }))(MenuItem);
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
+    root: {
+        padding: 30
+    },
     header: {
         '& > *': {
             fontWeight: 600
         }
     },
     cell: {
-        borderBottom: 'none'
+        borderBottom: 'none',
+        padding: (config: IConfigObject) => config.cellOptions ? config.cellOptions.padding : 'auto'
     },
 }))
 
-const TableWrapper: FunctionComponent<Props> = (props) => {
-    const classes = useStyles()
+const TableWrapper: FunctionComponent<Props> = ({config, ...props}) => {
+    const classes = useStyles(config)
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -82,7 +101,7 @@ const TableWrapper: FunctionComponent<Props> = (props) => {
 
     const TableHeader = <TableHead className={classes.header}>
         {
-            props.columns.map(column => (
+            config.columns.map(column => (
                 <TableCell key={column}>{column}</TableCell>
             ))
         }
@@ -91,7 +110,7 @@ const TableWrapper: FunctionComponent<Props> = (props) => {
 
     const body = <TableBody>
         {
-            props.data.map((value, i) => (
+            config.data.map((value, i) => (
                 <TableRow key={i}>
                     {
                         Object.keys(value).map((key, i) => <TableCell key={i}>{value[key]}</TableCell>)
@@ -107,13 +126,21 @@ const TableWrapper: FunctionComponent<Props> = (props) => {
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
                         >
-                            <StyledMenuItem onClick={handleClose}>Check Out</StyledMenuItem>
-                            <StyledMenuItem onClick={handleClose}>Resend Code</StyledMenuItem>
-                            <StyledMenuItem onClick={handleClose}>
-                                <Link to={"/visitor/" + i} style={{textDecoration: "none", color: "#192949"}}>
-                                    View Details
-                                </Link>
-                            </StyledMenuItem>
+                            {config.menuOptions.map(({title, path}) => (
+                                <StyledMenuItem key={title} onClick={handleClose}>
+                                    <Link to={path} style={{textDecoration: "none", color: "#192949"}}>
+                                        {title}
+                                    </Link>
+                                </StyledMenuItem>
+
+                            ))}
+                            {/*<StyledMenuItem onClick={handleClose}>Check Out</StyledMenuItem>*/}
+                            {/*<StyledMenuItem onClick={handleClose}>Resend Code</StyledMenuItem>*/}
+                            {/*<StyledMenuItem onClick={handleClose}>*/}
+                            {/*    <Link to={"/visitor/" + i} style={{textDecoration: "none", color: "#192949"}}>*/}
+                            {/*        View Details*/}
+                            {/*    </Link>*/}
+                            {/*</StyledMenuItem>*/}
                         </StyledMenu>
                     </TableCell>
                 </TableRow>
@@ -122,7 +149,9 @@ const TableWrapper: FunctionComponent<Props> = (props) => {
     </TableBody>
 
     return (
-        <TableContainer>
+        <TableContainer classes={{
+            root: classes.root
+        }}>
             <Table>
                 {TableHeader}
                 {body}

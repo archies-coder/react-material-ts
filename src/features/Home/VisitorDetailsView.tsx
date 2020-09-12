@@ -60,6 +60,11 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
     button: {
         marginRight: 20
+    },
+    selectInput:{
+        '& > .makeStyles-inputContainer-32': {
+            // padding: 0
+        }
     }
 }))
 
@@ -81,16 +86,14 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                     <Grid container>
                         <Grid item xs={6}>
                             <div className={classes.imageContainer}>
-                            <div className={classes.imageUpload}>
-                                <CameraAlt alignmentBaseline={"central"} color={"disabled"} fontSize={"large"}/>
-                            </div>
+                                <div className={classes.imageUpload}>
+                                    <CameraAlt alignmentBaseline={"central"} color={"disabled"} fontSize={"large"}/>
+                                </div>
                             </div>
                         </Grid>
                         <Grid item xs={6}>
                             <Box display="flex" justifyContent="flex-end">
-                                <Box className={classes.button}>
-                                    <SelectInput value="Actions"/>
-                                </Box>
+                                <SelectInput value="Actions" style={{marginTop: '-15px'}}/>
                                 <Box className={classes.button}>
                                     <CustomButton>Save</CustomButton>
                                 </Box>
@@ -112,43 +115,44 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                                     </Grid>
                                 </Grid>
                                 <TextInput label="Visitor Name" onChange={(e) => console.log(e)}
-                                           value="" />
+                                           value=""/>
                                 <TextInput label="Mobile Number" onChange={(e) => console.log(e)}
-                                           value="" />
+                                           value=""/>
                                 <TextInput label="Visitor type" onChange={(e) => console.log(e)}
-                                           value="" />
+                                           value=""/>
                                 <TextInput label="No. of visitors" onChange={(e) => console.log(e)}
-                                           value="" />
+                                           value=""/>
                                 <TextInput label="City" onChange={(e) => console.log(e)}
-                                           value="" />
+                                           value=""/>
                             </div>
                         </Grid>
                         <Grid item xs={6} className={classes.rightInputs}>
                             <TextInput label="Gender" onChange={(e) => console.log(e)}
-                                       value="" />
+                                       value=""/>
                             <TextInput label="Email" onChange={(e) => console.log(e)}
-                                       value="" />
+                                       value=""/>
                             <TextInput label="Purpose to visit" onChange={(e) => console.log(e)}
-                                       value="" />
+                                       value=""/>
                             <TextInput label="Visitor's Company" onChange={(e) => console.log(e)}
-                                       value="" />
+                                       value=""/>
                             <TextInput label="Country / Nationality" onChange={(e) => console.log(e)}
-                                       value="" />
+                                       value=""/>
                         </Grid>
                     </Grid>
                     <Grid container>
                         <Grid item xs={6}>
                             <div className={classes.appointment}>
                                 <span className={classes.headerSecondary}>Appointments requests</span>
-                                <TextInput label="Person to Visit" style={{marginTop: '16px'}} onChange={(e) => console.log(e)}
-                                           value="" />
+                                <TextInput label="Person to Visit" style={{marginTop: '16px'}}
+                                           onChange={(e) => console.log(e)}
+                                           value=""/>
                                 <TextInput label="Site" onChange={(e) => console.log(e)}
-                                           value="" />
+                                           value=""/>
                             </div>
                         </Grid>
                         <Grid item xs={6} style={{marginTop: '52px'}}>
                             <TextInput label="Host / Organization" onChange={(e) => console.log(e)}
-                                       value="" />
+                                       value=""/>
                         </Grid>
                     </Grid>
                 </form>

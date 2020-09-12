@@ -1,11 +1,13 @@
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent} from 'react';
 import {Box, createStyles, Grid, Paper, Theme} from "@material-ui/core";
 import SearchInput from "../../components/SearchInput";
 import TableWrapper from "../../components/TableWrapper";
 import {makeStyles} from "@material-ui/core/styles";
 import SelectInput from "../../components/SelectInput";
+import CustomButton from "../../components/Button";
 
-interface OwnProps {}
+interface OwnProps {
+}
 
 type Props = OwnProps;
 
@@ -16,6 +18,9 @@ const useStyles = makeStyles((theme: Theme) =>
             borderRadius: theme.shape.borderRadius - 5,
             marginRight: 30
         },
+        tableContainer: {
+            paddingRight: 100
+        }
     })
 )
 
@@ -38,15 +43,27 @@ const DevicesView: FunctionComponent<Props> = (props) => {
         tableRows = [data, ...copy]
     }
 
+    const TableConfig = {
+        columns: columns,
+        data: tableRows,
+        menuOptions: [{
+            title: 'View Details',
+            path: "/visitor/" + 2
+        }]
+    }
+
     return (
         <Grid item xs style={{height: "100%", marginTop: '22px'}}>
             <Paper className={classes.paper}>
                 <Box display="flex" justifyContent="space-between">
                     <SearchInput placeholder="Search Devices" width={500}/>
-                    <SelectInput value="Action" />
+                    <SelectInput value="Action"/>
+                    <SelectInput value="Action"/>
+                    <CustomButton>Add Device</CustomButton>
                 </Box>
-
-                <TableWrapper columns={columns} data={tableRows}/>
+                <Box className={classes.tableContainer}>
+                    <TableWrapper config={TableConfig}/>
+                </Box>
             </Paper>
         </Grid>
     );
