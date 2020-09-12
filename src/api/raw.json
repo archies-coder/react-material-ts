@@ -1,0 +1,209 @@
+{
+    "variables": [],
+    "info": {
+        "name": "receptionAPIs",
+        "_postman_id": "d43e4d7f-d1d0-06dd-11f9-ebab85e163b6",
+        "description": "",
+        "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+    },
+    "item": [{
+            "name": "http://52.66.55.89:18446/product/reception/user/data",
+            "request": {
+                "url": "http://localhost:18446/product/reception/checkin/user/data",
+                "method": "GET",
+                "header": [],
+                "body": {},
+                "description": ""
+            },
+            "response": []
+        },
+        {
+            "name": "52.66.55.89:18446/product/login",
+            "request": {
+                "url": "52.66.55.89:18446/product/login",
+                "method": "POST",
+                "header": [{
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                }],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n\t\"username\": \"panwar.arjunp@gmail.com\",\n\t\"password\": \"12345\"\n}"
+                },
+                "description": ""
+            },
+            "response": []
+        },
+        {
+            "name": "52.66.55.89:18446/product/acountDetail/register",
+            "request": {
+                "url": "52.66.55.89:18446/product/acountDetail/register",
+                "method": "POST",
+                "header": [{
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                }],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n\t\"username\": \"panwar.arjunp@gmail.com\",\n\t\"password\": \"12345\",\n\t\"name\": \"admin\",\n\t\"usertype\": \"admin\"\n}"
+                },
+                "description": ""
+            },
+            "response": []
+        },
+        {
+            "name": "localhost:18446/product/acountDetail/device/register",
+            "request": {
+                "url": "52.66.55.89:18446/product/acountDetail/device/register",
+                "method": "POST",
+                "header": [{
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                }],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n\t\"devicename\": \"arjun\",\n\t\"iosversion\": \"ios 14\",\n\t\"email\" : \"arjunpanwar85@gmail.com\",\n\t\"udid\": \"12345\"\n}"
+                },
+                "description": ""
+            },
+            "response": []
+        },
+        {
+            "name": "localhost:18446/product/device/login",
+            "request": {
+                "url": "52.66.55.89:18446/product/device/login",
+                "method": "POST",
+                "header": [{
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "description": ""
+                }],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n\t\"udid\": \"12345\",\n\t\"pincode\": 123456\n}"
+                },
+                "description": ""
+            },
+            "response": []
+        },
+        {
+            "name": "52.66.55.89:18446/product/reception/user/checkin",
+            "request": {
+                "url": "52.66.55.89:18446/product/reception/user/checkin",
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [{
+                            "key": "profilepic",
+                            "value": "",
+                            "description": "",
+                            "type": "file"
+                        },
+                        {
+                            "key": "idcard",
+                            "value": "",
+                            "description": "",
+                            "type": "file"
+                        },
+                        {
+                            "key": "signature",
+                            "value": "",
+                            "description": "",
+                            "type": "file"
+                        },
+                        {
+                            "key": "name",
+                            "value": "arjun",
+                            "description": "",
+                            "type": "text"
+                        },
+                        {
+                            "key": "mobile",
+                            "value": "9769335758",
+                            "description": "",
+                            "type": "text"
+                        },
+                        {
+                            "key": "email",
+                            "value": "arjunpanwar85@gmail.com",
+                            "description": "",
+                            "type": "text"
+                        },
+                        {
+                            "key": "tomeet",
+                            "value": "arjunp",
+                            "description": "",
+                            "type": "text"
+                        },
+                        {
+                            "key": "purpose",
+                            "value": "tomeet",
+                            "description": "",
+                            "type": "text"
+                        },
+                        {
+                            "key": "gender",
+                            "value": "male",
+                            "description": "",
+                            "type": "text"
+                        },
+                        {
+                            "key": "visitorcount",
+                            "value": "2",
+                            "description": "",
+                            "type": "text"
+                        },
+                        {
+                            "key": "company",
+                            "value": "test",
+                            "description": "",
+                            "type": "text"
+                        },
+                        {
+                            "key": "country",
+                            "value": "India",
+                            "description": "",
+                            "type": "text"
+                        },
+                        {
+                            "key": "organisation",
+                            "value": "test",
+                            "description": "",
+                            "type": "text"
+                        },
+                        {
+                            "key": "site",
+                            "value": "test",
+                            "description": "",
+                            "type": "text"
+                        },
+                        {
+                            "key": "vehicleno",
+                            "value": "test",
+                            "description": "",
+                            "type": "text"
+                        },
+                        {
+                            "key": "belongings",
+                            "value": "test",
+                            "description": "",
+                            "type": "text"
+                        },
+                        {
+                            "key": "idtype",
+                            "value": "pancard",
+                            "description": "",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "description": ""
+            },
+            "response": []
+        }
+    ]
+}

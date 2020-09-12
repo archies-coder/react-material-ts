@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState} from 'react';
+import React, {FunctionComponent, useState, useEffect} from 'react';
 import {
     Avatar,
     Box,
@@ -25,6 +25,9 @@ import {Link} from "react-router-dom";
 import TableWrapper from "../../components/TableWrapper";
 import SearchInput from "../../components/SearchInput";
 import SelectInput from "../../components/SelectInput";
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchVisitors } from 'features/Home/homeSlice'
+import { RootState } from 'app/rootReducer'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -124,9 +127,34 @@ const HomeView: FunctionComponent<Props> = (props) => {
         tableRows = [data, ...copy]
     }
 
-    const TableConfig = {
+    const dispatch = useDispatch()
+
+    const {
+        visitors,
+        currentPageVisitors,
+        pageCount,
+        pageLinks,
+        isLoading,
+        error
+    } = useSelector((state: RootState) => state.home)
+
+    useEffect(() => {
+        dispatch(fetchVisitors(0))
+        
+      }, [dispatch])
+    
+      if (error) {
+        return (
+          <div>
+            <h1>Something went wrong...</h1>
+            <div>{error.toString()}</div>
+          </div>
+        )
+      }
+
+      const TableConfig = {
         columns: columns,
-        data: tableRows,
+        data: visitors,
         menuOptions: [{
             title: 'View Details',
             path: "/visitor/" + 2
