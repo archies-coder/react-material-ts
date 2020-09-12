@@ -2,7 +2,7 @@ import React, {FunctionComponent} from 'react';
 import {Theme, withStyles} from "@material-ui/core";
 import Button from '@material-ui/core/Button'
 
-interface OwnProps {
+interface OwnProps extends React.HTMLAttributes<any> {
 }
 
 type Props = OwnProps;
@@ -26,6 +26,7 @@ const GradientButton = withStyles((theme: Theme) => ({
 const CustomButton: FunctionComponent<Props> = (props) => {
 
     return (
+    // @ts-ignore
             <GradientButton {...props} />
     );
 };
