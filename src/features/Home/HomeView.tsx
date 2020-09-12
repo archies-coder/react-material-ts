@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState, useEffect} from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import {
     Avatar,
     Box,
@@ -16,17 +16,18 @@ import {
     TableRow,
     Theme
 } from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import HomeStats from "./HomeStats";
 import HomeDateDropdown from "./HomeDateDropdown";
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import SearchIcon from '@material-ui/icons/Search';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import TableWrapper from "../../components/TableWrapper";
 import SearchInput from "../../components/SearchInput";
 import SelectInput from "../../components/SelectInput";
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchVisitors } from 'features/Home/homeSlice'
+import { fetchVisitors } from 'features/Home/visitorSlice'
+import { fetchHomeStats } from 'features/Home/homeSlice'
 import { RootState } from 'app/rootReducer'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -134,25 +135,36 @@ const HomeView: FunctionComponent<Props> = (props) => {
         currentPageVisitors,
         pageCount,
         pageLinks,
-        isLoading,
+        isLoading: isLoadingVisitor,
         error
+    } = useSelector((state: RootState) => state.visitors)
+
+    const {
+        checked_out,
+        in_office,
+        invite_sent,
+        total_visitor,
+        visitors: visitorStats,
+        isLoading: isLoadingHomeStats,
+        error: homeStatsError
     } = useSelector((state: RootState) => state.home)
 
     useEffect(() => {
         dispatch(fetchVisitors(0))
-        
-      }, [dispatch])
-    
-      if (error) {
-        return (
-          <div>
-            <h1>Something went wrong...</h1>
-            <div>{error.toString()}</div>
-          </div>
-        )
-      }
+        dispatch(fetchHomeStats())
 
-      const TableConfig = {
+    }, [dispatch])
+
+    if (error) {
+        return (
+            <div>
+                <h1>Something went wrong...</h1>
+                <div>{error.toString()}</div>
+            </div>
+        )
+    }
+
+    const TableConfig = {
         columns: columns,
         data: visitors,
         menuOptions: [{
@@ -161,23 +173,31 @@ const HomeView: FunctionComponent<Props> = (props) => {
         }]
     }
 
+    const homeStatsConfig ={
+        checked_out,
+        in_office,
+        invite_sent,
+        total_visitor,
+        visitorStats,
+        isLoadingHomeStats,
+    }
     return (
         <>
-            <Grid item xs={12} style={{height: "250px", marginTop: 0,}}>
+            <Grid item xs={12} style={{ height: "250px", marginTop: 0, }}>
                 <Paper className={classes.paper}>
-                    <HomeDateDropdown/>
-                    <HomeStats/>
+                    <HomeDateDropdown />
+                    <HomeStats config= {homeStatsConfig}/>
                 </Paper>
             </Grid>
-            <Grid item xs style={{height: "100%", marginTop: '22px'}}>
+            <Grid item xs style={{ height: "100%", marginTop: '22px' }}>
                 <Paper className={classes.paper}>
                     <Box display="flex" justifyContent="start">
-                        <SearchInput placeholder="Search visitor"/>
-                        <SelectInput value="In Office"/>
-                        <SelectInput value="All Purpose"/>
-                        <SelectInput value="All Sites"/>
+                        <SearchInput placeholder="Search visitor" />
+                        <SelectInput value="In Office" />
+                        <SelectInput value="All Purpose" />
+                        <SelectInput value="All Sites" />
                     </Box>
-                    <TableWrapper config={TableConfig}/>
+                    <TableWrapper config={TableConfig} />
                 </Paper>
             </Grid>
         </>

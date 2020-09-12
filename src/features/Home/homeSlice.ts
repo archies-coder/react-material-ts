@@ -1,71 +1,82 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Links } from 'parse-link-header'
 
-import { VisitorInfo, VisitorsResult, getVisitorInfo} from 'api/Apis'
+import { getHomeStats } from 'api/Apis'
 import { AppThunk } from 'app/store'
 
 
-interface VisitorState {
-  visitors: VisitorInfo[]
-  currentPageVisitors: number[]
-  pageCount: number
-  pageLinks: Links | null
+interface homeStatsState {
+  checked_out: number
+  in_office: number
+  invite_sent: number
+  total_visitor: number
+  visitors: number[]
   isLoading: boolean
   error: string | null
 }
 
-const visitorsInitialState: VisitorState = {
+const homeStatsInitialState: homeStatsState = {
+  checked_out: 0,
+  in_office: 0,
+  invite_sent: 0,
+  total_visitor: 0,
   visitors: [],
-  currentPageVisitors: [],
-  pageCount: 0,
-  pageLinks: {},
   isLoading: false,
   error: null
 }
 
-function startLoading(state: VisitorState) {
+function startLoading(state: homeStatsState) {
   state.isLoading = true
 }
 
-function loadingFailed(state: VisitorState, action: PayloadAction<string>) {
+function loadingFailed(state: homeStatsState, action: PayloadAction<string>) {
   state.isLoading = false
   state.error = action.payload
 }
 
-const visitors = createSlice({
-  name: 'visitors',
-  initialState: visitorsInitialState,
+const homeStats = createSlice({
+  name: 'homeStats',
+  initialState: homeStatsInitialState,
   reducers: {
-    
-    getVisitorsStart: startLoading,
-    getVisitorsSuccess(state, { payload }: PayloadAction<VisitorsResult>) {
-      const { pageCount, visitors } = payload
-      state.pageCount = pageCount
+
+    getHomeStatsStart: startLoading,
+    getHomeStatsSuccess(state, { payload }: PayloadAction<homeStatsState>) {
+      const { checked_out,
+        in_office,
+        invite_sent,
+        total_visitor,
+        visitors,
+        isLoading } = payload
+      state.checked_out = checked_out
+      state.in_office = in_office
+      state.invite_sent = invite_sent
+      state.total_visitor = total_visitor
       state.isLoading = false
       state.error = null
       state.visitors = visitors
     },
-    getVisitorsFailure: loadingFailed
+    getHomeStatsFailure: loadingFailed,
   }
 })
 
 export const {
-  getVisitorsStart,
-  getVisitorsSuccess,
-  getVisitorsFailure
-} = visitors.actions
+  getHomeStatsStart,
+  getHomeStatsSuccess,
+  getHomeStatsFailure
+} = homeStats.actions
 
-export default visitors.reducer
+export default homeStats.reducer
 
-export const fetchVisitors = (
+export const fetchHomeStats = (
   page?: number
 ): AppThunk => async dispatch => {
   try {
-    dispatch(getVisitorsStart())
-    const visitors = await getVisitorInfo()
-    dispatch(getVisitorsSuccess(visitors))
+    dispatch(getHomeStatsStart())
+    const stats = await getHomeStats()
+    debugger;
+    dispatch(getHomeStatsSuccess(stats.data))
   } catch (err) {
-    dispatch(getVisitorsFailure(err.toString()))
+    dispatch(getHomeStatsFailure(err.toString()))
   }
 }
 

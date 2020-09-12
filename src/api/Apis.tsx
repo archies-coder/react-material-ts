@@ -100,3 +100,10 @@ export async function getVisitorInfo() {
     visitors: data
   }
 }
+
+export async function getHomeStats(){
+  const url = `/product/stats/data`
+
+  const { data } = await apis.get(url)
+  return data
+}
