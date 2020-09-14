@@ -15,7 +15,7 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import {Link} from "react-router-dom";
 
 interface IRowProps {
-    [x: string]: any;
+    [id: string]: any;
 }
 
 interface IMenuItemProps {
@@ -27,9 +27,16 @@ interface ITableCellProps {
     padding?: number;
 }
 
+interface IColumnsConfig {
+    id: any,
+    label: any,
+    sequence?:number,
+    isSort?:boolean,
+    isFilterable?:boolean
+}
 interface IConfigObject {
-    columns: string[];
-    data: IRowProps[];
+    columns: IColumnsConfig[];
+    data:any;
     menuOptions: IMenuItemProps[];
     cellOptions?: ITableCellProps;
 }
@@ -102,7 +109,7 @@ const TableWrapper: FunctionComponent<Props> = ({config, ...props}) => {
     const TableHeader = <TableHead className={classes.header}>
         {
             config.columns.map(column => (
-                <TableCell key={column}>{column}</TableCell>
+                <TableCell key={column.id}>{column.label}</TableCell>
             ))
         }
 
@@ -110,10 +117,10 @@ const TableWrapper: FunctionComponent<Props> = ({config, ...props}) => {
 
     const body = <TableBody>
         {
-            config.data.map((value, i) => (
+            config.data.map((row:any, i:number) => (
                 <TableRow key={i}>
                     {
-                        Object.keys(value).map((key, i) => <TableCell key={i}>{value[key]}</TableCell>)
+                        config.columns.map( (col:any) => <TableCell key={row.id || i}>{row[col.id]}</TableCell>) 
                     }
                     <TableCell className={classes.cell} align="center">
                         <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>

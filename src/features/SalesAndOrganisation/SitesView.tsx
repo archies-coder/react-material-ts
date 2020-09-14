@@ -26,7 +26,36 @@ const data = {
     checkPoints: 'Gate 1',
 }
 
-const columns = ['Site name', 'Address', 'CheckPoints']
+//const columns = ['Site name', 'Address', 'CheckPoints']
+const columns = [
+    {
+        id: "profilePicPath",
+        label: '',
+    },
+    {
+        id: "name",
+        label: 'Visitor name'
+    },
+    {
+        id: "mobile",
+        label: 'Mobile No.'
+    },
+    {
+        id: "tomeet",
+        label: 'Person to meet'
+    },
+    {
+        id: "purpose",
+        label: 'Purpose'
+    },
+    {
+        id: "intime",
+        label: 'In Time'
+    },
+    {
+        id: "outtime",
+        label: 'Out Time'
+    }]
 
 const selectInputMenu = [{
     title: 'Add'

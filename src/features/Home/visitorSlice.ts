@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Links } from 'parse-link-header'
 
-import { VisitorInfo, VisitorsResult, getVisitorInfo} from 'api/Apis'
+import { VisitorInfo, VisitorsResult, getVisitorInfo, getVisitorData} from 'api/Apis'
 import { AppThunk } from 'app/store'
 
 
@@ -62,7 +62,8 @@ export const fetchVisitors = (
 ): AppThunk => async dispatch => {
   try {
     dispatch(getVisitorsStart())
-    const visitors = await getVisitorInfo()
+    const visitors = await getVisitorData()
+    debugger
     dispatch(getVisitorsSuccess(visitors))
   } catch (err) {
     dispatch(getVisitorsFailure(err.toString()))

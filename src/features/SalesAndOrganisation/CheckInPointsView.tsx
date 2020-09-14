@@ -26,7 +26,36 @@ const data = {
     device: 'Ipad Mini 78457',
 }
 
-const columns = ['Check In ports', 'Site name', 'Device']
+//const columns = ['Check In ports', 'Site name', 'Device']
+const columns = [
+    {
+        id: "profilePicPath",
+        label: '',
+    },
+    {
+        id: "name",
+        label: 'Visitor name'
+    },
+    {
+        id: "mobile",
+        label: 'Mobile No.'
+    },
+    {
+        id: "tomeet",
+        label: 'Person to meet'
+    },
+    {
+        id: "purpose",
+        label: 'Purpose'
+    },
+    {
+        id: "intime",
+        label: 'In Time'
+    },
+    {
+        id: "outtime",
+        label: 'Out Time'
+    }]
 
 const CheckInPointsView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
