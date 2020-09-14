@@ -105,8 +105,36 @@ const data = {
     outTime: '2:30 pm',
 }
 
-const columns = ['', 'Visitor name', 'Mobile No.', 'Person to meet', 'Purpose', 'In Time', 'Out Time']
-
+//const columns = ['', 'Visitor name', 'Mobile No.', 'Person to meet', 'Purpose', 'In Time', 'Out Time']
+const columns = [
+    {
+        id: "profilePicPath",
+        label: '',
+    },
+    {
+        id: "name",
+        label: 'Visitor name'
+    },
+    {
+        id: "mobile",
+        label: 'Mobile No.'
+    },
+    {
+        id: "tomeet",
+        label: 'Person to meet'
+    },
+    {
+        id: "purpose",
+        label: 'Purpose'
+    },
+    {
+        id: "intime",
+        label: 'In Time'
+    },
+    {
+        id: "outtime",
+        label: 'Out Time'
+    }]
 interface OwnProps {
 }
 

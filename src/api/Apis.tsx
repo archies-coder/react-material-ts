@@ -94,6 +94,39 @@ export async function data(model: any) {
   return data
 
 }
+
+interface VisitorModel {
+  "belongings": any//"belongings",
+  "company": any//"company",
+  "country": any//"country",
+  "email": any//"arjunpanwar85@gmail.com",
+  "gender": any//"gender",
+  "idnumber": any//"idtype",
+  "idtype": any//"idtype",
+  "intime": any//"2020-09-10 00:29:31",
+  "mobile": any//9769335758,
+  "name": any//"arjun",
+  "noofvisitor":any// 4,
+  "organisation": any//"organisation",
+  "purpose": any//"to meet",
+  "site": any//"site",
+  "tomeet": any//"Arjunp",
+  "vehicleno": any//"vehicleno"
+}
+
+export async function getVisitorData(){
+  const url = `/product/reception/checkin/user/data`
+
+  const { data } = await apis.get(url)
+  debugger
+  return {
+    //pageLinks: '',
+    pageCount: 1,
+    visitors: data.data
+  }
+  debugger
+}
+
 export async function getVisitorInfo() {
   const url = ``
 
