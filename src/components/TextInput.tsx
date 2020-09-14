@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         }
     },
     input: {
-        color: 'white'
+        // color: 'white'
     }
 }))
 
@@ -57,6 +57,7 @@ const TextInput: FunctionComponent<Props | TextFieldProps> = (props) => {
             value={props.value}
             onChange={props.onChange}
             margin="normal"
+            InputLabelProps={{variant: "outlined"}}
             InputProps={{
                 className: classes.input,
             }}

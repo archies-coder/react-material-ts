@@ -49,8 +49,9 @@ const useStyles = makeStyles((theme: Theme) =>
         expandIcon: {
             '& > *': {
                 fontSize: '35px',
-                top: '3px',
-                marginLeft: '-100px',
+                top: '-13px',
+                marginLeft: '-130px',
+                zIndex: '1',
                 verticalAlign: '-webkit-baseline-middle',
                 position: 'relative',
                 // top: '116px',

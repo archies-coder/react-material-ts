@@ -73,7 +73,6 @@ export const fetchHomeStats = (
   try {
     dispatch(getHomeStatsStart())
     const stats = await getHomeStats()
-    debugger;
     dispatch(getHomeStatsSuccess(stats.data))
   } catch (err) {
     dispatch(getHomeStatsFailure(err.toString()))

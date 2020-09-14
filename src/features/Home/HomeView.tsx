@@ -180,8 +180,8 @@ const HomeView: FunctionComponent<Props> = (props) => {
     useEffect(() => {
         dispatch(fetchVisitors(0))
         dispatch(fetchHomeStats())
-
     }, [dispatch])
+
 
     if (error) {
         return (
@@ -197,7 +197,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
         data: visitors,
         menuOptions: [{
             title: 'View Details',
-            path: "/visitor/" + 2
+            path: "/visitor"
         }]
     }
 

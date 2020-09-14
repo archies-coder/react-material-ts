@@ -53,6 +53,7 @@ interface UserModel {
 }
 
 export interface VisitorInfo {
+  id: any,
   avatar: any,
   name: any,
   mobileNo: any,
