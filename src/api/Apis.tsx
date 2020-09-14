@@ -8,7 +8,7 @@ const apis = axios.create({
   //headers: {'X-Custom-Header': 'foobar'}
 });
 
-interface CheckinModel {
+interface CheckinModelOld {
   name: string,
   mobile: number,
   email: string,
@@ -25,6 +25,25 @@ interface CheckinModel {
   idtype: string,
   idnumber: string
 }
+interface CheckinModel {
+  profilepic: any//""
+  idcard: any//""
+  signature: any//""
+  name: any//"arjun"
+  mobile: any//"9769335758"
+  email: any//"arjunpanwar85@gmail.com"
+  tomeet: any//"arjunp"
+  purpose: any//"tomeet"
+  gender: any//"male"
+  visitorcount: any//"2"
+  company: any//"test"
+  country: any//"India"
+  organisation: any//"test"
+  site: any//"test"
+  vehicleno: any//"test"
+  belongings: any//"test"
+  idtype: any//"pancard"
+}
 
 interface UserModel {
   username: any,
@@ -34,7 +53,6 @@ interface UserModel {
 }
 
 export interface VisitorInfo {
-  id: any,
   avatar: any,
   name: any,
   mobileNo: any,
@@ -51,7 +69,7 @@ export interface VisitorsResult {
 export async function checkin(model: CheckinModel) {
   const url = `/product/reception/user/checkin`
 
-  const { data } = await apis.post<CheckinModel>(url)
+  const { data } = await apis.post<CheckinModel>(url,{data:model})
   return data
 }
 
@@ -102,7 +120,7 @@ export async function getVisitorInfo() {
   }
 }
 
-export async function getHomeStats(){
+export async function getHomeStats() {
   const url = `/product/stats/data`
 
   const { data } = await apis.get(url)

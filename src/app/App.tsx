@@ -14,6 +14,8 @@ import DevicesView from "../features/Settings/DevicesView";
 import AgreementView from "../features/Settings/AgreementView";
 import NavGridContainer from "../components/NavGridContainer";
 import CustomDrawer from "../CustomDrawer";
+import InviteForm from "../features/Invites/InviteForm";
+import UserManagementView from "../features/UserManagement/UserManagementView";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -57,13 +59,16 @@ export default function App() {
                         <NavGridContainer>
                             <Switch>
                                 <Route exact path="/" component={HomeView}/>
-                                <Route path="/invites" component={InviteView}/>
+                                <Route exact path="/invites" component={InviteView}/>
+                                <Route exact path="/visitor" component={VisitorDetailsView}/>
                                 <Route path="/visitor/:visitorId" component={VisitorDetailsView}/>
                                 <Route path="/employees" component={EmployeesView}/>
                                 <Route path="/sites" component={SitesView}/>
                                 <Route path="/checkinpoints" component={CheckInPointsView}/>
                                 <Route path="/devices" component={DevicesView}/>
                                 <Route path="/agreement" component={AgreementView}/>
+                                <Route path="/invites/visitor" component={InviteForm}/>
+                                <Route path="/user" component={UserManagementView}/>
                             </Switch>
                         </NavGridContainer>
                     </Grid>

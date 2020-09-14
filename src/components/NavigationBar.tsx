@@ -52,7 +52,7 @@ const NavigationBar: FunctionComponent<Props> = (props) => {
                 </NavLink>
             </Link>
             <Link variant="h6" color="textSecondary">
-                <NavLink to="/invites" className={classes.navLink}>
+                <NavLink to="/invites/visitor" className={classes.navLink}>
                     <PersonIcon/> <span className={classes.navItem}>Invite</span>
                 </NavLink>
             </Link>

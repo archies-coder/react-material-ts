@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
     input: {
         // color: 'white'
+        fontSize: '14px'
     }
 }))
 
