@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState} from 'react';
+import React, {FunctionComponent, useEffect, useState} from 'react';
 import {
     Button,
     createStyles, Menu, MenuItem, MenuProps,
@@ -99,6 +99,12 @@ const TableWrapper: FunctionComponent<Props> = ({config, ...props}) => {
         setAnchorEl(null);
     };
 
+    useEffect(() => console.log(config.data), [])
+
+    const menuOptios = () => {
+
+    }
+
     const TableHeader = <TableHead className={classes.header}>
         {
             config.columns.map(column => (
@@ -128,11 +134,10 @@ const TableWrapper: FunctionComponent<Props> = ({config, ...props}) => {
                         >
                             {config.menuOptions.map(({title, path}) => (
                                 <StyledMenuItem key={title} onClick={handleClose}>
-                                    <Link to={path} style={{textDecoration: "none", color: "#192949"}}>
+                                    <Link to={path + "/" + value.id} style={{textDecoration: "none", color: "#192949"}}>
                                         {title}
                                     </Link>
                                 </StyledMenuItem>
-
                             ))}
                             {/*<StyledMenuItem onClick={handleClose}>Check Out</StyledMenuItem>*/}
                             {/*<StyledMenuItem onClick={handleClose}>Resend Code</StyledMenuItem>*/}

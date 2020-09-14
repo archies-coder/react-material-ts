@@ -97,7 +97,7 @@ const UserManagementView: FunctionComponent<Props> = (props) => {
     }
 
     return (
-        <Grid item xs style={{height: "inherit", marginTop: '22px'}}>
+        <Grid item xs style={{height: "calc(100vh - 100px)"}}>
             <Paper className={classes.paper}>
                 <div className={classes.header}>
                     <ArrowBackIos className={classes.arrowBack}/>

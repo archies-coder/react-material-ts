@@ -139,7 +139,8 @@ const mappableRoutes: MappableRoutesDictionary = {
             title: 'Agreement',
             path: '/agreement'
         }, {
-            title: 'Visitor\'s Form'
+            title: 'Visitor\'s Form',
+            path: '/visitorsform'
         }, {
             title: 'Notification'
         }]

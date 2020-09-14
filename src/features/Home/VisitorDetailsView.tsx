@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React, {FunctionComponent, useEffect, useState} from 'react';
 import {Box, createStyles, Grid, Paper} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {Theme} from "@material-ui/core/styles/createMuiTheme";
@@ -7,6 +7,9 @@ import TextInput from "../../components/TextInput";
 import SelectInput from "../../components/SelectInput";
 import CustomButton from "../../components/Button";
 import {BrowserRouterProps, Redirect, RouteComponentProps} from 'react-router-dom';
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../app/rootReducer";
+import {VisitorInfo} from "../../api/Apis";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     paper: {
@@ -61,7 +64,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     button: {
         marginRight: 20
     },
-    selectInput:{
+    selectInput: {
         '& > .makeStyles-inputContainer-32': {
             // padding: 0
         }
@@ -83,8 +86,43 @@ type Props = OwnProps;
 
 const VisitorDetailsView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
+
+    const defaultInputState = {
+        id: Number,
+        avatar: '',
+        name: '',
+        mobileNo: Number,
+        personToMeet: '',
+        purpose: '',
+        inTime: '',
+        outTime: '',
+    }
+
+    const [inputState, setInputState] = useState<VisitorInfo>(defaultInputState)
+
+    const handleChange = (e: any) => setInputState({
+        ...inputState,
+        [e.target.name]: e.target.value
+    })
+
+    const {
+        visitors,
+        visitorsById,
+        isLoading: isLoadingVisitor,
+        error
+    } = useSelector((state: RootState) => state.visitors)
+
+
+    const id = props.match.params.visitorId
+    useEffect(() => {
+        if (visitorsById[id]) {
+            setInputState(visitorsById[id])
+        }
+        console.log(visitors, inputState)
+    }, [id])
+
     return (
-        <Grid item xs={12} style={{height: '100%'}}>
+        <Grid item xs={12}>
             <Paper className={classes.paper}>
                 <form>
                     <div className={classes.header}>
@@ -101,7 +139,8 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                         </Grid>
                         <Grid item xs={6}>
                             <Box display="flex" justifyContent="flex-end">
-                                <SelectInput value="Actions" style={{marginTop: '-15px'}} menuOptions={selectInputMenu}/>
+                                <SelectInput value="Actions" style={{marginTop: '-15px'}}
+                                             menuOptions={selectInputMenu}/>
                                 <Box className={classes.button}>
                                     <CustomButton>Save</CustomButton>
                                 </Box>
@@ -114,18 +153,19 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                                 <span className={classes.headerSecondary}>Visitor's information</span>
                                 <Grid container style={{marginTop: '16px'}}>
                                     <Grid item xs={6}>
-                                        <TextInput label="Time In" value=""
-                                                   onChange={(e) => console.log(e)}/>
+                                        <TextInput label="Time In" name="inTime" value={inputState.inTime}
+                                                   onChange={handleChange}/>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <TextInput label="Time Out" value=""
-                                                   onChange={(e) => console.log(e)}/>
+                                        <TextInput label="Time Out" type="text" name="outTime"
+                                                   value={inputState.outTime}
+                                                   onChange={handleChange}/>
                                     </Grid>
                                 </Grid>
-                                <TextInput label="Visitor Name" onChange={(e) => console.log(e)}
-                                           value=""/>
-                                <TextInput label="Mobile Number" onChange={(e) => console.log(e)}
-                                           value=""/>
+                                <TextInput label="Visitor Name" name="name" onChange={handleChange}
+                                           value={inputState.name}/>
+                                <TextInput label="Mobile Number" name="mobileNo" onChange={handleChange}
+                                           value={inputState.mobileNo}/>
                                 <TextInput label="Visitor type" onChange={(e) => console.log(e)}
                                            value=""/>
                                 <TextInput label="No. of visitors" onChange={(e) => console.log(e)}
@@ -139,8 +179,8 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                                        value=""/>
                             <TextInput label="Email" onChange={(e) => console.log(e)}
                                        value=""/>
-                            <TextInput label="Purpose to visit" onChange={(e) => console.log(e)}
-                                       value=""/>
+                            <TextInput label="Purpose to visit" name="purpose" onChange={handleChange}
+                                       value={inputState.purpose}/>
                             <TextInput label="Visitor's Company" onChange={(e) => console.log(e)}
                                        value=""/>
                             <TextInput label="Country / Nationality" onChange={(e) => console.log(e)}
@@ -151,9 +191,9 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                         <Grid item xs={6}>
                             <div className={classes.appointment}>
                                 <span className={classes.headerSecondary}>Appointments requests</span>
-                                <TextInput label="Person to Visit" style={{marginTop: '16px'}}
-                                           onChange={(e) => console.log(e)}
-                                           value=""/>
+                                <TextInput label="Person to Visit" name="personToVisit" style={{marginTop: '16px'}}
+                                           onChange={handleChange}
+                                           value={inputState.personToMeet}/>
                                 <TextInput label="Site" onChange={(e) => console.log(e)}
                                            value=""/>
                             </div>
