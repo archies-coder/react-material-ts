@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState} from 'react';
+import React, {FunctionComponent, useState, useEffect} from 'react';
 import {
     Avatar,
     Box, Button,
@@ -24,6 +24,9 @@ import {makeStyles} from "@material-ui/core/styles";
 import TableWrapper from "../../components/TableWrapper";
 import SearchInput from "../../components/SearchInput";
 import SelectInput from "../../components/SelectInput";
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchInvites } from 'features/Invites/inviteSlice'
+import { RootState } from 'app/rootReducer'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -108,7 +111,7 @@ const data = {
 //const columns = ['', 'Visitor name', 'Mobile No.', 'Person to meet', 'Purpose', 'In Time', 'Out Time']
 const columns = [
     {
-        id: "profilePicPath",
+        id: "invite_id",
         label: '',
     },
     {
@@ -116,7 +119,7 @@ const columns = [
         label: 'Visitor name'
     },
     {
-        id: "mobile",
+        id: "mobileno",
         label: 'Mobile No.'
     },
     {
@@ -128,7 +131,7 @@ const columns = [
         label: 'Purpose'
     },
     {
-        id: "intime",
+        id: "scheduletime",
         label: 'In Time'
     },
     {
@@ -161,9 +164,34 @@ const InviteView: FunctionComponent<Props> = (props) => {
         tableRows = [data, ...copy]
     }
 
+    const dispatch = useDispatch()
+
+    const {
+        invites,
+        currentPageInvites,
+        pageCount,
+        pageLinks,
+        isLoading: isLoadingInvites,
+        error
+    } = useSelector((state: RootState) => state.invites)
+    
+    useEffect(() => {
+        dispatch(fetchInvites())
+    }, [dispatch])
+
+
+    if (error) {
+        return (
+            <div>
+                <h1>Something went wrong...</h1>
+                <div>{error.toString()}</div>
+            </div>
+        )
+    }
+
     const TableConfig = {
         columns: columns,
-        data: tableRows,
+        data: invites,
         menuOptions: [{
             title: 'View Details',
             path: "/visitor/" + 2

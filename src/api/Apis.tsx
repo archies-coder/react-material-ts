@@ -159,3 +159,16 @@ export async function getHomeStats() {
   const { data } = await apis.get(url)
   return data
 }
+
+export async function getInvitesData(){
+  const url = `/product/reception/invite/user/data`
+
+  const { data } = await apis.get(url)
+  debugger
+  return {
+    //pageLinks: '',
+    pageCount: 1,
+    invites: data.data
+  }
+  debugger
+}
