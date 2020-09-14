@@ -141,7 +141,7 @@ const TableWrapper: FunctionComponent<Props> = ({config, ...props}) => {
                         >
                             {config.menuOptions.map(({title, path}) => (
                                 <StyledMenuItem key={title} onClick={handleClose}>
-                                    <Link to={path + "/" + value.id} style={{textDecoration: "none", color: "#192949"}}>
+                                    <Link to={path + "/" + row.id} style={{textDecoration: "none", color: "#192949"}}>
                                         {title}
                                     </Link>
                                 </StyledMenuItem>
