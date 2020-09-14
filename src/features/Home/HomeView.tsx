@@ -118,7 +118,35 @@ const HomeView: FunctionComponent<Props> = (props) => {
         outTime: '2:30 pm',
     }
 
-    const columns = ['', 'Visitor name', 'Mobile No.', 'Person to meet', 'Purpose', 'In Time', 'Out Time']
+    const columns = [
+        {
+            id: "profilePicPath",
+            label: '',
+        },
+        {
+            id: "name",
+            label: 'Visitor name'
+        },
+        {
+            id: "mobile",
+            label: 'Mobile No.'
+        },
+        {
+            id: "tomeet",
+            label: 'Person to meet'
+        },
+        {
+            id: "purpose",
+            label: 'Purpose'
+        },
+        {
+            id: "intime",
+            label: 'In Time'
+        },
+        {
+            id: "outtime",
+            label: 'Out Time'
+        }]
 
     let tableRows: any = []
 
@@ -173,7 +201,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
         }]
     }
 
-    const homeStatsConfig ={
+    const homeStatsConfig = {
         checked_out,
         in_office,
         invite_sent,
@@ -186,7 +214,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
             <Grid item xs={12} style={{ height: "250px", marginTop: 0, }}>
                 <Paper className={classes.paper}>
                     <HomeDateDropdown />
-                    <HomeStats config= {homeStatsConfig}/>
+                    <HomeStats config={homeStatsConfig} />
                 </Paper>
             </Grid>
             <Grid item xs style={{ height: "100%", marginTop: '22px' }}>

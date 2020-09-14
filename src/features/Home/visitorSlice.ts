@@ -1,8 +1,9 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {Links} from 'parse-link-header'
 
-import {VisitorInfo, VisitorsResult, getVisitorInfo} from 'api/Apis'
-import {AppThunk} from 'app/store'
+import { VisitorInfo, VisitorsResult, getVisitorInfo, getVisitorData} from 'api/Apis'
+import { AppThunk } from 'app/store'
+
 
 
 interface VisitorState {
@@ -65,13 +66,13 @@ export default visitors.reducer
 export const fetchVisitors = (
     page?: number
 ): AppThunk => async dispatch => {
-    try {
-        dispatch(getVisitorsStart())
-        const visitors = await getVisitorInfo()
-
-        dispatch(getVisitorsSuccess(visitors))
-    } catch (err) {
-        dispatch(getVisitorsFailure(err.toString()))
-    }
+  try {
+    dispatch(getVisitorsStart())
+    const visitors = await getVisitorData()
+    
+    dispatch(getVisitorsSuccess(visitors))
+  } catch (err) {
+    dispatch(getVisitorsFailure(err.toString()))
+  }
 }
 

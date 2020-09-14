@@ -8,7 +8,7 @@ const apis = axios.create({
   //headers: {'X-Custom-Header': 'foobar'}
 });
 
-interface CheckinModel {
+interface CheckinModelOld {
   name: string,
   mobile: number,
   email: string,
@@ -24,6 +24,25 @@ interface CheckinModel {
   belongings: string,
   idtype: string,
   idnumber: string
+}
+interface CheckinModel {
+  profilepic: any//""
+  idcard: any//""
+  signature: any//""
+  name: any//"arjun"
+  mobile: any//"9769335758"
+  email: any//"arjunpanwar85@gmail.com"
+  tomeet: any//"arjunp"
+  purpose: any//"tomeet"
+  gender: any//"male"
+  visitorcount: any//"2"
+  company: any//"test"
+  country: any//"India"
+  organisation: any//"test"
+  site: any//"test"
+  vehicleno: any//"test"
+  belongings: any//"test"
+  idtype: any//"pancard"
 }
 
 interface UserModel {
@@ -51,7 +70,7 @@ export interface VisitorsResult {
 export async function checkin(model: CheckinModel) {
   const url = `/product/reception/user/checkin`
 
-  const { data } = await apis.post<CheckinModel>(url)
+  const { data } = await apis.post<CheckinModel>(url,{data:model})
   return data
 }
 
@@ -76,6 +95,39 @@ export async function data(model: any) {
   return data
 
 }
+
+interface VisitorModel {
+  "belongings": any//"belongings",
+  "company": any//"company",
+  "country": any//"country",
+  "email": any//"arjunpanwar85@gmail.com",
+  "gender": any//"gender",
+  "idnumber": any//"idtype",
+  "idtype": any//"idtype",
+  "intime": any//"2020-09-10 00:29:31",
+  "mobile": any//9769335758,
+  "name": any//"arjun",
+  "noofvisitor":any// 4,
+  "organisation": any//"organisation",
+  "purpose": any//"to meet",
+  "site": any//"site",
+  "tomeet": any//"Arjunp",
+  "vehicleno": any//"vehicleno"
+}
+
+export async function getVisitorData(){
+  const url = `/product/reception/checkin/user/data`
+
+  const { data } = await apis.get(url)
+  debugger
+  return {
+    //pageLinks: '',
+    pageCount: 1,
+    visitors: data.data
+  }
+  debugger
+}
+
 export async function getVisitorInfo() {
   const url = ``
 
@@ -102,7 +154,7 @@ export async function getVisitorInfo() {
   }
 }
 
-export async function getHomeStats(){
+export async function getHomeStats() {
   const url = `/product/stats/data`
 
   const { data } = await apis.get(url)
