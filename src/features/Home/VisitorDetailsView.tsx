@@ -118,7 +118,6 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
         if (visitorsById[id]) {
             setInputState(visitorsById[id])
         }
-        console.log(visitors, inputState)
     }, [id])
 
     return (

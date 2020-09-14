@@ -49,6 +49,7 @@ const visitors = createSlice({
             state.visitors = visitors.map((obj, i) => ({
                 ...obj, id: i
             }))
+            // @ts-ignore
             state.visitorsById = state.visitors.map(visitor => ({...visitor, id: visitor.id}))
         },
         getVisitorsFailure: loadingFailed,
