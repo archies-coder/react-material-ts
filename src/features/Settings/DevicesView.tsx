@@ -87,7 +87,7 @@ const DevicesView: FunctionComponent<Props> = (props) => {
     }
 
     return (
-        <Grid item xs style={{height: "100%", marginTop: '22px'}}>
+        <Grid item xs style={{height: "calc(100vh - 100px)"}}>
             <Paper className={classes.paper}>
                 <Box display="flex" justifyContent="space-between">
                     <SearchInput placeholder="Search Devices" width={400}/>

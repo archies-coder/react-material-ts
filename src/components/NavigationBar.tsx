@@ -14,19 +14,20 @@ const useStyles = makeStyles((theme: Theme) =>
             fontSize: '24px',
             fontWeight: 300,
             '& > *': {
-                color:  theme.palette.text.primary ,
+                color: theme.palette.text.primary,
             },
             '& > * + *': {
                 marginLeft: theme.spacing(8),
-                color:  theme.palette.text.primary ,
+                color: theme.palette.text.primary,
             },
         },
         navLink: {
-          color: theme.palette.text.primary
+            color: theme.palette.text.primary,
+            textDecoration: 'none'
         },
         navItem: {
             verticalAlign: 'text-bottom',
-            color:  theme.palette.text.primary ,
+            color: theme.palette.text.primary,
         },
         profileName: {
             verticalAlign: 'text-bottom',
@@ -45,11 +46,13 @@ const NavigationBar: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
     return (
         <Typography className={classes.root}>
-            <Link href="#" variant="h6" color="textSecondary">
-                <ExitToAppIcon/> <span className={classes.navItem}>Check In</span>
+            <Link variant="h6" color="textSecondary">
+                <NavLink to="/visitor" className={classes.navLink}>
+                    <ExitToAppIcon/> <span className={classes.navItem}>Check In</span>
+                </NavLink>
             </Link>
             <Link variant="h6" color="textSecondary">
-                <NavLink to="/invites" className={classes.navLink} style={{textDecoration: 'none'}}>
+                <NavLink to="/invites/visitor" className={classes.navLink}>
                     <PersonIcon/> <span className={classes.navItem}>Invite</span>
                 </NavLink>
             </Link>

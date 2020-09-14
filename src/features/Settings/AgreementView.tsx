@@ -41,7 +41,7 @@ const AgreementView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
     return (
-        <Grid item xs style={{height: "100%", marginTop: '22px'}}>
+        <Grid item xs style={{height: "inherit", marginTop: '22px'}}>
             <Paper className={classes.paper}>
                 <div className={classes.header}>
                     <span> Non Disclosure Agreement</span>

@@ -7,7 +7,7 @@ import NavigationBar from "./NavigationBar";
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         fullHeightContainer: {
-            height: '100%',
+            height: '100vh',
             overflow: 'auto'
         },
         nav: {
