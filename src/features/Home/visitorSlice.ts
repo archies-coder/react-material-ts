@@ -7,8 +7,8 @@ import { AppThunk } from 'app/store'
 
 
 interface VisitorState {
-    visitors: VisitorInfo[]
-    visitorsById: Record<number, VisitorInfo>
+    visitors: any[]
+    visitorsById: any
     currentPageVisitors: number[]
     pageCount: number
     pageLinks: Links | null
@@ -70,7 +70,7 @@ export const fetchVisitors = (
   try {
     dispatch(getVisitorsStart())
     const visitors = await getVisitorData()
-    
+
     dispatch(getVisitorsSuccess(visitors))
   } catch (err) {
     dispatch(getVisitorsFailure(err.toString()))

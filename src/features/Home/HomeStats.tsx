@@ -13,8 +13,9 @@ const useStyles = makeStyles((theme: Theme) =>
         root: {
             display: 'flex',
             flexWrap: 'wrap',
+            justifyContent: 'space-between',
             // maxHeight: '175px',
-            marginLeft: theme.spacing(1),
+            margin: theme.spacing(0,2),
             // backgroundColor: 'white',
             // width: '60%',
 
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
                 textAlign: 'center',
                 color: '#192949',
                 backgroundColor: '#E7ECF6',
-                margin: theme.spacing(3,3,6,6),
+                margin: theme.spacing(1,1,1,1),
                 // marginTop: theme.spacing(3),
                 width: theme.spacing(16),
                 height: theme.spacing(14),
@@ -30,11 +31,11 @@ const useStyles = makeStyles((theme: Theme) =>
             },
         },
         count: {
-            fontSize: '72px',
+            fontSize: '64px',
         },
         label: {
             lineHeight: '5px',
-            fontSize: '20px'
+            fontSize: '16px'
         },
     }),
 );
