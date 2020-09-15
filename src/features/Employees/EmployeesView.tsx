@@ -1,9 +1,11 @@
-import React, {FunctionComponent} from 'react';
+import React, {FunctionComponent, useEffect} from 'react';
 import TableWrapper from "../../components/TableWrapper";
 import {createStyles, fade, Grid, Paper, Theme} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import SearchInput from "../../components/SearchInput";
-
+import { RootState } from 'app/rootReducer'
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchEmployees } from 'features/Employees/employeeSlice'
 interface OwnProps {
 }
 
@@ -44,23 +46,40 @@ const columns = [
     },
     {
         id: "tomeet",
-        label: 'Person to meet'
+        label: 'Email'
     },
     {
         id: "purpose",
-        label: 'Purpose'
-    },
-    {
-        id: "intime",
-        label: 'In Time'
-    },
-    {
-        id: "outtime",
-        label: 'Out Time'
+        label: 'Organization'
     }]
 const EmployeesView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
+    const dispatch = useDispatch()
+
+    const {
+        employees,
+        currentPageEmployees,
+        pageCount,
+        pageLinks,
+        isLoading: isLoadingEmployee,
+        error
+    } = useSelector((state: RootState) => state.employees)
+
+    useEffect(() => {
+        dispatch(fetchEmployees())
+        
+    }, [dispatch])
+
+
+    if (error) {
+        return (
+            <div>
+                <h1>Something went wrong...</h1>
+                <div>{error.toString()}</div>
+            </div>
+        )
+    }
 
     let tableRows: any = []
 
@@ -73,7 +92,7 @@ const EmployeesView: FunctionComponent<Props> = (props) => {
 
     const TableConfig = {
         columns: columns,
-        data: tableRows,
+        data: employees,
         menuOptions: [{
             title: 'View Details',
             path: "/visitor/" + 2
