@@ -1,11 +1,13 @@
-import React, {FunctionComponent} from 'react';
+import React, {FunctionComponent, useEffect} from 'react';
 import {Box, createStyles, Grid, Paper, Theme} from "@material-ui/core";
 import SearchInput from "../../components/SearchInput";
 import TableWrapper from "../../components/TableWrapper";
 import {makeStyles} from "@material-ui/core/styles";
 import SelectInput from "../../components/SelectInput";
 import CustomButton from "../../components/Button";
-
+import { RootState } from 'app/rootReducer'
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchDevices } from 'features/Settings/deviceSlice'
 interface OwnProps {
 }
 
@@ -39,37 +41,50 @@ const data = {
 
 //const columns = ['Device name', 'App Version', 'Ios Version', 'Check In Ports']
 const columns = [
+    
     {
-        id: "profilePicPath",
-        label: '',
+        id: "devicename",
+        label: 'Device name'
     },
     {
-        id: "name",
-        label: 'Visitor name'
+        id: "appversion",
+        label: 'App Version'
     },
     {
-        id: "mobile",
-        label: 'Mobile No.'
+        id: "iosversion",
+        label: 'Ios Version'
     },
     {
-        id: "tomeet",
-        label: 'Person to meet'
-    },
-    {
-        id: "purpose",
-        label: 'Purpose'
-    },
-    {
-        id: "intime",
-        label: 'In Time'
-    },
-    {
-        id: "outtime",
-        label: 'Out Time'
+        id: "checkinpoints",
+        label: 'Check In Ports'
     }]
 const DevicesView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
+    const dispatch = useDispatch()
 
+    const {
+        devices,
+        currentPageDevices,
+        pageCount,
+        pageLinks,
+        isLoading: isLoadingDevice,
+        error
+    } = useSelector((state: RootState) => state.devices)
+
+    useEffect(() => {
+        dispatch(fetchDevices())
+        
+    }, [dispatch])
+
+
+    if (error) {
+        return (
+            <div>
+                <h1>Something went wrong...</h1>
+                <div>{error.toString()}</div>
+            </div>
+        )
+    }
     let tableRows: any = []
 
     for (let i = 0; i < 10; i++) {
@@ -79,7 +94,7 @@ const DevicesView: FunctionComponent<Props> = (props) => {
 
     const TableConfig = {
         columns: columns,
-        data: tableRows,
+        data: devices,
         menuOptions: [{
             title: 'View Details',
             path: "/visitor/" + 2
