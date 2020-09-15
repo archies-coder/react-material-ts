@@ -13,15 +13,17 @@ const useStyles = makeStyles((theme: Theme) =>
         root: {
             display: 'flex',
             flexWrap: 'wrap',
-            maxHeight: '175px',
-            marginLeft: theme.spacing(2),
+            // maxHeight: '175px',
+            marginLeft: theme.spacing(1),
+            // backgroundColor: 'white',
+            // width: '60%',
 
             '& > *': {
                 textAlign: 'center',
                 color: '#192949',
                 backgroundColor: '#E7ECF6',
-                margin: theme.spacing(6),
-                marginTop: theme.spacing(3),
+                margin: theme.spacing(3,3,6,6),
+                // marginTop: theme.spacing(3),
                 width: theme.spacing(16),
                 height: theme.spacing(14),
                 fontWeight: theme.typography.fontWeightBold,

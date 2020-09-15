@@ -35,7 +35,12 @@ const useStyles = makeStyles((theme: Theme) =>
         paper: {
             backgroundColor: '#E7ECF6',
             borderRadius: theme.shape.borderRadius - 5,
-            marginRight: 30
+            marginRight: 30,
+            height: '100%'
+        },
+        graph: {
+            backgroundColor: 'blue',
+            height: '100%'
         },
         cell: {
             borderBottom: 'none'
@@ -211,13 +216,21 @@ const HomeView: FunctionComponent<Props> = (props) => {
     }
     return (
         <>
-            <Grid item xs={12} style={{ height: "250px", marginTop: 0, }}>
+            <Grid item xs={12} style={{ height: "30%", marginTop: 0, }}>
                 <Paper className={classes.paper}>
-                    <HomeDateDropdown />
-                    <HomeStats config={homeStatsConfig} />
+                    <Grid container>
+                        <Grid item md={7}>
+                            <HomeDateDropdown />
+                            <HomeStats config={homeStatsConfig} />
+                        </Grid>
+                        <Grid item md={5}>
+                            <div className={classes.graph}>1</div>
+                        </Grid>
+                    </Grid>
+
                 </Paper>
             </Grid>
-            <Grid item xs style={{ height: "100%", marginTop: '22px' }}>
+            <Grid item xs style={{ height: "70%", marginTop: '22px' }}>
                 <Paper className={classes.paper}>
                     <Box display="flex" justifyContent="start">
                         <SearchInput placeholder="Search visitor" />
