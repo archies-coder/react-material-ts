@@ -2,7 +2,7 @@ import axios from 'axios'
 import parseLink, { Links } from 'parse-link-header'
 
 
-const apis = axios.create({
+export const apis = axios.create({
   baseURL: 'http://52.66.55.89:18446',
   timeout: 5000,
   //headers: {'X-Custom-Header': 'foobar'}
@@ -52,15 +52,47 @@ interface UserModel {
   usertype: any
 }
 
-export interface VisitorInfo {
-  avatar: any,
+export interface VisitorInfo  {
+  answer1: any,
+  answer2: any,
+  answer3: any,
+  answer4: any,
+  answer5: any,
+  belongings: any,
+  checkin_id: any,
+  city: any,
+  company: any,
+  country: any,
+  email: any,
+  gender: any,
+  idCardImagePath: any,
+  idtype: any,
+  intime: any,
+  mobile: any,
   name: any,
-  mobileNo: any,
-  personToMeet: any,
+  ndastatus: any,
+  noofvisitor: any,
+  organisation: any,
+  outime: any,
+  policycheckstatus: any,
+  profilePicPath: any,
   purpose: any,
-  inTime: any,
-  outTime: any,
+  signaturePath: any,
+  site: any,
+  tomeet: any,
+  usertype: any,
+  vehicleno: any
 }
+
+// export interface VisitorInfo {
+//   avatar: any,
+//   name: any,
+//   mobileNo: any,
+//   personToMeet: any,
+//   purpose: any,
+//   inTime: any,
+//   outTime: any,
+// }
 export interface VisitorsResult {
   //pageLinks: Links | null
   pageCount: number
@@ -69,7 +101,7 @@ export interface VisitorsResult {
 export async function checkin(model: CheckinModel) {
   const url = `/product/reception/user/checkin`
 
-  const { data } = await apis.post<CheckinModel>(url,{data:model})
+  const { data } = await apis.post<CheckinModel>(url, { data: model })
   return data
 }
 
@@ -106,7 +138,7 @@ interface VisitorModel {
   "intime": any//"2020-09-10 00:29:31",
   "mobile": any//9769335758,
   "name": any//"arjun",
-  "noofvisitor":any// 4,
+  "noofvisitor": any// 4,
   "organisation": any//"organisation",
   "purpose": any//"to meet",
   "site": any//"site",
@@ -114,7 +146,7 @@ interface VisitorModel {
   "vehicleno": any//"vehicleno"
 }
 
-export async function getVisitorData(){
+export async function getVisitorData() {
   const url = `/product/reception/checkin/user/data`
 
   const { data } = await apis.get(url)
@@ -160,7 +192,7 @@ export async function getHomeStats() {
   return data
 }
 
-export async function getInvitesData(){
+export async function getInvitesData() {
   const url = `/product/reception/invite/user/data`
 
   const { data } = await apis.get(url)
