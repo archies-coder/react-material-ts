@@ -19,8 +19,10 @@ interface IRowProps {
 }
 
 interface IMenuItemProps {
-    path?: string;
+    path?: string | ((id: any) => any);
     title: string;
+    onClick?: () => any;
+    item: (id: any) => JSX.Element
 }
 
 interface ITableCellProps {
@@ -37,7 +39,7 @@ interface IColumnsConfig {
 interface IConfigObject {
     columns: IColumnsConfig[];
     data:any;
-    menuOptions: IMenuItemProps[];
+    menuOptions?: any[];
     cellOptions?: ITableCellProps;
 }
 
@@ -138,11 +140,9 @@ const TableWrapper: FunctionComponent<Props> = ({config, ...props}) => {
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
                         >
-                            {config.menuOptions.map(({title, path}) => (
-                                <StyledMenuItem key={title} onClick={handleClose}>
-                                    <Link to={path + "/" + row.id} style={{textDecoration: "none", color: "#192949"}}>
-                                        {title}
-                                    </Link>
+                            {config.menuOptions.map(({item}, i) => (
+                                <StyledMenuItem key={i}>
+                                    {item(row.id)}
                                 </StyledMenuItem>
                             ))}
                             {/*<StyledMenuItem onClick={handleClose}>Check Out</StyledMenuItem>*/}

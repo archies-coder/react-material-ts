@@ -30,6 +30,9 @@ import { fetchVisitors } from 'features/Home/visitorSlice'
 import { fetchHomeStats } from 'features/Home/homeSlice'
 import { RootState } from 'app/rootReducer'
 import { MyChart2 } from 'components/Chart'
+import { CustomMenuItem } from 'components/CustomMenuItem';
+import Axios from 'axios';
+import { apis } from 'api/Apis';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -189,6 +192,17 @@ const HomeView: FunctionComponent<Props> = (props) => {
         dispatch(fetchHomeStats())
     }, [dispatch])
 
+    const handleCheckOut = async (id: any) => {
+        const response = await apis.post('/product/reception/user/checkout', JSON.stringify({
+            "checkin_id": "arj1600095051"
+        }), {
+            headers: {
+                "Cache-Control": "no-cache",
+                'Content-Type': 'application/json'
+            }
+        })
+    }
+
 
     if (error) {
         return (
@@ -206,8 +220,13 @@ const HomeView: FunctionComponent<Props> = (props) => {
             profilePicPath: <Avatar src={el['profilePicPath']} />
         })),
         menuOptions: [{
-            title: 'View Details',
-            path: "/visitor"
+            item: (id: any) => <CustomMenuItem to='/' onClick={() => handleCheckOut(id)}>
+                Check Out
+            </CustomMenuItem>
+        }, {
+            item: (id: any) => <CustomMenuItem to={'/visitor/' + id}>
+                View Details
+            </CustomMenuItem>
         }]
     }
 
@@ -222,41 +241,43 @@ const HomeView: FunctionComponent<Props> = (props) => {
         isLoadingHomeStats,
     }
     return (
-        <>
-            <Grid item xs={12} style={{ height: "40%", marginTop: 0, }}>
-                <Paper className={classes.paper}>
-                    <Grid container>
-                        <Grid item md={7}>
-                            <Box>
-                                <Box alignItems="flex-start">
-                                    <HomeDateDropdown />
+        <Grid item>
+            <Grid container>
+                <Grid item xs={12} style={{ height: "40%", marginTop: 0, }}>
+                    <Paper className={classes.paper}>
+                        <Grid container>
+                            <Grid item md={7}>
+                                <Box>
+                                    <Box alignItems="flex-start">
+                                        <HomeDateDropdown />
+                                    </Box>
+                                    <Box alignItems="flex-end">
+                                        <HomeStats config={homeStatsConfig} />
+                                    </Box>
                                 </Box>
-                                <Box alignItems="flex-end">
-                                    <HomeStats config={homeStatsConfig} />
-                                </Box>
-                            </Box>
+                            </Grid>
+                            <Grid item md={5}>
+                                <div className={classes.graph}>
+                                    <MyChart2 visitorStats={[...visitorStats]}></MyChart2>
+                                </div>
+                            </Grid>
                         </Grid>
-                        <Grid item md={5}>
-                            <div className={classes.graph}>
-                                <MyChart2 visitorStats={[...visitorStats]}></MyChart2>
-                            </div>
-                        </Grid>
-                    </Grid>
 
-                </Paper>
+                    </Paper>
+                </Grid>
+                <Grid item xs style={{ height: "100%", marginTop: '22px' }}>
+                    <Paper className={classes.paper}>
+                        <Box display="flex" justifyContent="start">
+                            <SearchInput placeholder="Search visitor" />
+                            <SelectInput value="In Office" />
+                            <SelectInput value="All Purpose" />
+                            <SelectInput value="All Sites" />
+                        </Box>
+                        <TableWrapper config={TableConfig} />
+                    </Paper>
+                </Grid>
             </Grid>
-            <Grid item xs style={{ height: "100%", marginTop: '22px' }}>
-                <Paper className={classes.paper}>
-                    <Box display="flex" justifyContent="start">
-                        <SearchInput placeholder="Search visitor" />
-                        <SelectInput value="In Office" />
-                        <SelectInput value="All Purpose" />
-                        <SelectInput value="All Sites" />
-                    </Box>
-                    <TableWrapper config={TableConfig} />
-                </Paper>
-            </Grid>
-        </>
+        </Grid>
     );
 };
 

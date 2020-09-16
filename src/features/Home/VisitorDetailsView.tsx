@@ -157,7 +157,7 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
         bodyFormData.append('idcard', 'arjun_pass.jpg')
         bodyFormData.append('signature', 'arjun_pass.jpg')
         bodyFormData.append('name', name)
-        bodyFormData.append('mobile', '1')
+        bodyFormData.append('mobile', mobileNo)
         bodyFormData.append('tomeet', personToMeet)
         bodyFormData.append('email', email)
         bodyFormData.append('purpose', purpose)
@@ -169,7 +169,7 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
         bodyFormData.append('site', site)
         bodyFormData.append('vehicleno', "test")
         bodyFormData.append('belongings', "test")
-        bodyFormData.append('idtype', type)
+        bodyFormData.append('idtype', 'pancard')
         bodyFormData.append('city', city)
         bodyFormData.append('answer1', "yes")
         bodyFormData.append('answer2', "yes")
@@ -178,8 +178,7 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
         bodyFormData.append('answer5', "yes")
         bodyFormData.append('ndacheck', "1")
         bodyFormData.append('policycheck', "1")
-        bodyFormData.append('usertype', "visitor")
-            debugger
+        bodyFormData.append('usertype', type)
         const response = await apis.post('/product/reception/user/checkin',bodyFormData, {
             headers: {
                 "Accept": "*/*",
@@ -189,9 +188,7 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                 "Content-Type": "multipart/form-data",
                 "Content-Length": 2617
             },
-            
         })
-        debugger
     }
 
     return (

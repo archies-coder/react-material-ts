@@ -4,6 +4,7 @@ import SearchInput from "../../components/SearchInput";
 import TableWrapper from "../../components/TableWrapper";
 import {makeStyles} from "@material-ui/core/styles";
 import SelectInput from "../../components/SelectInput";
+import { CustomMenuItem } from 'components/CustomMenuItem';
 
 interface OwnProps {}
 
@@ -79,8 +80,9 @@ const SitesView: FunctionComponent<Props> = (props) => {
         columns: columns,
         data: tableRows,
         menuOptions: [{
-            title: 'View Details',
-            path: "/visitor/" + 2
+            item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+                Check Out
+            </CustomMenuItem>
         }]
     }
 
