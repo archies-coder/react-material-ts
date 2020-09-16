@@ -28,6 +28,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchInvites } from 'features/Invites/inviteSlice'
 import { RootState } from 'app/rootReducer'
 import { CustomMenuItem } from 'components/CustomMenuItem';
+import HomeDateDropdown from 'features/Home/HomeDateDropdown';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -201,8 +202,9 @@ const InviteView: FunctionComponent<Props> = (props) => {
     }
 
     return (
-        <Grid item xs style={{ height: "calc(100vh - 100px)" }}>
+        <Grid item xs={12} style={{ height: '100%' }}>
             <Paper className={classes.paper}>
+                <HomeDateDropdown />
                 <Box display="flex" justifyContent="start">
                     <SearchInput placeholder="S earch visitor" />
                     <SelectInput value="In Office" />
