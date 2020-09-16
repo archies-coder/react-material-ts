@@ -140,9 +140,9 @@ const TableWrapper: FunctionComponent<Props> = ({config, ...props}) => {
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
                         >
-                            {config.menuOptions.map(({item}, i) => (
+                            {config.menuOptions.map(({item,key}, i) => (
                                 <StyledMenuItem key={i}>
-                                    {item(row.id)}
+                                    {item(row[key]||row.id)}
                                 </StyledMenuItem>
                             ))}
                             {/*<StyledMenuItem onClick={handleClose}>Check Out</StyledMenuItem>*/}

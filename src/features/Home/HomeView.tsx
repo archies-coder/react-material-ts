@@ -154,7 +154,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
             label: 'In Time'
         },
         {
-            id: "outtime",
+            id: "outime",
             label: 'Out Time'
         }]
 
@@ -193,8 +193,9 @@ const HomeView: FunctionComponent<Props> = (props) => {
     }, [dispatch])
 
     const handleCheckOut = async (id: any) => {
+        debugger
         const response = await apis.post('/product/reception/user/checkout', JSON.stringify({
-            "checkin_id": "arj1600095051"
+            "checkin_id": id
         }), {
             headers: {
                 "Cache-Control": "no-cache",
@@ -220,10 +221,12 @@ const HomeView: FunctionComponent<Props> = (props) => {
             profilePicPath: <Avatar src={el['profilePicPath']} />
         })),
         menuOptions: [{
+            key:'checkin_id',
             item: (id: any) => <CustomMenuItem to='/' onClick={() => handleCheckOut(id)}>
                 Check Out
             </CustomMenuItem>
         }, {
+            key:'id',
             item: (id: any) => <CustomMenuItem to={'/visitor/' + id}>
                 View Details
             </CustomMenuItem>
