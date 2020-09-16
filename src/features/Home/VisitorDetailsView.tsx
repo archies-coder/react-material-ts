@@ -110,25 +110,7 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
         gender: ''
     }
 
-    const [inputState, setInputState] = useState({
-        id: 0,
-        avatar: '',
-        name: '',
-        mobileNo: '',
-        personToMeet: '',
-        purpose: '',
-        inTime: '',
-        outTime: '',
-        type: '',
-        noOfVisitors: '',
-        city: '',
-        email: '',
-        visitorCompany: '',
-        country: '',
-        site: '',
-        host: '',
-        gender: ''
-    })
+    const [inputState, setInputState] = useState(defaultInputState)
 
     const handleChange = (e: any) => setInputState({
         ...inputState,
@@ -171,19 +153,17 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
 
         const bodyFormData = new FormData();
 
-        const bodyObj = {
-            'name': name,
-            'mobile': mobileNo,
-            'tomeet': mobileNo,
-            'email': mobileNo,
-            'purpose': mobileNo,
-            'gender': mobileNo,
-            'visitorcount': mobileNo,
-        }
+        // const bodyObj: any = {
+        //     name: 'abc',
+        //     mobile: 'abc',
+        //     tomeet: 'abc',
+        //     email: 'abc',
+        //     purpose: 'abc',
+        //     gender: 'abc',
+        //     visitorcount: 'abc',
+        // }
 
-        for(key in bodyObj) {
-            bodyFormData.append()
-        }
+        // Object.keys(bodyObj).forEach(key => bodyFormData.append(key, bodyObj[key]))
 
         bodyFormData.append('name', name)
         bodyFormData.append('mobile', mobileNo)
@@ -209,7 +189,7 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
         bodyFormData.append('policycheck', "1")
         bodyFormData.append('usertype', "visitor")
 
-        console.log(bodyFormData)
+        console.log(bodyFormData.keys())
 
         const response = await apis.post('/product/reception/user/checkin', {
             headers: {
@@ -267,7 +247,7 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                                 </Grid>
                                 <TextInput label="Visitor Name" name="name" onChange={handleChange}
                                     value={inputState.name} />
-                                <TextInput label="Mobile Number" name="mobile" onChange={handleChange}
+                                <TextInput label="Mobile Number" name="mobileNo" onChange={handleChange}
                                     value={inputState.mobileNo} />
                                 <TextInput label="Visitor type" name="type" onChange={handleChange}
                                     value={inputState.type} />
