@@ -19,8 +19,10 @@ interface IRowProps {
 }
 
 interface IMenuItemProps {
-    path?: string;
+    path?: string | ((id: any) => any);
     title: string;
+    onClick?: () => any;
+    item: (id: any) => JSX.Element
 }
 
 interface ITableCellProps {
@@ -37,7 +39,7 @@ interface IColumnsConfig {
 interface IConfigObject {
     columns: IColumnsConfig[];
     data:any;
-    menuOptions: IMenuItemProps[];
+    menuOptions?: any[];
     cellOptions?: ITableCellProps;
 }
 
@@ -118,7 +120,6 @@ const TableWrapper: FunctionComponent<Props> = ({config, ...props}) => {
                 <TableCell key={column.id}>{column.label}</TableCell>
             ))
         }
-
     </TableHead>
 
     const body = <TableBody>
@@ -126,7 +127,7 @@ const TableWrapper: FunctionComponent<Props> = ({config, ...props}) => {
             config.data.map((row:any, i:number) => (
                 <TableRow key={i}>
                     {
-                        config.columns.map( (col:any) => <TableCell key={row.id || i}>{row[col.id]}</TableCell>) 
+                        config.columns.map( (col:any) => <TableCell key={row.id || i}>{row[col.id]}</TableCell>)
                     }
                     <TableCell className={classes.cell} align="center">
                         <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
@@ -139,11 +140,9 @@ const TableWrapper: FunctionComponent<Props> = ({config, ...props}) => {
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
                         >
-                            {config.menuOptions.map(({title, path}) => (
-                                <StyledMenuItem key={title} onClick={handleClose}>
-                                    <Link to={path + "/" + row.id} style={{textDecoration: "none", color: "#192949"}}>
-                                        {title}
-                                    </Link>
+                            {config.menuOptions.map(({item}, i) => (
+                                <StyledMenuItem key={i}>
+                                    {item(row.id)}
                                 </StyledMenuItem>
                             ))}
                             {/*<StyledMenuItem onClick={handleClose}>Check Out</StyledMenuItem>*/}

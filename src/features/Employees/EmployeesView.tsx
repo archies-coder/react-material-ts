@@ -6,6 +6,7 @@ import SearchInput from "../../components/SearchInput";
 import { RootState } from 'app/rootReducer'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchEmployees } from 'features/Employees/employeeSlice'
+import { CustomMenuItem } from 'components/CustomMenuItem';
 interface OwnProps {
 }
 
@@ -68,7 +69,7 @@ const EmployeesView: FunctionComponent<Props> = (props) => {
 
     useEffect(() => {
         dispatch(fetchEmployees())
-        
+
     }, [dispatch])
 
 
@@ -94,10 +95,9 @@ const EmployeesView: FunctionComponent<Props> = (props) => {
         columns: columns,
         data: employees,
         menuOptions: [{
-            title: 'View Details',
-            path: "/visitor/" + 2
-        }, {
-            title: 'Delete'
+            item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+                Check Out
+            </CustomMenuItem>
         }]
     }
 

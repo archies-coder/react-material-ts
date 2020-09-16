@@ -8,6 +8,7 @@ import CustomButton from "../../components/Button";
 import { RootState } from 'app/rootReducer'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchDevices } from 'features/Settings/deviceSlice'
+import { CustomMenuItem } from 'components/CustomMenuItem';
 interface OwnProps {
 }
 
@@ -41,7 +42,7 @@ const data = {
 
 //const columns = ['Device name', 'App Version', 'Ios Version', 'Check In Ports']
 const columns = [
-    
+
     {
         id: "devicename",
         label: 'Device name'
@@ -73,7 +74,7 @@ const DevicesView: FunctionComponent<Props> = (props) => {
 
     useEffect(() => {
         dispatch(fetchDevices())
-        
+
     }, [dispatch])
 
 
@@ -96,8 +97,9 @@ const DevicesView: FunctionComponent<Props> = (props) => {
         columns: columns,
         data: devices,
         menuOptions: [{
-            title: 'View Details',
-            path: "/visitor/" + 2
+            item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+                Check Out
+            </CustomMenuItem>
         }]
     }
 

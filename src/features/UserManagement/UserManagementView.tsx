@@ -4,6 +4,7 @@ import {createStyles, fade, Grid, Paper, Theme} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import SearchInput from "../../components/SearchInput";
 import {ArrowBackIos} from "@material-ui/icons";
+import { CustomMenuItem } from 'components/CustomMenuItem';
 
 interface OwnProps {
 }
@@ -119,8 +120,9 @@ const UserManagementView: FunctionComponent<Props> = (props) => {
             status: 'Assigned'
         }],
         menuOptions: [{
-            title: 'View Details',
-            path: "/visitor/" + 2
+            item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+                Check Out
+            </CustomMenuItem>
         }]
     }
 

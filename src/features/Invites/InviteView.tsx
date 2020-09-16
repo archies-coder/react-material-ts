@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState, useEffect} from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import {
     Avatar,
     Box, Button,
@@ -20,13 +20,14 @@ import {
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import TableWrapper from "../../components/TableWrapper";
 import SearchInput from "../../components/SearchInput";
 import SelectInput from "../../components/SelectInput";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchInvites } from 'features/Invites/inviteSlice'
 import { RootState } from 'app/rootReducer'
+import { CustomMenuItem } from 'components/CustomMenuItem';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -174,7 +175,7 @@ const InviteView: FunctionComponent<Props> = (props) => {
         isLoading: isLoadingInvites,
         error
     } = useSelector((state: RootState) => state.invites)
-    
+
     useEffect(() => {
         dispatch(fetchInvites())
     }, [dispatch])
@@ -193,22 +194,23 @@ const InviteView: FunctionComponent<Props> = (props) => {
         columns: columns,
         data: invites,
         menuOptions: [{
-            title: 'View Details',
-            path: "/visitor/" + 2
+            item: (id: any) => <CustomMenuItem to={"/visitor/" + id}>
+                View Details
+            </CustomMenuItem>
         }]
     }
 
     return (
-        <Grid item xs style={{height: "calc(100vh - 100px)"}}>
+        <Grid item xs style={{ height: "calc(100vh - 100px)" }}>
             <Paper className={classes.paper}>
                 <Box display="flex" justifyContent="start">
-                    <SearchInput placeholder="S earch visitor"/>
-                    <SelectInput value="In Office"/>
-                    <SelectInput value="All Purpose"/>
-                    <SelectInput value="All Sites"/>
+                    <SearchInput placeholder="S earch visitor" />
+                    <SelectInput value="In Office" />
+                    <SelectInput value="All Purpose" />
+                    <SelectInput value="All Sites" />
 
                 </Box>
-                <TableWrapper config={TableConfig}/>
+                <TableWrapper config={TableConfig} />
             </Paper>
         </Grid>
     );
