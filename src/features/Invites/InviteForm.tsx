@@ -101,7 +101,7 @@ const InviteForm: FunctionComponent<Props> = (props) => {
         outTime: '',
     }
 
-    const [inputState, setInputState] = useState<VisitorInfo>(defaultInputState)
+    const [inputState, setInputState] = useState<any>(defaultInputState)
 
     const handleChange = (e: any) => setInputState({
         ...inputState,
