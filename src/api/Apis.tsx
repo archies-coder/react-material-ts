@@ -243,3 +243,16 @@ export async function getDevicesData(){
   }
 
 }
+
+export async function getUsersData(){
+  const url = `/product/device/data`
+
+  const { data } = await apis.get(url)
+  debugger
+  return {
+    //pageLinks: '',
+    pageCount: 1,
+    users: data.data
+  }
+
+}

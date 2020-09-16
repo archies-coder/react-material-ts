@@ -7,6 +7,7 @@ import inviteReducer from 'features/Invites/inviteSlice'
 import employeeReducer from 'features/Employees/employeeSlice'
 import siteReducer from 'features/SalesAndOrganisation/siteSlice'
 import deviceReducer from 'features/Settings/deviceSlice'
+import userReducer from 'features/UserManagement/userSlice'
 
 const rootReducer = combineReducers({
   home: homeReducer,
@@ -14,8 +15,8 @@ const rootReducer = combineReducers({
   invites: inviteReducer,
   employees: employeeReducer,
   sites: siteReducer,
-  devices: deviceReducer
-
+  devices: deviceReducer,
+  users: userReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>
