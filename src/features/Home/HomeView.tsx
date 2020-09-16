@@ -29,6 +29,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchVisitors } from 'features/Home/visitorSlice'
 import { fetchHomeStats } from 'features/Home/homeSlice'
 import { RootState } from 'app/rootReducer'
+import { MyChart2 } from 'components/Chart'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
             height: '100%'
         },
         graph: {
-            backgroundColor: 'blue',
+            //backgroundColor: 'blue',
             height: '100%'
         },
         cell: {
@@ -224,7 +225,9 @@ const HomeView: FunctionComponent<Props> = (props) => {
                             <HomeStats config={homeStatsConfig} />
                         </Grid>
                         <Grid item md={5}>
-                            <div className={classes.graph}>1</div>
+                            <div className={classes.graph}>
+                                <MyChart2 visitorStats={[...visitorStats]}></MyChart2>
+                            </div>
                         </Grid>
                     </Grid>
 
