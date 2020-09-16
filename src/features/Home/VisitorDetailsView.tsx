@@ -151,13 +151,13 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
             site,
             host } = inputState
 
-        const bodyFormData = new FormData();
+        let bodyFormData = new FormData();
 
         bodyFormData.append('profilepic', 'arjun_pass.jpg')
         bodyFormData.append('idcard', 'arjun_pass.jpg')
         bodyFormData.append('signature', 'arjun_pass.jpg')
         bodyFormData.append('name', name)
-        bodyFormData.append('mobile', mobileNo)
+        bodyFormData.append('mobile', '1')
         bodyFormData.append('tomeet', personToMeet)
         bodyFormData.append('email', email)
         bodyFormData.append('purpose', purpose)
@@ -179,8 +179,8 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
         bodyFormData.append('ndacheck', "1")
         bodyFormData.append('policycheck', "1")
         bodyFormData.append('usertype', "visitor")
-
-        const response = await apis.post('/product/reception/user/checkin', {
+            debugger
+        const response = await apis.post('/product/reception/user/checkin',bodyFormData, {
             headers: {
                 "Accept": "*/*",
                 "Cache-Control": "no-cache",
@@ -189,8 +189,9 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                 "Content-Type": "multipart/form-data",
                 "Content-Length": 2617
             },
-            data: bodyFormData
+            
         })
+        debugger
     }
 
     return (
