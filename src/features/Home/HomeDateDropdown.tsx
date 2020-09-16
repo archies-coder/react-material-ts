@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
             // marginTop: '15px',
             cursor: 'pointer',
 
-            margin: '15px 0 0 15px',
+            // margin: '15px 0 0 15px',
             '& .MuiInput-underline:before, & .MuiInput-underline:after': {
                 borderBottom: 'none !important'
             },

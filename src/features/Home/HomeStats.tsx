@@ -13,7 +13,11 @@ const useStyles = makeStyles((theme: Theme) =>
         root: {
             display: 'flex',
             flexWrap: 'wrap',
+            // height: '100%',
             justifyContent: 'space-between',
+            // alignContent: 'center',
+            // alignItems: 'center',
+            // alignSelf: 'center',
             // maxHeight: '175px',
             margin: theme.spacing(0,2),
             // backgroundColor: 'white',
@@ -23,19 +27,23 @@ const useStyles = makeStyles((theme: Theme) =>
                 textAlign: 'center',
                 color: '#192949',
                 backgroundColor: '#E7ECF6',
-                margin: theme.spacing(1,1,1,1),
+                margin: theme.spacing(1),
                 // marginTop: theme.spacing(3),
                 width: theme.spacing(16),
                 height: theme.spacing(14),
                 fontWeight: theme.typography.fontWeightBold,
             },
         },
+        // paper: {
+        //     height: '175px',
+        //     backgroundColor: 'white'
+        // },
         count: {
-            fontSize: '64px',
+            fontSize: '56px',
         },
         label: {
             lineHeight: '5px',
-            fontSize: '16px'
+            fontSize: '14px'
         },
     }),
 );
