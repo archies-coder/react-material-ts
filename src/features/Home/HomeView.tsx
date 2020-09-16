@@ -41,7 +41,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         graph: {
             //backgroundColor: 'blue',
-            height: '100%'
+            height: '100%',
+            padding: 20
         },
         cell: {
             borderBottom: 'none'
@@ -115,7 +116,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
     };
 
     const data = {
-        avatar: '',
+        avatar: <Avatar src={"uploads/1600095048.825798_arjun_pass.JPG"} />,
         name: 'Vijaya Tondon',
         mobileNo: 9754821630,
         personToMeet: 'Ramesh Chawla',
@@ -200,12 +201,17 @@ const HomeView: FunctionComponent<Props> = (props) => {
 
     const TableConfig = {
         columns: columns,
-        data: visitors,
+        data: visitors.map(el => ({
+            ...el,
+            profilePicPath: <Avatar src={el['profilePicPath']} />
+        })),
         menuOptions: [{
             title: 'View Details',
             path: "/visitor"
         }]
     }
+
+    console.log(TableConfig.data)
 
     const homeStatsConfig = {
         checked_out,
@@ -217,12 +223,18 @@ const HomeView: FunctionComponent<Props> = (props) => {
     }
     return (
         <>
-            <Grid item xs={12} style={{ height: "30%", marginTop: 0, }}>
+            <Grid item xs={12} style={{ height: "40%", marginTop: 0, }}>
                 <Paper className={classes.paper}>
                     <Grid container>
                         <Grid item md={7}>
-                            <HomeDateDropdown />
-                            <HomeStats config={homeStatsConfig} />
+                            <Box>
+                                <Box alignItems="flex-start">
+                                    <HomeDateDropdown />
+                                </Box>
+                                <Box alignItems="flex-end">
+                                    <HomeStats config={homeStatsConfig} />
+                                </Box>
+                            </Box>
                         </Grid>
                         <Grid item md={5}>
                             <div className={classes.graph}>
@@ -233,7 +245,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
 
                 </Paper>
             </Grid>
-            <Grid item xs style={{ height: "70%", marginTop: '22px' }}>
+            <Grid item xs style={{ height: "100%", marginTop: '22px' }}>
                 <Paper className={classes.paper}>
                     <Box display="flex" justifyContent="start">
                         <SearchInput placeholder="Search visitor" />
