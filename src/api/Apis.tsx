@@ -196,11 +196,50 @@ export async function getInvitesData() {
   const url = `/product/reception/invite/user/data`
 
   const { data } = await apis.get(url)
-  debugger
+
   return {
     //pageLinks: '',
     pageCount: 1,
     invites: data.data
   }
+
+}
+
+export async function getEmployeesData(){
+  const url = `/product/reception/checkin/user/data`
+
+  const { data } = await apis.get(url)
+
+  return {
+    //pageLinks: '',
+    pageCount: 1,
+    employees: data.data
+  }
+
+}
+
+export async function getSitesData(){
+  const url = `/product/reception/checkin/user/data`
+
+  const { data } = await apis.get(url)
+
+  return {
+    //pageLinks: '',
+    pageCount: 1,
+    sites: data.data
+  }
+
+}
+
+export async function getDevicesData(){
+  const url = `/product/device/data`
+
+  const { data } = await apis.get(url)
   debugger
+  return {
+    //pageLinks: '',
+    pageCount: 1,
+    devices: data.data
+  }
+
 }
