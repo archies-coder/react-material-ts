@@ -153,18 +153,9 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
 
         const bodyFormData = new FormData();
 
-        // const bodyObj: any = {
-        //     name: 'abc',
-        //     mobile: 'abc',
-        //     tomeet: 'abc',
-        //     email: 'abc',
-        //     purpose: 'abc',
-        //     gender: 'abc',
-        //     visitorcount: 'abc',
-        // }
-
-        // Object.keys(bodyObj).forEach(key => bodyFormData.append(key, bodyObj[key]))
-
+        bodyFormData.append('profilepic', 'arjun_pass.jpg')
+        bodyFormData.append('idcard', 'arjun_pass.jpg')
+        bodyFormData.append('signature', 'arjun_pass.jpg')
         bodyFormData.append('name', name)
         bodyFormData.append('mobile', mobileNo)
         bodyFormData.append('tomeet', personToMeet)
@@ -189,18 +180,16 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
         bodyFormData.append('policycheck', "1")
         bodyFormData.append('usertype', "visitor")
 
-        console.log(bodyFormData.keys())
-
         const response = await apis.post('/product/reception/user/checkin', {
             headers: {
                 "Accept": "*/*",
                 "Cache-Control": "no-cache",
                 "Accept-Encoding": "gzip, deflate, br",
                 "Connection": "keep-alive",
-                "Content-Type": "multipart/form-data; boundary=",
+                "Content-Type": "multipart/form-data",
                 "Content-Length": 2617
             },
-            body: bodyFormData
+            data: bodyFormData
         })
     }
 
@@ -274,7 +263,7 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                         <Grid item xs={6}>
                             <div className={classes.appointment}>
                                 <span className={classes.headerSecondary}>Appointments requests</span>
-                                <TextInput label="Person to Visit" name="personToVisit" style={{ marginTop: '16px' }}
+                                <TextInput label="Person to Visit" name="personToMeet" style={{ marginTop: '16px' }}
                                     onChange={handleChange}
                                     value={inputState.personToMeet} />
                                 <TextInput label="Site" name="site" onChange={handleChange}
