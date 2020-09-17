@@ -193,7 +193,6 @@ const HomeView: FunctionComponent<Props> = (props) => {
     }, [dispatch])
 
     const handleCheckOut = async (id: any) => {
-        debugger
         const response = await apis.post('/product/reception/user/checkout', JSON.stringify({
             "checkin_id": id
         }), {
@@ -221,12 +220,19 @@ const HomeView: FunctionComponent<Props> = (props) => {
             profilePicPath: <Avatar src={el['profilePicPath']} />
         })),
         menuOptions: [{
-            key:'checkin_id',
-            item: (id: any) => <CustomMenuItem to='/' onClick={() => handleCheckOut(id)}>
-                Check Out
-            </CustomMenuItem>
+            key: 'checkin_id',
+            callback: handleCheckOut,
+            item: (id: any) => {
+
+                return (<CustomMenuItem to='/' onClick={() => {
+
+                }
+                }>
+                    {'Check Out'}
+                </CustomMenuItem>)
+            }
         }, {
-            key:'id',
+            key: 'id',
             item: (id: any) => <CustomMenuItem to={'/visitor/' + id}>
                 View Details
             </CustomMenuItem>
