@@ -10,6 +10,8 @@ import { BrowserRouterProps, Redirect, RouteComponentProps } from 'react-router-
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/rootReducer";
 import { apis, VisitorInfo } from "../../api/Apis";
+import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     paper: {
@@ -66,7 +68,7 @@ const InviteForm: FunctionComponent<Props> = (props) => {
 
     const defaultInputState = {
         id: Number,
-        time: '',
+        time: new Date().toLocaleString(),
         name: '',
         mobileNo: Number,
         personToMeet: '',
@@ -74,13 +76,24 @@ const InviteForm: FunctionComponent<Props> = (props) => {
         email: '',
     }
 
-    const [inputState, setInputState] = useState<any>(defaultInputState)
+    const [inputState, setInputState] = useState<any>({
+        //id: Number,
+        time: new Date().toJSON(),
+        name: '',
+        mobileNo: '',
+        personToMeet: '',
+        purpose: '',
+        email: '',
+    })
 
-    const handleChange =(e: any) => setInputState({
+    const handleChange = (e: any) => setInputState({
         ...inputState,
         [e.target.name]: e.target.value
     })
-
+    const handleDateChange = (date: Date | null) =>  setInputState({
+        ...inputState,
+        'time': date
+    })
     const handleSubmit = async (e: any) => {
         const {
             name,
@@ -88,7 +101,7 @@ const InviteForm: FunctionComponent<Props> = (props) => {
             personToMeet,
             purpose,
             email,
-            time} = inputState
+            time } = inputState
 
         const response = await apis.post('/product/reception/user/invite', JSON.stringify({
             "name": name,
@@ -96,7 +109,7 @@ const InviteForm: FunctionComponent<Props> = (props) => {
             "email": email,
             "tomeet": personToMeet,
             "purpose": purpose,
-            "scheduletime": time
+            "scheduletime": time.toLocaleString()
         }), {
             headers: {
                 "Content-Type": "application/json",
@@ -138,11 +151,32 @@ const InviteForm: FunctionComponent<Props> = (props) => {
                     <Grid className={classes.inputGrid} container>
                         <Grid item xs={6}>
                             <div>
-                                <TextInput label="Schedule Time"
-                                    type="text"
+                                {/* <TextInput label="Schedule Time"
+                                   type="datetime-local"
                                     name="time"
                                     value={inputState.time}
-                                    onChange={handleChange} />
+                                    defaultValue={inputState.time}
+                                    onChange={handleChange} /> */}
+                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                
+                                    <KeyboardDateTimePicker
+                                        disableToolbar
+                                        label="Schedule Time"
+                                        //variant="inline"
+                                        //format="MMM dd, yyyy "
+                                        margin="normal"
+                                        id="date-picker-inline"
+                                        autoOk
+                                        value={inputState.time}
+                                        onChange={handleDateChange}
+
+                                    // KeyboardButtonProps={{
+                                    //     'aria-label': 'change date',
+                                    //     edge: 'start'
+                                    // }}
+                                    />
+                                    
+                                </MuiPickersUtilsProvider>
                                 <TextInput label="Visitor Name"
                                     name="name"
                                     onChange={handleChange}
