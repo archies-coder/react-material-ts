@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useEffect, useState} from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
     Button,
     createStyles, Menu, MenuItem, MenuProps,
@@ -10,9 +10,9 @@ import {
     TableRow,
     Theme, withStyles
 } from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface IRowProps {
     [id: string]: any;
@@ -32,13 +32,13 @@ interface ITableCellProps {
 interface IColumnsConfig {
     id: any,
     label: any,
-    sequence?:number,
-    isSort?:boolean,
-    isFilterable?:boolean
+    sequence?: number,
+    isSort?: boolean,
+    isFilterable?: boolean
 }
 interface IConfigObject {
     columns: IColumnsConfig[];
-    data:any;
+    data: any;
     menuOptions?: any[];
     cellOptions?: ITableCellProps;
 }
@@ -95,17 +95,20 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
 }))
 
-const TableWrapper: FunctionComponent<Props> = ({config, ...props}) => {
+const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => {
     const classes = useStyles(config)
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [menuId, setMenuId] = useState<null | any>(null);
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>, menuId: any) => {
         setAnchorEl(event.currentTarget);
+        setMenuId(menuId);
     };
 
     const handleClose = () => {
         setAnchorEl(null);
+        setMenuId(null);
     };
 
     useEffect(() => console.log(config.data), [])
@@ -121,30 +124,38 @@ const TableWrapper: FunctionComponent<Props> = ({config, ...props}) => {
             ))
         }
     </TableHead>
-
+    const rows = [...config.data]
     const body = <TableBody>
         {
-            config.data.map((row:any, i:number) => (
+            rows.map((row: any, i: number) => (
                 <TableRow key={i}>
                     {
-                        config.columns.map( (col:any) => <TableCell key={row.id || i}>{row[col.id]}</TableCell>)
+                        config.columns.map((col: any, j: number) => <TableCell key={i + '' + j}>{row[col.id]}</TableCell>)
                     }
-                    <TableCell className={classes.cell} align="center">
-                        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                            <MoreHorizIcon/>
+                    <TableCell key={i + "-c"} className={classes.cell} align="center">
+                        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={(e) => { handleClick(e, i + "-c") }}>
+                            <MoreHorizIcon />
                         </Button>
                         <StyledMenu
-                            id="simple-menu"
+                            id={"simple-menu-" + i + row['id']}
                             anchorEl={anchorEl}
                             keepMounted
-                            open={Boolean(anchorEl)}
+                            open={Boolean(menuId === (i + "-c"))}
                             onClose={handleClose}
                         >
-                            {config.menuOptions.map(({item,key}, i) => (
-                                <StyledMenuItem key={i}>
-                                    {item(row[key]||row.id)}
-                                </StyledMenuItem>
-                            ))}
+                            {config.menuOptions.map(({ item, key, callback }, i) => {
+                                
+                                return (
+                                    <StyledMenuItem key={i} id={row[key] || row.id} onClick={(e) => {
+                                        handleClose()
+                                        callback && callback(row[key] || row.id)
+                                    }}>
+                                        {
+                                            item(row[key] || row.id)
+                                        }
+                                    </StyledMenuItem>
+                                )
+                            })}
                             {/*<StyledMenuItem onClick={handleClose}>Check Out</StyledMenuItem>*/}
                             {/*<StyledMenuItem onClick={handleClose}>Resend Code</StyledMenuItem>*/}
                             {/*<StyledMenuItem onClick={handleClose}>*/}
