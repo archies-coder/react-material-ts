@@ -194,7 +194,8 @@ const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => {
         }}>
             <Table>
                 {TableHeader}
-                {config.isLoading ? skeletonBody : body}
+                {config.isLoading && skeletonBody}
+                {!config.isLoading && body}
             </Table>
         </TableContainer>
     );
