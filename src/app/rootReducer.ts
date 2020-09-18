@@ -2,6 +2,7 @@ import { combineReducers } from '@reduxjs/toolkit'
 
 
 import homeReducer from 'features/Home/homeSlice'
+import backDropReducer from 'app/BackdropSlice'
 import visitorReducer from 'features/Home/visitorSlice'
 import inviteReducer from 'features/Invites/inviteSlice'
 import employeeReducer from 'features/Employees/employeeSlice'
@@ -10,6 +11,7 @@ import deviceReducer from 'features/Settings/deviceSlice'
 import userReducer from 'features/UserManagement/userSlice'
 
 const rootReducer = combineReducers({
+  backdrop: backDropReducer,
   home: homeReducer,
   visitors: visitorReducer,
   invites: inviteReducer,

@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/rootReducer";
 import { VisitorInfo } from "../../api/Apis";
 import { apis } from '../../api/Apis'
-import Axios from 'axios';
+import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     paper: {
@@ -90,6 +90,8 @@ type Props = OwnProps;
 const VisitorDetailsView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
+    const dispatch = useDispatch()
+
     const defaultInputState = {
         id: 0,
         avatar: '',
@@ -124,6 +126,10 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
         error
     } = useSelector((state: RootState) => state.visitors)
 
+    const {
+        mask
+    } = useSelector((state: RootState) => state.backdrop)
+
 
     const id = props.match.params.visitorId
     useEffect(() => {
@@ -134,6 +140,7 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
     }, [id])
 
     const handleSubmit = async (e: any) => {
+        dispatch(getBackdropStart())
         const {
             name,
             mobileNo,
@@ -179,7 +186,7 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
         bodyFormData.append('ndacheck', "1")
         bodyFormData.append('policycheck', "1")
         bodyFormData.append('usertype', type)
-        const response = await apis.post('/product/reception/user/checkin',bodyFormData, {
+        apis.post('/product/reception/user/checkin',bodyFormData, {
             headers: {
                 "Accept": "*/*",
                 "Cache-Control": "no-cache",
@@ -189,6 +196,8 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                 "Content-Length": 2617
             },
         })
+            .then(() => dispatch(getBackdropStop())).catch(() => dispatch(getBackdropStop()))
+        // dispatch(getBackdropStop())
     }
 
     return (

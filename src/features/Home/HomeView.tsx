@@ -215,6 +215,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
 
     const TableConfig = {
         columns: columns,
+        isLoading: isLoadingHomeStats,
         data: visitors.map(el => ({
             ...el,
             profilePicPath: <Avatar src={el['profilePicPath']} />
@@ -238,9 +239,6 @@ const HomeView: FunctionComponent<Props> = (props) => {
             </CustomMenuItem>
         }]
     }
-
-    console.log(TableConfig.data)
-
     const homeStatsConfig = {
         checked_out,
         in_office,

@@ -194,6 +194,7 @@ const InviteView: FunctionComponent<Props> = (props) => {
     const TableConfig = {
         columns: columns,
         data: invites,
+        isLoading: isLoadingInvites,
         menuOptions: [{
             item: (id: any) => <CustomMenuItem to={"/visitor/" + id}>
                 View Details

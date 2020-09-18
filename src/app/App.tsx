@@ -1,6 +1,6 @@
 import React from 'react'
 import Container from '@material-ui/core/Container'
-import {Box, createMuiTheme, createStyles, Grid, Paper, Theme} from "@material-ui/core"
+import {Backdrop, Box, CircularProgress, createMuiTheme, createStyles, Grid, Paper, Theme} from "@material-ui/core"
 import {makeStyles} from "@material-ui/core/styles"
 import {Switch, Route} from 'react-router-dom'
 import './styles.css'
@@ -16,6 +16,8 @@ import NavGridContainer from "../components/NavGridContainer";
 import CustomDrawer from "../CustomDrawer";
 import InviteForm from "../features/Invites/InviteForm";
 import UserManagementView from "../features/UserManagement/UserManagementView";
+import { RootState } from './rootReducer'
+import { useSelector } from 'react-redux'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -25,6 +27,10 @@ const useStyles = makeStyles((theme: Theme) =>
             // backgroundColor: theme.palette.primary.main,
             height: 'inherit',
             overflow: 'hidden'
+        },
+        backdrop: {
+            zIndex: 10000,
+            color: theme.palette.primary.main,
         },
         fullHeightContainer: {
             height: '100%',
@@ -45,9 +51,14 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function App() {
     const classes = useStyles();
 
+    const { mask } = useSelector((state: RootState)  => state.backdrop)
+
     // @ts-ignore
     return (
         <Box height="100vh">
+            <Backdrop className={classes.backdrop} open={mask}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <Container maxWidth={"xl"} className={classes.root}>
                 <Grid container spacing={3} className={classes.fullHeightContainer}>
                     <Grid item md={2}>

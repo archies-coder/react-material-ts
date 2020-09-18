@@ -94,6 +94,7 @@ const EmployeesView: FunctionComponent<Props> = (props) => {
     const TableConfig = {
         columns: columns,
         data: employees,
+        isLoading: isLoadingEmployee,
         menuOptions: [{
             item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
                 Check Out

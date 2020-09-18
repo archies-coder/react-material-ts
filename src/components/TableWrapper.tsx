@@ -1,4 +1,3 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
     Button,
     createStyles, Menu, MenuItem, MenuProps,
@@ -12,7 +11,8 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import { Link } from "react-router-dom";
+import { Skeleton } from '@material-ui/lab';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 
 interface IRowProps {
     [id: string]: any;
@@ -41,6 +41,7 @@ interface IConfigObject {
     data: any;
     menuOptions?: any[];
     cellOptions?: ITableCellProps;
+    isLoading?: Boolean;
 }
 
 interface OwnProps extends React.HTMLAttributes<any> {
@@ -144,7 +145,7 @@ const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => {
                             onClose={handleClose}
                         >
                             {config.menuOptions.map(({ item, key, callback }, i) => {
-                                
+
                                 return (
                                     <StyledMenuItem key={i} id={row[key] || row.id} onClick={(e) => {
                                         handleClose()
@@ -170,13 +171,31 @@ const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => {
         }
     </TableBody>
 
+    const skeletonBody = <TableBody>
+        {
+            Array(20).fill(0).map((row: any, i: number) => (
+                <TableRow key={i}>
+                    {
+                        config.columns.map((col: any) => <TableCell key={row.id || i}><Skeleton /></TableCell>)
+                    }
+                    <TableCell className={classes.cell} align="center">
+                        <Button aria-controls="simple-menu" aria-haspopup="true">
+                            <MoreHorizIcon />
+                        </Button>
+                    </TableCell>
+                </TableRow>
+            ))
+        }
+    </TableBody>
+
     return (
         <TableContainer classes={{
             root: classes.root
         }}>
             <Table>
                 {TableHeader}
-                {body}
+                {config.isLoading && skeletonBody}
+                {!config.isLoading && body}
             </Table>
         </TableContainer>
     );
