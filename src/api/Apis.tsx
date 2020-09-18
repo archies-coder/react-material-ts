@@ -150,13 +150,13 @@ export async function getVisitorData() {
   const url = `/product/reception/checkin/user/data`
 
   const { data } = await apis.get(url)
-  debugger
+  // debugger
   return {
     //pageLinks: '',
     pageCount: 1,
     visitors: data.data
   }
-  debugger
+  // debugger
 }
 
 export async function getVisitorInfo() {
@@ -235,7 +235,7 @@ export async function getDevicesData(){
   const url = `/product/device/data`
 
   const { data } = await apis.get(url)
-  debugger
+  // debugger
   return {
     //pageLinks: '',
     pageCount: 1,
@@ -248,7 +248,7 @@ export async function getUsersData(){
   const url = `/product/device/data`
 
   const { data } = await apis.get(url)
-  debugger
+  // debugger
   return {
     //pageLinks: '',
     pageCount: 1,
