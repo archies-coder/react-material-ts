@@ -141,7 +141,7 @@ const InviteForm: FunctionComponent<Props> = (props) => {
                 <form>
                     <div className={classes.header}>
                         <ArrowBackIos className={classes.arrowBack} onClick={() => props.history.push('/')} />
-                        <span> Visitor's Details</span>
+                        <span> Invitee's Details</span>
                     </div>
                     <Box display="flex" justifyContent="flex-end">
                         <Box className={classes.button}>
@@ -158,11 +158,12 @@ const InviteForm: FunctionComponent<Props> = (props) => {
                                     defaultValue={inputState.time}
                                     onChange={handleChange} /> */}
                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                
+
                                     <KeyboardDateTimePicker
                                         disableToolbar
                                         label="Schedule Time"
                                         //variant="inline"
+                                        inputVariant="outlined"
                                         //format="MMM dd, yyyy "
                                         margin="normal"
                                         id="date-picker-inline"
@@ -175,7 +176,7 @@ const InviteForm: FunctionComponent<Props> = (props) => {
                                     //     edge: 'start'
                                     // }}
                                     />
-                                    
+
                                 </MuiPickersUtilsProvider>
                                 <TextInput label="Visitor Name"
                                     name="name"

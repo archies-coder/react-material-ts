@@ -1,8 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Links } from 'parse-link-header'
-
-import { getHomeStats } from 'api/Apis'
-import { AppThunk } from 'app/store'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { getHomeStats } from 'api/Apis';
+import { AppThunk } from 'app/store';
 
 
 interface homeStatsState {
@@ -34,6 +32,7 @@ function loadingFailed(state: homeStatsState, action: PayloadAction<string>) {
   state.error = action.payload
 }
 
+
 const homeStats = createSlice({
   name: 'homeStats',
   initialState: homeStatsInitialState,
@@ -62,7 +61,7 @@ const homeStats = createSlice({
 export const {
   getHomeStatsStart,
   getHomeStatsSuccess,
-  getHomeStatsFailure
+  getHomeStatsFailure,
 } = homeStats.actions
 
 export default homeStats.reducer
