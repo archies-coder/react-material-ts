@@ -1,17 +1,17 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Box, createStyles, Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import { ArrowBackIos, CameraAlt } from "@material-ui/icons";
-import TextInput from "../../components/TextInput";
-import SelectInput from "../../components/SelectInput";
-import CustomButton from "../../components/Button";
-import { BrowserRouterProps, Redirect, RouteComponentProps } from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../app/rootReducer";
-import { VisitorInfo } from "../../api/Apis";
-import { apis } from '../../api/Apis'
 import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice';
+import { setCurrentVisitor } from 'features/Home/visitorSlice';
+import React, { FunctionComponent, useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { RouteComponentProps } from 'react-router-dom';
+import { apis } from '../../api/Apis';
+import { RootState } from "../../app/rootReducer";
+import CustomButton from "../../components/Button";
+import SelectInput from "../../components/SelectInput";
+import TextInput from "../../components/TextInput";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     paper: {
@@ -112,20 +112,27 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
         gender: ''
     }
 
-    const [inputState, setInputState] = useState(defaultInputState)
-
-    const handleChange = (e: any) => setInputState({
-        ...inputState,
-        [e.target.name]: e.target.value
-    })
+    //const [inputState, setInputState] = useState(defaultInputState)
+    const setInputState = (a: any) => { }
+    const handleChange = (e: any) => {
+        dispatch(setCurrentVisitor({
+            ...currentVisitor,
+            [e.target.name]: e.target.value
+        }));
+        setInputState({
+            ...inputState,
+            [e.target.name]: e.target.value
+        })
+    }
 
     const {
         visitors,
         visitorsById,
+        currentVisitor,
         isLoading: isLoadingVisitor,
         error
     } = useSelector((state: RootState) => state.visitors)
-
+    const inputState = currentVisitor
     const {
         mask
     } = useSelector((state: RootState) => state.backdrop)
@@ -135,7 +142,8 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
     useEffect(() => {
         if (visitorsById[id]) {
             const tempId = visitorsById[id]
-            setInputState(tempId)
+            //setInputState(tempId)
+            dispatch(setCurrentVisitor(tempId));
         }
     }, [id])
 
@@ -186,7 +194,7 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
         bodyFormData.append('ndacheck', "1")
         bodyFormData.append('policycheck', "1")
         bodyFormData.append('usertype', type)
-        apis.post('/product/reception/user/checkin',bodyFormData, {
+        await apis.post('/product/reception/user/checkin', bodyFormData, {
             headers: {
                 "Accept": "*/*",
                 "Cache-Control": "no-cache",
@@ -197,7 +205,7 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
             },
         })
             .then(() => dispatch(getBackdropStop())).catch(() => dispatch(getBackdropStop()))
-        // dispatch(getBackdropStop())
+        setInputState(defaultInputState)
     }
 
     return (

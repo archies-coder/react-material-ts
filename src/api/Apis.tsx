@@ -256,3 +256,22 @@ export async function getUsersData(){
   }
 
 }
+
+export async function checkout(id: any) {
+  await apis.post('/product/reception/user/checkout', JSON.stringify({
+    "checkin_id": id
+  }), {
+    headers: {
+      "Cache-Control": "no-cache",
+      'Content-Type': 'application/json'
+    }
+  })
+}
+export async function createInvite(json:string) {
+  return await apis.post('/product/reception/user/invite', json, {
+    headers: {
+      "Content-Type": "application/json",
+      // "Content-Length": 2617
+    },
+  })
+}

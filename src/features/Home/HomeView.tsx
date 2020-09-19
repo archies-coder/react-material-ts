@@ -32,7 +32,8 @@ import { RootState } from 'app/rootReducer'
 import { MyChart2 } from 'components/Chart'
 import { CustomMenuItem } from 'components/CustomMenuItem';
 import Axios from 'axios';
-import { apis } from 'api/Apis';
+import { apis, checkout } from 'api/Apis';
+import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -193,14 +194,13 @@ const HomeView: FunctionComponent<Props> = (props) => {
     }, [dispatch])
 
     const handleCheckOut = async (id: any) => {
-        const response = await apis.post('/product/reception/user/checkout', JSON.stringify({
-            "checkin_id": id
-        }), {
-            headers: {
-                "Cache-Control": "no-cache",
-                'Content-Type': 'application/json'
-            }
-        })
+        dispatch(getBackdropStart())
+        await checkout(id)
+            .then(() => {
+                dispatch(fetchHomeStats())
+                dispatch(getBackdropStop())
+            })
+            .catch(() => dispatch(getBackdropStop()))
     }
 
 
