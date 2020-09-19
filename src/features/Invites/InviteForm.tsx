@@ -3,7 +3,7 @@ import { Box, createStyles, Grid, Paper } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import { ArrowBackIos } from "@material-ui/icons";
-import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice';
 import React, { FunctionComponent, useState } from 'react';
 import { useDispatch } from "react-redux";
@@ -11,6 +11,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { createInvite } from "../../api/Apis";
 import CustomButton from "../../components/Button";
 import TextInput from "../../components/TextInput";
+import DateTimeInput from 'components/DateTimeInput'
 import {saveInvite} from 'features/Invites/inviteSlice'
 const useStyles = makeStyles((theme: Theme) => createStyles({
     paper: {
@@ -66,7 +67,7 @@ const StyledDatePicker = withStyles({
     '& .MuiInput-underline:before': {
         borderBottom: 'none'
     }
-})(KeyboardDateTimePicker)
+})(DateTimePicker)
 
 interface OwnProps extends RouteComponentProps<any> {
 }
@@ -165,19 +166,19 @@ const InviteForm: FunctionComponent<Props> = (props) => {
                                     value={inputState.time}
                                     defaultValue={inputState.time}
                                     onChange={handleChange} /> */}
-                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
 
-                                    <StyledDatePicker
+                                    <DateTimeInput
                                         disableToolbar
                                         label="Schedule Time"
 
-                                        TextFieldComponent={TextInput}
-                                        // className={classes.datePicker}
+                                        //TextFieldComponent={TextInput}
+                                        disablePast
+                                        //className={classes.datePicker}
                                         // InputProps={}
                                         //variant="inline"
                                         // inputVariant="outlined"
                                         // format="dd"
-                                        format="MMM dd, yyyy "
+                                        format="dd-mm-yyyy hh:mm a"
                                         margin="normal"
                                         id="date-picker-inline"
                                         autoOk
@@ -190,7 +191,7 @@ const InviteForm: FunctionComponent<Props> = (props) => {
                                     // }}
                                     />
 
-                                </MuiPickersUtilsProvider>
+                                
                                 <TextInput label="Visitor Name"
                                     required
                                     name="name"

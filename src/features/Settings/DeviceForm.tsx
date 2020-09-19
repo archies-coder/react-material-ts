@@ -1,16 +1,17 @@
 import DateFnsUtils from '@date-io/date-fns';
-import {Box, createStyles, Grid, Paper} from "@material-ui/core";
-import {makeStyles, withStyles} from "@material-ui/core/styles";
-import {Theme} from "@material-ui/core/styles/createMuiTheme";
-import {ArrowBackIos} from "@material-ui/icons";
-import {KeyboardDateTimePicker, MuiPickersUtilsProvider} from '@material-ui/pickers';
-import {getBackdropStart, getBackdropStop} from 'app/BackdropSlice';
-import React, {FunctionComponent, useState} from 'react';
-import {useDispatch} from "react-redux";
-import {RouteComponentProps} from 'react-router-dom';
-import {createInvite} from "api/Apis";
+import { Box, createStyles, Grid, Paper } from "@material-ui/core";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { Theme } from "@material-ui/core/styles/createMuiTheme";
+import { ArrowBackIos } from "@material-ui/icons";
+import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice';
+import React, { FunctionComponent, useState } from 'react';
+import { useDispatch } from "react-redux";
+import { RouteComponentProps } from 'react-router-dom';
+import { createInvite } from "api/Apis";
 import CustomButton from "components/Button";
 import TextInput from "components/TextInput";
+import { saveDevice } from './deviceSlice';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     paper: {
@@ -79,21 +80,18 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
         e.preventDefault()
         const {
             name,
-            mobileNo,
-            personToMeet,
-            purpose,
+            iosVersion,
+            udid,
             email,
-            time
+            id
         } = inputState
 
-        // dispatch(saveDevice(JSON.stringify({
-        //     "name": name,
-        //     "mobile": mobileNo,
-        //     "email": email,
-        //     "tomeet": personToMeet,
-        //     "purpose": purpose,
-        //     "scheduletime": new Date(time).toLocaleString()
-        // }),()=>setInputState(defaultInputState)))
+        dispatch(saveDevice(JSON.stringify({
+            "devicename": name,
+            "iosversion": iosVersion,
+            "email": email,
+            "udid": udid
+        }), () => setInputState(defaultInputState)))
     }
 
     // const {
@@ -113,11 +111,11 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
     // }, [id])
 
     return (
-        <Grid item style={{height: '80%', width: '90%'}}>
+        <Grid item style={{ height: '80%', width: '90%' }}>
             <Paper className={classes.paper}>
                 <form onSubmit={handleSubmit}>
                     <div className={classes.header}>
-                        <ArrowBackIos className={classes.arrowBack} onClick={() => props.history.push('/devices')}/>
+                        <ArrowBackIos className={classes.arrowBack} onClick={() => props.history.push('/devices')} />
                         <span> Device details</span>
                     </div>
                     <Box display="flex" justifyContent="flex-end">
@@ -129,33 +127,35 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
                         <Grid item xs={6}>
                             {/*<div>*/}
                             <TextInput label="Device Name"
-                                       required
-                                       name="name"
-                                       onChange={handleChange}
-                                       value={inputState.name}/>
+                                required
+                                name="name"
+                                onChange={handleChange}
+                                value={inputState.name} />
                             <TextInput label="Ios Version"
-                                       name="iosVersion"
-                                       onChange={handleChange}
-                                       value={inputState.iosVersion}/>
+                                required
+                                name="iosVersion"
+                                onChange={handleChange}
+                                value={inputState.iosVersion} />
                             {/*</div>*/}
                         </Grid>
                         <Grid item xs={6}>
                             <TextInput
                                 required
+                                type="email"
                                 label="Email"
                                 onChange={handleChange}
                                 name="email"
-                                value={inputState.email}/>
+                                value={inputState.email} />
                             <TextInput
                                 required
                                 label="Udid"
                                 onChange={handleChange}
                                 name="udid"
-                                value={inputState.udid}/>
+                                value={inputState.udid} />
                         </Grid>
                     </Grid>
                     <Grid container>
-                        <Grid item xs={6} style={{marginTop: '52px'}}>
+                        <Grid item xs={6} style={{ marginTop: '52px' }}>
                         </Grid>
                     </Grid>
                 </form>

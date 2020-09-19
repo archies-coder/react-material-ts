@@ -6,7 +6,7 @@ interface OwnProps {
     value: string;
     id?: string;
     label: string;
-    onChange: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+    onChange: any;
 }
 
 type Props = OwnProps;
@@ -28,8 +28,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
             margin: theme.spacing(0, 2, 1.5, 0),
         },
 
-        '& .MuiFilledInput-underline:before, & .MuiFilledInput-underline:after': {
-            borderBottom: 'none'
+        '& .MuiFilledInput-underline:before, & .MuiFilledInput-underline:after, & .MuiInput-underline:before, & .MuiInput-underline:after': {
+            borderBottom: 'none !important'
         },
 
         '& .MuiInputBase-input': {
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     }
 }))
 
-const TextInput: FunctionComponent<Props | TextFieldProps> = (props) => {
+const TextInput: FunctionComponent<any> = (props) => {
     const classes = useStyles()
     return (
         <TextField

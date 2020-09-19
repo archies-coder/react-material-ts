@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Links } from 'parse-link-header'
 
-import { getDevicesData } from 'api/Apis'
+import { createDevice, getDevicesData } from 'api/Apis'
 import { AppThunk } from 'app/store'
+import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice'
 
 
 export interface Device {
@@ -87,3 +88,18 @@ export const fetchDevices = (
     }
 }
 
+export const saveDevice = (
+    device: any,
+    callback?: (() => void)
+): AppThunk => async dispatch => {
+    try {
+        dispatch(getBackdropStart())
+        await createDevice(device)
+            .then(() => dispatch(getBackdropStop())).catch(() => dispatch(getBackdropStop()))
+        //return setInputState(defaultInputState)
+        callback && callback();
+        //dispatch(saveInvitesSuccess(invites))
+    } catch (err) {
+        dispatch(getBackdropStop())
+    }
+}
