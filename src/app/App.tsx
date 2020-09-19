@@ -22,6 +22,7 @@ import DeviceForm from "../features/Settings/DeviceForm";
 import SignIn from 'features/auth/SignIn'
 import SignUp from 'features/auth/SignUp'
 
+
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -59,9 +60,8 @@ export default function App() {
     // @ts-ignore
     return (
         <Box>
-            <Switch>
-                <Route exact path="/signin" component={SignIn} />
-                <Route exact path="/signup" component={SignUp} />
+                {/* <Route exact path="/signin" component={SignIn} />
+                <Route exact path="/signup" component={SignUp} /> */}
                 <Backdrop className={classes.backdrop} open={mask}>
                     <CircularProgress color="inherit" />
                 </Backdrop>
@@ -74,6 +74,7 @@ export default function App() {
                         </Grid>
                         <Grid item md={10}>
                             <NavGridContainer>
+                <Switch>
                                 <Route exact path="/" component={HomeView} />
                                 <Route exact path="/invites" component={InviteView} />
                                 <Route exact path="/visitor" component={VisitorDetailsView} />
@@ -87,11 +88,11 @@ export default function App() {
                                 <Route exact path="/devices/device" component={DeviceForm} />
                                 <Route path="/devices/device/:deviceId" component={DeviceForm} />
                                 <Route path="/user" component={UserManagementView} />
+            </Switch>
                             </NavGridContainer>
                         </Grid>
                     </Grid>
                 </Container>
-            </Switch>
         </Box>
     );
 }
