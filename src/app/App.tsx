@@ -1,8 +1,8 @@
 import React from 'react'
 import Container from '@material-ui/core/Container'
-import {Backdrop, Box, CircularProgress, createMuiTheme, createStyles, Grid, Paper, Theme} from "@material-ui/core"
-import {makeStyles} from "@material-ui/core/styles"
-import {Switch, Route} from 'react-router-dom'
+import { Backdrop, Box, CircularProgress, createMuiTheme, createStyles, Grid, Paper, Theme } from "@material-ui/core"
+import { makeStyles } from "@material-ui/core/styles"
+import { Switch, Route } from 'react-router-dom'
 import './styles.css'
 import HomeView from "../features/Home/HomeView";
 import InviteView from "../features/Invites/InviteView";
@@ -19,6 +19,8 @@ import UserManagementView from "../features/UserManagement/UserManagementView";
 import { RootState } from './rootReducer'
 import { useSelector } from 'react-redux'
 import DeviceForm from "../features/Settings/DeviceForm";
+import SignIn from 'features/auth/SignIn'
+import SignUp from 'features/auth/SignUp'
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -52,42 +54,44 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function App() {
     const classes = useStyles();
 
-    const { mask } = useSelector((state: RootState)  => state.backdrop)
+    const { mask } = useSelector((state: RootState) => state.backdrop)
 
     // @ts-ignore
     return (
         <Box>
-            <Backdrop className={classes.backdrop} open={mask}>
-                <CircularProgress color="inherit" />
-            </Backdrop>
-            <Container maxWidth={"xl"} className={classes.root}>
-                <Grid container spacing={3} className={classes.fullHeightContainer}>
-                    <Grid item md={2}>
-                        <Box className={classes.paper}>
-                            <CustomDrawer/>
-                        </Box>
+            <Switch>
+                <Route exact path="/signin" component={SignIn} />
+                <Route exact path="/signup" component={SignUp} />
+                <Backdrop className={classes.backdrop} open={mask}>
+                    <CircularProgress color="inherit" />
+                </Backdrop>
+                <Container maxWidth={"xl"} className={classes.root}>
+                    <Grid container spacing={3} className={classes.fullHeightContainer}>
+                        <Grid item md={2}>
+                            <Box className={classes.paper}>
+                                <CustomDrawer />
+                            </Box>
+                        </Grid>
+                        <Grid item md={10}>
+                            <NavGridContainer>
+                                <Route exact path="/" component={HomeView} />
+                                <Route exact path="/invites" component={InviteView} />
+                                <Route exact path="/visitor" component={VisitorDetailsView} />
+                                <Route path="/visitor/:visitorId" component={VisitorDetailsView} />
+                                <Route path="/employees" component={EmployeesView} />
+                                <Route path="/sites" component={SitesView} />
+                                <Route path="/checkinpoints" component={CheckInPointsView} />
+                                <Route exact path="/devices" component={DevicesView} />
+                                <Route path="/agreement" component={AgreementView} />
+                                <Route path="/invites/visitor" component={InviteForm} />
+                                <Route exact path="/devices/device" component={DeviceForm} />
+                                <Route path="/devices/device/:deviceId" component={DeviceForm} />
+                                <Route path="/user" component={UserManagementView} />
+                            </NavGridContainer>
+                        </Grid>
                     </Grid>
-                    <Grid item md={10}>
-                        <NavGridContainer>
-                            <Switch>
-                                <Route exact path="/" component={HomeView}/>
-                                <Route exact path="/invites" component={InviteView}/>
-                                <Route exact path="/visitor" component={VisitorDetailsView}/>
-                                <Route path="/visitor/:visitorId" component={VisitorDetailsView}/>
-                                <Route path="/employees" component={EmployeesView}/>
-                                <Route path="/sites" component={SitesView}/>
-                                <Route path="/checkinpoints" component={CheckInPointsView}/>
-                                <Route exact path="/devices" component={DevicesView}/>
-                                <Route path="/agreement" component={AgreementView}/>
-                                <Route path="/invites/visitor" component={InviteForm}/>
-                                <Route exact path="/devices/device" component={DeviceForm}/>
-                                <Route path="/devices/device/:deviceId" component={DeviceForm}/>
-                                <Route path="/user" component={UserManagementView}/>
-                            </Switch>
-                        </NavGridContainer>
-                    </Grid>
-                </Grid>
-            </Container>
+                </Container>
+            </Switch>
         </Box>
     );
 }
