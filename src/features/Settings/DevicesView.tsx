@@ -1,15 +1,15 @@
-import React, {FunctionComponent, useEffect} from 'react';
-import {Box, createStyles, Grid, Paper, Theme} from "@material-ui/core";
+import React, { FunctionComponent, useEffect } from 'react';
+import { Box, createStyles, Grid, Paper, Theme } from "@material-ui/core";
 import SearchInput from "../../components/SearchInput";
 import TableWrapper from "../../components/TableWrapper";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import SelectInput from "../../components/SelectInput";
 import CustomButton from "../../components/Button";
 import { RootState } from 'app/rootReducer'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchDevices } from 'features/Settings/deviceSlice'
 import { CustomMenuItem } from 'components/CustomMenuItem';
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 interface OwnProps {
 }
 
@@ -70,13 +70,15 @@ const DevicesView: FunctionComponent<Props> = (props) => {
         pageCount,
         pageLinks,
         isLoading: isLoadingDevice,
-        error
+        error,
+        devicesById
     } = useSelector((state: RootState) => state.devices)
 
     useEffect(() => {
         dispatch(fetchDevices())
 
     }, [dispatch])
+
 
 
     if (error) {
@@ -98,25 +100,25 @@ const DevicesView: FunctionComponent<Props> = (props) => {
         columns: columns,
         data: devices,
         menuOptions: [{
-            item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
-                Check Out
+            item: (id: any) => <CustomMenuItem to={'/devices/device/' + id} onClick={() => console.log(id)} >
+                View Details
             </CustomMenuItem>
         }]
     }
 
     return (
-        <Grid item xs style={{height: "calc(100vh - 100px)"}}>
+        <Grid item xs style={{ height: "calc(100vh - 100px)" }}>
             <Paper className={classes.paper}>
                 <Box display="flex" justifyContent="space-between">
-                    <SearchInput placeholder="Search Devices" width={400}/>
-                    <SelectInput style={{marginRight: '-80px'}} value="All Sites"/>
-                    <SelectInput style={{marginLeft: '40'}} value="All Status"/>
-                    <CustomButton style={{padding: '10px 40px', marginRight: '20px', marginTop: '20px'}}>
-                        <CustomMenuItem style={{color: 'white'}} to='/devices/device'>Add Device</CustomMenuItem>
+                    <SearchInput placeholder="Search Devices" width={400} />
+                    <SelectInput style={{ marginRight: '-80px' }} value="All Sites" />
+                    <SelectInput style={{ marginLeft: '40' }} value="All Status" />
+                    <CustomButton style={{ padding: '10px 40px', marginRight: '20px', marginTop: '20px' }}>
+                        <CustomMenuItem style={{ color: 'white' }} to='/devices/device'>Add Device</CustomMenuItem>
                     </CustomButton>
                 </Box>
                 <Box className={classes.tableContainer}>
-                    <TableWrapper config={TableConfig}/>
+                    <TableWrapper config={TableConfig} />
                 </Box>
             </Paper>
         </Grid>

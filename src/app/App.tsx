@@ -80,7 +80,8 @@ export default function App() {
                                 <Route exact path="/devices" component={DevicesView}/>
                                 <Route path="/agreement" component={AgreementView}/>
                                 <Route path="/invites/visitor" component={InviteForm}/>
-                                <Route path="/devices/device" component={DeviceForm}/>
+                                <Route exact path="/devices/device" component={DeviceForm}/>
+                                <Route path="/devices/device/:deviceId" component={DeviceForm}/>
                                 <Route path="/user" component={UserManagementView}/>
                             </Switch>
                         </NavGridContainer>

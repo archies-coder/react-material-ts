@@ -5,13 +5,14 @@ import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import { ArrowBackIos } from "@material-ui/icons";
 import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice';
-import React, { FunctionComponent, useState } from 'react';
-import { useDispatch } from "react-redux";
+import React, { FunctionComponent, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import { RouteComponentProps } from 'react-router-dom';
 import { createInvite } from "api/Apis";
 import CustomButton from "components/Button";
 import TextInput from "components/TextInput";
-import { saveDevice } from './deviceSlice';
+import { saveDevice, setCurrentDevice } from './deviceSlice';
+import { RootState } from 'app/rootReducer';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     paper: {
@@ -70,7 +71,21 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
     }
 
     const [inputState, setInputState] = useState<any>(defaultInputState)
+    const {
+        devices,
+        devicesById,
+        error
+    } = useSelector((state: RootState) => state.devices)
 
+    const id = props.match.params.deviceId
+    useEffect(() => {
+        if (devicesById[id]) {
+            const tempId = devicesById[id]
+            //setInputState(tempId)
+            dispatch(setCurrentDevice(tempId));
+        }
+    }, [id])
+    
     const handleChange = (e: any) => setInputState({
         ...inputState,
         [e.target.name]: e.target.value

@@ -16,12 +16,13 @@ export interface Device {
 export interface DevicesResult {
     //pageLinks: Links | null
     pageCount: number
-    devices: Device[]
+    devices: Device[],
 }
 
 interface DeviceState {
     devices: Device[]
     devicesById: Record<string, Device>
+    currentDevice: any
     currentPageDevices: number[]
     pageCount: number
     pageLinks: Links | null
@@ -32,6 +33,7 @@ interface DeviceState {
 const devicesInitialState: DeviceState = {
     devices: [],
     devicesById: {},
+    currentDevice: {},
     currentPageDevices: [],
     pageCount: 0,
     pageLinks: {},
@@ -64,13 +66,17 @@ const devices = createSlice({
             state.devices.map(device => (state.devicesById[device.udid] = device))
         },
         getDevicesFailure: loadingFailed,
+        setCurrentDevice(state, { payload }: PayloadAction<any>){
+            state.currentDevice = payload
+        }
     }
 })
 
 export const {
     getDevicesStart,
     getDevicesSuccess,
-    getDevicesFailure
+    getDevicesFailure,
+    setCurrentDevice
 } = devices.actions
 
 export default devices.reducer
