@@ -283,3 +283,28 @@ export async function createDevice(json:string) {
     },
   })
 }
+
+export async function signIn(username: string, password: string) {
+  return await apis.post('/product/login',JSON.stringify({
+    "username":username,
+    "password":password
+  }), {
+    headers: {
+      'Content-type': 'application/json'
+    }
+  })
+}
+// panwar.arjunp@gmail.com 12345
+
+export async function signUp(username: string, password: string, name: string, userType: string) {
+  return await apis.post('/product/accountDetail/register',JSON.stringify({
+    "username": username,
+    "password": password,
+    "name": name,
+    "usertype": userType
+  }), {
+    headers: {
+      'Content-type': 'application/json'
+    }
+  })
+}
