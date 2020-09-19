@@ -100,6 +100,7 @@ const DevicesView: FunctionComponent<Props> = (props) => {
         columns: columns,
         data: devices,
         menuOptions: [{
+            key: 'udid',
             item: (id: any) => <CustomMenuItem to={'/devices/device/' + id} onClick={() => console.log(id)} >
                 View Details
             </CustomMenuItem>
