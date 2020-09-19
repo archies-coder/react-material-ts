@@ -267,3 +267,11 @@ export async function checkout(id: any) {
     }
   })
 }
+export async function createInvite(json:string) {
+  return await apis.post('/product/reception/user/invite', json, {
+    headers: {
+      "Content-Type": "application/json",
+      // "Content-Length": 2617
+    },
+  })
+}

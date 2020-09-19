@@ -1,8 +1,8 @@
-import React, {FunctionComponent} from 'react';
-import {Theme, withStyles} from "@material-ui/core";
-import Button from '@material-ui/core/Button'
+import { Theme, withStyles } from "@material-ui/core";
+import Button, { ButtonTypeMap } from '@material-ui/core/Button';
+import React, { FunctionComponent } from 'react';
 
-interface OwnProps extends React.HTMLAttributes<any> {
+interface OwnProps extends React.AllHTMLAttributes<ButtonTypeMap> {
 }
 
 type Props = OwnProps;

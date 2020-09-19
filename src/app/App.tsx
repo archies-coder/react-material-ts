@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: '#192949',
         },
         fullHeight: {
-            height: '100vh',
+            // height: '100vh',
         }
     }),
 );
@@ -55,7 +55,7 @@ export default function App() {
 
     // @ts-ignore
     return (
-        <Box height="100vh">
+        <Box>
             <Backdrop className={classes.backdrop} open={mask}>
                 <CircularProgress color="inherit" />
             </Backdrop>
