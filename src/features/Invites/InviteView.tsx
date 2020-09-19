@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: '#E7ECF6',
             borderRadius: theme.shape.borderRadius - 5,
             marginRight: 30,
-            height: '100%'
+            // height: '100%'
         },
         cell: {
             borderBottom: 'none'

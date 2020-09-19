@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Links } from 'parse-link-header'
 
-import { getDevicesData } from 'api/Apis'
+import { createDevice, getDevicesData } from 'api/Apis'
 import { AppThunk } from 'app/store'
+import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice'
 
 
 export interface Device {
@@ -15,12 +16,13 @@ export interface Device {
 export interface DevicesResult {
     //pageLinks: Links | null
     pageCount: number
-    devices: Device[]
+    devices: Device[],
 }
 
 interface DeviceState {
     devices: Device[]
     devicesById: Record<string, Device>
+    currentDevice: any
     currentPageDevices: number[]
     pageCount: number
     pageLinks: Links | null
@@ -31,6 +33,7 @@ interface DeviceState {
 const devicesInitialState: DeviceState = {
     devices: [],
     devicesById: {},
+    currentDevice: {},
     currentPageDevices: [],
     pageCount: 0,
     pageLinks: {},
@@ -63,13 +66,17 @@ const devices = createSlice({
             state.devices.map(device => (state.devicesById[device.udid] = device))
         },
         getDevicesFailure: loadingFailed,
+        setCurrentDevice(state, { payload }: PayloadAction<any>){
+            state.currentDevice = payload
+        }
     }
 })
 
 export const {
     getDevicesStart,
     getDevicesSuccess,
-    getDevicesFailure
+    getDevicesFailure,
+    setCurrentDevice
 } = devices.actions
 
 export default devices.reducer
@@ -87,3 +94,18 @@ export const fetchDevices = (
     }
 }
 
+export const saveDevice = (
+    device: any,
+    callback?: (() => void)
+): AppThunk => async dispatch => {
+    try {
+        dispatch(getBackdropStart())
+        await createDevice(device)
+            .then(() => dispatch(getBackdropStop())).catch(() => dispatch(getBackdropStop()))
+        //return setInputState(defaultInputState)
+        callback && callback();
+        //dispatch(saveInvitesSuccess(invites))
+    } catch (err) {
+        dispatch(getBackdropStop())
+    }
+}
