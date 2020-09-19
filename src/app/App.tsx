@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Container from '@material-ui/core/Container'
 import { Backdrop, Box, CircularProgress, createMuiTheme, createStyles, Grid, Paper, Theme } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
@@ -55,44 +55,49 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function App() {
     const classes = useStyles();
 
+    const [isLoggedIn, setIsLoggedIn] = useState(true)
+
     const { mask } = useSelector((state: RootState) => state.backdrop)
 
+    const Routes = <Box>
+        <Backdrop className={classes.backdrop} open={mask}>
+            <CircularProgress color="inherit" />
+        </Backdrop>
+        <Container maxWidth={"xl"} className={classes.root}>
+            <Grid container spacing={3} className={classes.fullHeightContainer}>
+                <Grid item md={2}>
+                    <Box className={classes.paper}>
+                        <CustomDrawer />
+                    </Box>
+                </Grid>
+                <Grid item md={10}>
+                    <NavGridContainer>
+                        <Switch>
+                            <Route exact path="/" component={HomeView} />
+                            <Route exact path="/invites" component={InviteView} />
+                            <Route exact path="/visitor" component={VisitorDetailsView} />
+                            <Route path="/visitor/:visitorId" component={VisitorDetailsView} />
+                            <Route path="/employees" component={EmployeesView} />
+                            <Route path="/sites" component={SitesView} />
+                            <Route path="/checkinpoints" component={CheckInPointsView} />
+                            <Route exact path="/devices" component={DevicesView} />
+                            <Route path="/agreement" component={AgreementView} />
+                            <Route path="/invites/visitor" component={InviteForm} />
+                            <Route exact path="/devices/device" component={DeviceForm} />
+                            <Route path="/devices/device/:deviceId" component={DeviceForm} />
+                            <Route path="/user" component={UserManagementView} />
+                        </Switch>
+                    </NavGridContainer>
+                </Grid>
+            </Grid>
+        </Container>
+    </Box>
+
+    const AuthRoutes = <Switch>
+        <Route exact path="/signin" component={SignIn} />
+        <Route exact path="/signup" component={SignUp} />
+    </Switch>
+
     // @ts-ignore
-    return (
-        <Box>
-                {/* <Route exact path="/signin" component={SignIn} />
-                <Route exact path="/signup" component={SignUp} /> */}
-                <Backdrop className={classes.backdrop} open={mask}>
-                    <CircularProgress color="inherit" />
-                </Backdrop>
-                <Container maxWidth={"xl"} className={classes.root}>
-                    <Grid container spacing={3} className={classes.fullHeightContainer}>
-                        <Grid item md={2}>
-                            <Box className={classes.paper}>
-                                <CustomDrawer />
-                            </Box>
-                        </Grid>
-                        <Grid item md={10}>
-                            <NavGridContainer>
-                <Switch>
-                                <Route exact path="/" component={HomeView} />
-                                <Route exact path="/invites" component={InviteView} />
-                                <Route exact path="/visitor" component={VisitorDetailsView} />
-                                <Route path="/visitor/:visitorId" component={VisitorDetailsView} />
-                                <Route path="/employees" component={EmployeesView} />
-                                <Route path="/sites" component={SitesView} />
-                                <Route path="/checkinpoints" component={CheckInPointsView} />
-                                <Route exact path="/devices" component={DevicesView} />
-                                <Route path="/agreement" component={AgreementView} />
-                                <Route path="/invites/visitor" component={InviteForm} />
-                                <Route exact path="/devices/device" component={DeviceForm} />
-                                <Route path="/devices/device/:deviceId" component={DeviceForm} />
-                                <Route path="/user" component={UserManagementView} />
-            </Switch>
-                            </NavGridContainer>
-                        </Grid>
-                    </Grid>
-                </Container>
-        </Box>
-    );
+    return isLoggedIn ? Routes : AuthRoutes
 }
