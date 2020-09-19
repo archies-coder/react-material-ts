@@ -9,6 +9,7 @@ import { RootState } from 'app/rootReducer'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchDevices } from 'features/Settings/deviceSlice'
 import { CustomMenuItem } from 'components/CustomMenuItem';
+import {Link} from "react-router-dom";
 interface OwnProps {
 }
 
@@ -110,7 +111,9 @@ const DevicesView: FunctionComponent<Props> = (props) => {
                     <SearchInput placeholder="Search Devices" width={400}/>
                     <SelectInput style={{marginRight: '-80px'}} value="All Sites"/>
                     <SelectInput style={{marginLeft: '40'}} value="All Status"/>
-                    <CustomButton style={{padding: '10px 40px', marginRight: '20px'}}>Add Device</CustomButton>
+                    <CustomButton style={{padding: '10px 40px', marginRight: '20px', marginTop: '20px'}}>
+                        <CustomMenuItem style={{color: 'white'}} to='/devices/device'>Add Device</CustomMenuItem>
+                    </CustomButton>
                 </Box>
                 <Box className={classes.tableContainer}>
                     <TableWrapper config={TableConfig}/>

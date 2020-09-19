@@ -18,6 +18,7 @@ import InviteForm from "../features/Invites/InviteForm";
 import UserManagementView from "../features/UserManagement/UserManagementView";
 import { RootState } from './rootReducer'
 import { useSelector } from 'react-redux'
+import DeviceForm from "../features/Settings/DeviceForm";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -76,9 +77,10 @@ export default function App() {
                                 <Route path="/employees" component={EmployeesView}/>
                                 <Route path="/sites" component={SitesView}/>
                                 <Route path="/checkinpoints" component={CheckInPointsView}/>
-                                <Route path="/devices" component={DevicesView}/>
+                                <Route exact path="/devices" component={DevicesView}/>
                                 <Route path="/agreement" component={AgreementView}/>
                                 <Route path="/invites/visitor" component={InviteForm}/>
+                                <Route path="/devices/device" component={DeviceForm}/>
                                 <Route path="/user" component={UserManagementView}/>
                             </Switch>
                         </NavGridContainer>
