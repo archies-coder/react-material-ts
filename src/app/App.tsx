@@ -93,10 +93,15 @@ export default function App() {
         </Container>
     </Box>
 
-    const AuthRoutes = <Switch>
-        <Route exact path="/signin" component={SignIn} />
-        <Route exact path="/signup" component={SignUp} />
-    </Switch>
+    const AuthRoutes = <Box>
+        <Backdrop className={classes.backdrop} open={mask}>
+            <CircularProgress color="inherit" />
+        </Backdrop>
+        <Switch>
+            <Route exact path="/signin" component={SignIn} />
+            <Route exact path="/signup" component={SignUp} />
+        </Switch>
+    </Box>
 
     // @ts-ignore
     return isLoggedIn ? Routes : AuthRoutes
