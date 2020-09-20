@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Container from '@material-ui/core/Container'
 import { Backdrop, Box, CircularProgress, createMuiTheme, createStyles, Grid, Paper, Theme } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import './styles.css'
 import HomeView from "../features/Home/HomeView";
 import InviteView from "../features/Invites/InviteView";
@@ -21,6 +21,7 @@ import { useSelector } from 'react-redux'
 import DeviceForm from "../features/Settings/DeviceForm";
 import SignIn from 'features/auth/SignIn'
 import SignUp from 'features/auth/SignUp'
+import { AuthRoute } from './AuthRoute'
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -55,8 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function App() {
     const classes = useStyles();
 
-    const [isLoggedIn, setIsLoggedIn] = useState(true)
-
+    const {isLoggedIn} = useSelector((state: RootState) => state.auth)
     const { mask } = useSelector((state: RootState) => state.backdrop)
 
     const Routes = <Box>
@@ -73,6 +73,7 @@ export default function App() {
                 <Grid item md={10}>
                     <NavGridContainer>
                         <Switch>
+                            <Redirect from='/signin' to='/'/>
                             <Route exact path="/" component={HomeView} />
                             <Route exact path="/invites" component={InviteView} />
                             <Route exact path="/visitor" component={VisitorDetailsView} />
@@ -98,11 +99,23 @@ export default function App() {
             <CircularProgress color="inherit" />
         </Backdrop>
         <Switch>
+            <AuthRoute exact path="/" component={HomeView} />
+            <AuthRoute exact path="/invites" component={InviteView} />
+            <AuthRoute exact path="/visitor" component={VisitorDetailsView} />
+            <AuthRoute exact path="/visitor/:visitorId" component={VisitorDetailsView} />
+            <AuthRoute exact path="/employees" component={EmployeesView} />
+            <AuthRoute exact path="/sites" component={SitesView} />
+            <AuthRoute exact path="/checkinpoints" component={CheckInPointsView} />
+            <AuthRoute exact path="/devices" component={DevicesView} />
+            <AuthRoute exact path="/agreement" component={AgreementView} />
+            <AuthRoute exact path="/invites/visitor" component={InviteForm} />
+            <AuthRoute exact path="/devices/device" component={DeviceForm} />
+            <AuthRoute exact path="/devices/device/:deviceId" component={DeviceForm} />
+            <AuthRoute exact path="/user" component={UserManagementView} />
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/signup" component={SignUp} />
         </Switch>
     </Box>
 
-    // @ts-ignore
     return isLoggedIn ? Routes : AuthRoutes
 }
