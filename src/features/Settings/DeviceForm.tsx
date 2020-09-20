@@ -70,14 +70,28 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
         udid: '',
     }
 
-    const [inputState, setInputState] = useState<any>(defaultInputState)
+    //const [inputState, setInputState] = useState<any>(defaultInputState)
+    
     const {
         devices,
+        currentDevice,
         devicesById,
         error
     } = useSelector((state: RootState) => state.devices)
 
+    const {
+        devicename,
+        iosversion,
+        udid,
+        email
+    } = currentDevice 
+    const inputState = currentDevice;
+    const setInputState=(device:any)=>{
+        dispatch(setCurrentDevice(device));
+    }
+
     const id = props.match.params.deviceId
+    debugger;
     useEffect(() => {
         if (devicesById[id]) {
             const tempId = devicesById[id]
@@ -93,37 +107,14 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
 
     const handleSubmit = async (e: any) => {
         e.preventDefault()
-        const {
-            name,
-            iosVersion,
-            udid,
-            email,
-            id
-        } = inputState
-
         dispatch(saveDevice(JSON.stringify({
-            "devicename": name,
-            "iosversion": iosVersion,
+            "devicename": devicename,
+            "iosversion": iosversion,
             "email": email,
             "udid": udid
         }), () => setInputState(defaultInputState)))
     }
 
-    // const {
-    //     visitors,
-    //     visitorsById,
-    //     isLoading: isLoadingVisitor,
-    //     error
-    // } = useSelector((state: RootState) => state.visitors)
-    //
-    //
-    // const id = props.match.params.visitorId
-    // useEffect(() => {
-    //     if (visitorsById[id]) {
-    //         setInputState(visitorsById[id])
-    //     }
-    //     console.log(visitors, inputState)
-    // }, [id])
 
     return (
         <Grid item style={{ height: '80%', width: '90%' }}>
@@ -143,14 +134,14 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
                             {/*<div>*/}
                             <TextInput label="Device Name"
                                 required
-                                name="name"
+                                name="devicename"
                                 onChange={handleChange}
-                                value={inputState.name} />
+                                value={devicename} />
                             <TextInput label="Ios Version"
                                 required
-                                name="iosVersion"
+                                name="iosversion"
                                 onChange={handleChange}
-                                value={inputState.iosVersion} />
+                                value={iosversion} />
                             {/*</div>*/}
                         </Grid>
                         <Grid item xs={6}>
@@ -160,13 +151,13 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
                                 label="Email"
                                 onChange={handleChange}
                                 name="email"
-                                value={inputState.email} />
+                                value={email} />
                             <TextInput
                                 required
                                 label="Udid"
                                 onChange={handleChange}
                                 name="udid"
-                                value={inputState.udid} />
+                                value={udid} />
                         </Grid>
                     </Grid>
                     <Grid container>
