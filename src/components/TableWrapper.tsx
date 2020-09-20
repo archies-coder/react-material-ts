@@ -1,4 +1,5 @@
 import {
+    Box,
     Button,
     createStyles, IconButton, Menu, MenuItem, MenuProps,
     Table,
@@ -9,7 +10,7 @@ import {
     TableHead,
     TablePagination,
     TableRow,
-    Theme, withStyles
+    Theme, withStyles,
 } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { KeyboardArrowRight, KeyboardArrowLeft, FirstPage as FirstPageIcon, LastPage as LastPageIcon} from "@material-ui/icons";
@@ -65,23 +66,23 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
     const classes = useStyles1();
     const theme = useTheme();
     const { count, page, rowsPerPage, onChangePage } = props;
-  
+
     const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       onChangePage(event, 0);
     };
-  
+
     const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       onChangePage(event, page - 1);
     };
-  
+
     const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       onChangePage(event, page + 1);
     };
-  
+
     const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
     };
-  
+
     return (
       <div className={classes.root}>
         <IconButton
@@ -152,6 +153,17 @@ const StyledMenuItem = withStyles((theme) => ({
     },
 }))(MenuItem);
 
+const StyledPaginationBox = withStyles((theme) => ({
+    root: {
+        '&': {
+            // textAlign: '-moz-center',
+            textAlign: '-webkit-center',
+            padding: '20px auto',
+            // fontSize: '16px'
+        }
+    }
+}))(Box)
+
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
         padding: 30
@@ -165,6 +177,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         borderBottom: 'none',
         padding: (config: IConfigObject) => config.cellOptions ? config.cellOptions.padding : 'auto'
     },
+    pagination: {
+        fontSize: '25px'
+    }
 }))
 
 const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => {
@@ -191,7 +206,7 @@ const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => {
     const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
         setPage(newPage);
       };
-    
+
       const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
       ) => {
@@ -199,9 +214,9 @@ const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => {
         setPage(0);
       };
 
-   
 
-    
+
+
 
     const TableHeader = <TableHead className={classes.header}>
         {
@@ -210,7 +225,7 @@ const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => {
             ))
         }
     </TableHead>
-    
+
     const body = <TableBody>
         {
             (rowsPerPage > 0
@@ -269,6 +284,29 @@ const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => {
         }
     </TableBody>
 
+    const tableHeader = <TableHead>
+        <TableRow>
+            <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                colSpan={columns.length}
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                align="right"
+                page={page}
+                SelectProps={{
+                    inputProps: { 'aria-label': 'rows per page' },
+                    native: true,
+                }}
+                classes={{
+                    root: classes.pagination
+                }}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+            />
+        </TableRow>
+    </TableHead>
+
     const tableFooter = <TableFooter>
         <TableRow>
             <TablePagination
@@ -291,12 +329,14 @@ const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => {
         <TableContainer classes={{
             root: classes.root
         }}>
+                <StyledPaginationBox justifyContent="end">{config.pagination && tableHeader}</StyledPaginationBox>
             <Table>
                 {TableHeader}
                 {config.isLoading && skeletonBody}
                 {!config.isLoading && body}
-                {config.pagination && tableFooter}
+
             </Table>
+            <StyledPaginationBox justifyContent="end">{config.pagination && tableFooter}</StyledPaginationBox>
         </TableContainer>
     );
 };

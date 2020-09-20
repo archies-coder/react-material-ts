@@ -21,6 +21,7 @@ import { useSelector } from 'react-redux'
 import DeviceForm from "../features/Settings/DeviceForm";
 import SignIn from 'features/auth/SignIn'
 import SignUp from 'features/auth/SignUp'
+import { AuthRoute } from './AuthRoute'
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -98,12 +99,23 @@ export default function App() {
             <CircularProgress color="inherit" />
         </Backdrop>
         <Switch>
-            {/* <Redirect from="*" to="/signin" /> */}
+            <AuthRoute exact path="/" component={HomeView} />
+            <AuthRoute exact path="/invites" component={InviteView} />
+            <AuthRoute exact path="/visitor" component={VisitorDetailsView} />
+            <AuthRoute exact path="/visitor/:visitorId" component={VisitorDetailsView} />
+            <AuthRoute exact path="/employees" component={EmployeesView} />
+            <AuthRoute exact path="/sites" component={SitesView} />
+            <AuthRoute exact path="/checkinpoints" component={CheckInPointsView} />
+            <AuthRoute exact path="/devices" component={DevicesView} />
+            <AuthRoute exact path="/agreement" component={AgreementView} />
+            <AuthRoute exact path="/invites/visitor" component={InviteForm} />
+            <AuthRoute exact path="/devices/device" component={DeviceForm} />
+            <AuthRoute exact path="/devices/device/:deviceId" component={DeviceForm} />
+            <AuthRoute exact path="/user" component={UserManagementView} />
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/signup" component={SignUp} />
         </Switch>
     </Box>
 
-    // @ts-ignore
     return isLoggedIn ? Routes : AuthRoutes
 }
