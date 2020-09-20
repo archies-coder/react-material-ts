@@ -119,16 +119,6 @@ const HomeView: FunctionComponent<Props> = (props) => {
         setAnchorEl(null);
     };
 
-    const data = {
-        avatar: <Avatar src={"uploads/1600095048.825798_arjun_pass.JPG"} />,
-        name: 'Vijaya Tondon',
-        mobileNo: 9754821630,
-        personToMeet: 'Ramesh Chawla',
-        purpose: 'Meeting',
-        inTime: '11:30 am',
-        outTime: '2:30 pm',
-    }
-
     const columns = [
         {
             id: "profilePicPath",
@@ -160,12 +150,6 @@ const HomeView: FunctionComponent<Props> = (props) => {
         }]
 
     let tableRows: any = []
-
-    for (let i = 0; i < 10; i++) {
-        let copy: any = tableRows
-
-        tableRows = [data, ...copy]
-    }
 
     const dispatch = useDispatch()
 
@@ -220,6 +204,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
             ...el,
             profilePicPath: <Avatar src={el['profilePicPath']} />
         })),
+        pagination:true,
         menuOptions: [{
             key: 'checkin_id',
             callback: handleCheckOut,
