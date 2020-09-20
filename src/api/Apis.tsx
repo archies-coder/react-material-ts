@@ -52,7 +52,7 @@ interface UserModel {
   usertype: any
 }
 
-export interface VisitorInfo  {
+export interface VisitorInfo {
   answer1: any,
   answer2: any,
   answer3: any,
@@ -205,7 +205,7 @@ export async function getInvitesData() {
 
 }
 
-export async function getEmployeesData(){
+export async function getEmployeesData() {
   const url = `/product/reception/checkin/user/data`
 
   const { data } = await apis.get(url)
@@ -218,7 +218,7 @@ export async function getEmployeesData(){
 
 }
 
-export async function getSitesData(){
+export async function getSitesData() {
   const url = `/product/reception/checkin/user/data`
 
   const { data } = await apis.get(url)
@@ -231,7 +231,7 @@ export async function getSitesData(){
 
 }
 
-export async function getDevicesData(){
+export async function getDevicesData() {
   const url = `/product/device/data`
 
   const { data } = await apis.get(url)
@@ -244,7 +244,7 @@ export async function getDevicesData(){
 
 }
 
-export async function getUsersData(){
+export async function getUsersData() {
   const url = `/product/device/data`
 
   const { data } = await apis.get(url)
@@ -267,7 +267,7 @@ export async function checkout(id: any) {
     }
   })
 }
-export async function createInvite(json:string) {
+export async function createInvite(json: string) {
   return await apis.post('/product/reception/user/invite', json, {
     headers: {
       "Content-Type": "application/json",
@@ -275,7 +275,7 @@ export async function createInvite(json:string) {
     },
   })
 }
-export async function createDevice(json:string) {
+export async function createDevice(json: string) {
   return await apis.post('/product/acountDetail/device/register', json, {
     headers: {
       "Content-Type": "application/json",
@@ -285,9 +285,9 @@ export async function createDevice(json:string) {
 }
 
 export async function signIn(username: string, password: string) {
-  return await apis.post('/product/login',JSON.stringify({
-    "username":username,
-    "password":password
+  return await apis.post('/product/login', JSON.stringify({
+    "username": username,
+    "password": password
   }), {
     headers: {
       'Content-type': 'application/json'
@@ -297,12 +297,13 @@ export async function signIn(username: string, password: string) {
 // panwar.arjunp@gmail.com 12345
 
 export async function signUp(username: string, password: string, name: string, userType: string) {
-  return await apis.post('/product/accountDetail/register',JSON.stringify({
-    "username": username,
-    "password": password,
-    "name": name,
-    "usertype": userType
-  }), {
+  return await apis.post('/product/accountDetail/register',
+    JSON.stringify({
+      "username": username,
+      "password": password,
+      "name": name,
+      "usertype": userType
+    }), {
     headers: {
       'Content-type': 'application/json'
     }

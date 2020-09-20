@@ -9,6 +9,7 @@ import employeeReducer from 'features/Employees/employeeSlice'
 import siteReducer from 'features/SalesAndOrganisation/siteSlice'
 import deviceReducer from 'features/Settings/deviceSlice'
 import userReducer from 'features/UserManagement/userSlice'
+import authReducer from 'features/auth/AuthSlice'
 
 const rootReducer = combineReducers({
   backdrop: backDropReducer,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   employees: employeeReducer,
   sites: siteReducer,
   devices: deviceReducer,
-  users: userReducer
+  users: userReducer,
+  auth: authReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>

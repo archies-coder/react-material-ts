@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Container from '@material-ui/core/Container'
 import { Backdrop, Box, CircularProgress, createMuiTheme, createStyles, Grid, Paper, Theme } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import './styles.css'
 import HomeView from "../features/Home/HomeView";
 import InviteView from "../features/Invites/InviteView";
@@ -55,8 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function App() {
     const classes = useStyles();
 
-    const [isLoggedIn, setIsLoggedIn] = useState(true)
-
+    const {isLoggedIn} = useSelector((state: RootState) => state.auth)
     const { mask } = useSelector((state: RootState) => state.backdrop)
 
     const Routes = <Box>
@@ -73,6 +72,7 @@ export default function App() {
                 <Grid item md={10}>
                     <NavGridContainer>
                         <Switch>
+                            <Redirect from='/signin' to='/'/>
                             <Route exact path="/" component={HomeView} />
                             <Route exact path="/invites" component={InviteView} />
                             <Route exact path="/visitor" component={VisitorDetailsView} />
@@ -98,6 +98,7 @@ export default function App() {
             <CircularProgress color="inherit" />
         </Backdrop>
         <Switch>
+            {/* <Redirect from="*" to="/signin" /> */}
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/signup" component={SignUp} />
         </Switch>

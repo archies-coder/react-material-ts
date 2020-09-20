@@ -51,9 +51,9 @@ const TextInput: FunctionComponent<any> = (props) => {
     const classes = useStyles()
     return (
         <TextField
-            id="email"
+            // id="email"
             variant="filled"
-            label="Email"
+            // label="Email"
             className={classes.textField}
             value={props.value}
             onChange={props.onChange}
