@@ -19,6 +19,7 @@ interface AuthState {
     token: string
     userType: string
     isLoggedIn: boolean
+    name: string
     currentSignInInput: ISignInInputState
     currentSignUpInput: ISignUpInputState
 }
@@ -41,6 +42,7 @@ const authInitialState: AuthState = {
     token: '',
     userType: '',
     isLoggedIn: false,
+    name: '',
     currentSignInInput: InitialSignInState,
     currentSignUpInput: InitialSignUpState
 }
@@ -65,12 +67,13 @@ const AuthSlice = createSlice({
         },
         getSignInSuccess(state: AuthState, { payload }: PayloadAction<any>) {
             console.log(payload)
-            const { token, usertype } = payload.data
+            const { token, usertype, name } = payload.data
             if (token) {
                 state.token = token
                 localStorage.setItem('token', token)
                 state.isLoggedIn = true
                 state.userType = usertype
+                state.name = name
             }
         },
         getAuthFailure: stopLoading,

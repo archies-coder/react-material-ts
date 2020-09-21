@@ -5,8 +5,9 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonIcon from '@material-ui/icons/Person';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import { Link as NavLink, Redirect, RouteComponentProps } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logout } from 'features/auth/AuthSlice';
+import { RootState } from 'app/rootReducer';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -52,6 +53,8 @@ const NavigationBar: FunctionComponent<Props> = (props) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
+    const {name} = useSelector((state: RootState) => state.auth)
+
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -77,7 +80,7 @@ const NavigationBar: FunctionComponent<Props> = (props) => {
                 <NotificationsActiveIcon /> <span className={classes.navItem}>Notification</span>
             </Link>
             <Link href="#" variant="h5" color="textSecondary">
-                    <span className={classes.profileName} aria-controls="fade-menu" aria-haspopup="true" onClick={handleClick}>John Doe</span>
+                    <span className={classes.profileName} aria-controls="fade-menu" aria-haspopup="true" onClick={handleClick}>{name}</span>
                     {/* Open with fade transition */}
                 <Menu
                     id="fade-menu"
