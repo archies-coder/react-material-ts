@@ -12,7 +12,7 @@ import { createInvite } from "../../api/Apis";
 import CustomButton from "../../components/Button";
 import TextInput from "../../components/TextInput";
 import DateTimeInput from 'components/DateTimeInput'
-import {saveInvite} from 'features/Invites/inviteSlice'
+import { saveInvite } from 'features/Invites/inviteSlice'
 const useStyles = makeStyles((theme: Theme) => createStyles({
     paper: {
         backgroundColor: '#E7ECF6',
@@ -81,7 +81,7 @@ const InviteForm: FunctionComponent<Props> = (props) => {
 
     const defaultInputState = {
         id: Number,
-        time: new Date().toLocaleString(),
+        time: new Date(),
         name: '',
         mobileNo: Number,
         personToMeet: '',
@@ -91,7 +91,7 @@ const InviteForm: FunctionComponent<Props> = (props) => {
 
     const [inputState, setInputState] = useState<any>({
         //id: Number,
-        time: new Date().toJSON(),
+        time: new Date(),
         name: '',
         mobileNo: '',
         personToMeet: '',
@@ -125,7 +125,7 @@ const InviteForm: FunctionComponent<Props> = (props) => {
             "tomeet": personToMeet,
             "purpose": purpose,
             "scheduletime": new Date(time).toLocaleString()
-        }),()=>setInputState(defaultInputState)))
+        }), () => setInputState(defaultInputState)))
     }
 
     // const {
@@ -160,38 +160,21 @@ const InviteForm: FunctionComponent<Props> = (props) => {
                     <Grid className={classes.inputGrid} container>
                         <Grid item xs={6}>
                             <div>
-                                {/* <TextInput label="Schedule Time"
-                                   type="datetime-local"
-                                    name="time"
+                                <DateTimeInput
+                                    disableToolbar
+                                    label="Schedule Time"
+                                    disablePast
+                                    format="dd-MM-yyyy hh:mm a"
+                                    mask="__-__-____ __:__ _"
+                                    margin="normal"
+                                    id="date-picker-inline"
+                                    autoOk
                                     value={inputState.time}
-                                    defaultValue={inputState.time}
-                                    onChange={handleChange} /> */}
+                                    onError={console.log}
+                                    onChange={(val) => { debugger; handleDateChange(val) }}
+                                />
 
-                                    <DateTimeInput
-                                        disableToolbar
-                                        label="Schedule Time"
 
-                                        //TextFieldComponent={TextInput}
-                                        disablePast
-                                        //className={classes.datePicker}
-                                        // InputProps={}
-                                        //variant="inline"
-                                        // inputVariant="outlined"
-                                        // format="dd"
-                                        format="dd-mm-yyyy hh:mm a"
-                                        margin="normal"
-                                        id="date-picker-inline"
-                                        autoOk
-                                        value={inputState.time}
-                                        onChange={handleDateChange}
-
-                                    // KeyboardButtonProps={{
-                                    //     'aria-label': 'change date',
-                                    //     edge: 'start'
-                                    // }}
-                                    />
-
-                                
                                 <TextInput label="Visitor Name"
                                     required
                                     name="name"
