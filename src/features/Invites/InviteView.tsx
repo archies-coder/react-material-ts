@@ -113,10 +113,6 @@ const data = {
 //const columns = ['', 'Visitor name', 'Mobile No.', 'Person to meet', 'Purpose', 'In Time', 'Out Time']
 const columns = [
     {
-        id: "invite_id",
-        label: '',
-    },
-    {
         id: "name",
         label: 'Visitor name'
     },
@@ -135,10 +131,6 @@ const columns = [
     {
         id: "scheduletime",
         label: 'In Time'
-    },
-    {
-        id: "outtime",
-        label: 'Out Time'
     }]
 interface OwnProps {
 }
@@ -195,6 +187,7 @@ const InviteView: FunctionComponent<Props> = (props) => {
         columns: columns,
         data: invites,
         isLoading: isLoadingInvites,
+        pagination: true,
         menuOptions: [{
             item: (id: any) => <CustomMenuItem to={"/visitor/" + id}>
                 View Details

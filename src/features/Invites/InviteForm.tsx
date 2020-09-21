@@ -171,7 +171,7 @@ const InviteForm: FunctionComponent<Props> = (props) => {
                                     autoOk
                                     value={inputState.time}
                                     onError={console.log}
-                                    onChange={(val) => { debugger; handleDateChange(val) }}
+                                    onChange={(val) => { handleDateChange(val) }}
                                 />
 
 
