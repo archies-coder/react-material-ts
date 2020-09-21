@@ -1,27 +1,27 @@
-import React, { useState } from 'react'
+import { Backdrop, Box, CircularProgress, createStyles, Grid, Theme } from "@material-ui/core"
 import Container from '@material-ui/core/Container'
-import { Backdrop, Box, CircularProgress, createMuiTheme, createStyles, Grid, Paper, Theme } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import { Switch, Route, Redirect } from 'react-router-dom'
-import './styles.css'
-import HomeView from "../features/Home/HomeView";
-import InviteView from "../features/Invites/InviteView";
-import VisitorDetailsView from "../features/Home/VisitorDetailsView";
-import EmployeesView from "../features/Employees/EmployeesView";
-import SitesView from "../features/SalesAndOrganisation/SitesView";
-import CheckInPointsView from "../features/SalesAndOrganisation/CheckInPointsView";
-import DevicesView from "../features/Settings/DevicesView";
-import AgreementView from "../features/Settings/AgreementView";
-import NavGridContainer from "../components/NavGridContainer";
-import CustomDrawer from "../CustomDrawer";
-import InviteForm from "../features/Invites/InviteForm";
-import UserManagementView from "../features/UserManagement/UserManagementView";
-import { RootState } from './rootReducer'
-import { useSelector } from 'react-redux'
-import DeviceForm from "../features/Settings/DeviceForm";
+import { AuthRoute } from 'app/AuthRoute'
+import NavGridContainer from "components/NavGridContainer"
+import CustomDrawer from "CustomDrawer"
 import SignIn from 'features/auth/SignIn'
 import SignUp from 'features/auth/SignUp'
-import { AuthRoute } from './AuthRoute'
+import EmployeesView from "features/Employees/EmployeesView"
+import HomeView from "features/Home/HomeView"
+import VisitorDetailsView from "features/Home/VisitorDetailsView"
+import InviteForm from "features/Invites/InviteForm"
+import InviteView from "features/Invites/InviteView"
+import CheckInPointsView from "features/SalesAndOrganisation/CheckInPointsView"
+import SitesView from "features/SalesAndOrganisation/SitesView"
+import AgreementView from "features/Settings/AgreementView"
+import DeviceForm from "features/Settings/DeviceForm"
+import DevicesView from "features/Settings/DevicesView"
+import UserManagementView from "features/UserManagement/UserManagementView"
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Redirect, Route, Switch } from 'react-router-dom'
+import { RootState } from './rootReducer'
+import './styles.css'
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -56,8 +56,11 @@ const useStyles = makeStyles((theme: Theme) =>
 export default function App() {
     const classes = useStyles();
 
+    const dispatch = useDispatch()
+
     const {isLoggedIn} = useSelector((state: RootState) => state.auth)
     const { mask } = useSelector((state: RootState) => state.backdrop)
+
 
     const Routes = <Box>
         <Backdrop className={classes.backdrop} open={mask}>

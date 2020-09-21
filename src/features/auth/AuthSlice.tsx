@@ -19,6 +19,7 @@ interface AuthState {
     token: string
     userType: string
     isLoggedIn: boolean
+    name: string
     currentSignInInput: ISignInInputState
     currentSignUpInput: ISignUpInputState
 }
@@ -41,6 +42,7 @@ const authInitialState: AuthState = {
     token: '',
     userType: '',
     isLoggedIn: false,
+    name: '',
     currentSignInInput: InitialSignInState,
     currentSignUpInput: InitialSignUpState
 }
@@ -57,42 +59,55 @@ const AuthSlice = createSlice({
     initialState: authInitialState,
     reducers: {
         getAuthStart: startLoading,
-        getSignUpSuccess(state, { payload }: PayloadAction<any>) {
+        getAuthStatus(state: AuthState){
+            if (localStorage.token) state.isLoggedIn = true
+        },
+        getSignUpSuccess(state: AuthState, { payload }: PayloadAction<any>) {
             console.log(payload)
         },
-        getSignInSuccess(state, { payload }: PayloadAction<any>) {
+        getSignInSuccess(state: AuthState, { payload }: PayloadAction<any>) {
             console.log(payload)
-            if (payload.data.token) {
-                state.token = payload.data.token
+            const { token, usertype, name } = payload.data
+            if (token) {
+                state.token = token
+                localStorage.setItem('token', token)
                 state.isLoggedIn = true
-                state.userType = payload.data.usertype
+                state.userType = usertype
+                state.name = name
             }
         },
         getAuthFailure: stopLoading,
-        setCurrentSignUpInput(state, {payload}: PayloadAction<ISignUpInputState>) {
+        setCurrentSignUpInput(state: AuthState, {payload}: PayloadAction<ISignUpInputState>) {
             state.currentSignUpInput = payload
         },
         setCurrentSignInInput(state, {payload}: PayloadAction<ISignInInputState>) {
             state.currentSignInInput = payload
         },
-        resetSignUpInput(state) {
+        resetSignUpInput(state: AuthState) {
             state.currentSignUpInput = InitialSignUpState
         },
-        resetSignInInput(state) {
+        resetSignInInput(state: AuthState) {
             state.currentSignInInput = InitialSignInState
         },
+        logout(state: AuthState) {
+            debugger
+            state = authInitialState
+            localStorage.removeItem('token')
+        }
     }
 })
 
 export const {
     getAuthStart,
+    getAuthStatus,
     getSignUpSuccess,
     getSignInSuccess,
     getAuthFailure,
     setCurrentSignInInput,
     setCurrentSignUpInput,
     resetSignUpInput,
-    resetSignInInput
+    resetSignInInput,
+    logout
 } = AuthSlice.actions
 
 export default AuthSlice.reducer
