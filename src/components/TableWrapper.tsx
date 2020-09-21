@@ -13,7 +13,7 @@ import {
     Theme, withStyles,
 } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { KeyboardArrowRight, KeyboardArrowLeft, FirstPage as FirstPageIcon, LastPage as LastPageIcon} from "@material-ui/icons";
+import { KeyboardArrowRight, KeyboardArrowLeft, FirstPage as FirstPageIcon, LastPage as LastPageIcon } from "@material-ui/icons";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { Skeleton } from '@material-ui/lab';
 import React, { FunctionComponent, useEffect, useState } from 'react';
@@ -46,7 +46,7 @@ interface IConfigObject {
     menuOptions?: any[];
     cellOptions?: ITableCellProps;
     isLoading?: Boolean;
-    pagination?:Boolean;
+    pagination?: Boolean;
 }
 
 interface OwnProps extends React.HTMLAttributes<any> {
@@ -54,12 +54,12 @@ interface OwnProps extends React.HTMLAttributes<any> {
 }
 
 const useStyles1 = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexShrink: 0,
-      marginLeft: theme.spacing(2.5),
-    },
-  }),
+    createStyles({
+        root: {
+            flexShrink: 0,
+            marginLeft: theme.spacing(2.5),
+        },
+    }),
 );
 
 function TablePaginationActions(props: TablePaginationActionsProps) {
@@ -68,57 +68,57 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
     const { count, page, rowsPerPage, onChangePage } = props;
 
     const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      onChangePage(event, 0);
+        onChangePage(event, 0);
     };
 
     const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      onChangePage(event, page - 1);
+        onChangePage(event, page - 1);
     };
 
     const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      onChangePage(event, page + 1);
+        onChangePage(event, page + 1);
     };
 
     const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+        onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
     };
 
     return (
-      <div className={classes.root}>
-        <IconButton
-          onClick={handleFirstPageButtonClick}
-          disabled={page === 0}
-          aria-label="first page"
-        >
-          {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
-        </IconButton>
-        <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
-          {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
-        </IconButton>
-        <IconButton
-          onClick={handleNextButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label="next page"
-        >
-          {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
-        </IconButton>
-        <IconButton
-          onClick={handleLastPageButtonClick}
-          disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-          aria-label="last page"
-        >
-          {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
-        </IconButton>
-      </div>
+        <div className={classes.root}>
+            <IconButton
+                onClick={handleFirstPageButtonClick}
+                disabled={page === 0}
+                aria-label="first page"
+            >
+                {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+            </IconButton>
+            <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
+                {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+            </IconButton>
+            <IconButton
+                onClick={handleNextButtonClick}
+                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+                aria-label="next page"
+            >
+                {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+            </IconButton>
+            <IconButton
+                onClick={handleLastPageButtonClick}
+                disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+                aria-label="last page"
+            >
+                {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+            </IconButton>
+        </div>
     );
-  }
+}
 
 interface TablePaginationActionsProps {
     count: number;
     page: number;
     rowsPerPage: number;
     onChangePage: (event: React.MouseEvent<HTMLButtonElement>, newPage: number) => void;
-  }
+}
 
 type Props = OwnProps;
 
@@ -158,7 +158,7 @@ const StyledPaginationBox = withStyles((theme) => ({
         '&': {
             // textAlign: '-moz-center',
             textAlign: '-webkit-center',
-            padding: '20px auto',
+            margin: '20px auto',
             // fontSize: '16px'
         }
     }
@@ -178,7 +178,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         padding: (config: IConfigObject) => config.cellOptions ? config.cellOptions.padding : 'auto'
     },
     pagination: {
-        fontSize: '25px'
+        // fontSize: '25px'
     }
 }))
 
@@ -205,17 +205,14 @@ const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => {
 
     const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
         setPage(newPage);
-      };
+    };
 
-      const handleChangeRowsPerPage = (
+    const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-      ) => {
+    ) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
-      };
-
-
-
+    };
 
 
     const TableHeader = <TableHead className={classes.header}>
@@ -231,7 +228,7 @@ const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => {
             (rowsPerPage > 0
                 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 : rows
-              ).map((row: any, i: number) => (
+            ).map((row: any, i: number) => (
                 <TableRow key={i}>
                     {
                         columns.map((col: any, j: number) => <TableCell key={i + '' + j}>{row[col.id]}</TableCell>)
@@ -329,14 +326,17 @@ const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => {
         <TableContainer classes={{
             root: classes.root
         }}>
-                <StyledPaginationBox justifyContent="end">{config.pagination && tableHeader}</StyledPaginationBox>
             <Table>
                 {TableHeader}
                 {config.isLoading && skeletonBody}
                 {!config.isLoading && body}
 
             </Table>
-            <StyledPaginationBox justifyContent="end">{config.pagination && tableFooter}</StyledPaginationBox>
+            {config.pagination === undefined ?
+                <StyledPaginationBox justifyContent="end">{tableFooter}</StyledPaginationBox>
+                :
+                <StyledPaginationBox justifyContent="end">{config.pagination && tableFooter}</StyledPaginationBox>
+            }
         </TableContainer>
     );
 };

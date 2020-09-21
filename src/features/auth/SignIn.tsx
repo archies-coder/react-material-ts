@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import {Link} from 'react-router-dom';
+import {Link, RouteComponentProps} from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -16,7 +16,7 @@ import CustomButton from 'components/Button';
 import TextInput from 'components/TextInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'app/rootReducer';
-import { doLogin, resetSignInInput, setCurrentSignInInput } from './AuthSlice';
+import { doLogin, getAuthStatus, resetSignInInput, setCurrentSignInInput } from './AuthSlice';
 
 // function Copyright() {
 //   return (
@@ -51,7 +51,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+interface Props extends RouteComponentProps<any> {
+
+}
+
+export default function SignIn(props: Props) {
   const classes = useStyles();
 
   const dispatch = useDispatch()
@@ -74,6 +78,7 @@ export default function SignIn() {
       password,
       () => dispatch(resetSignInInput())
     ))
+    props.history.push('/')
   }
   return (
     <Container component="main" maxWidth="xs">

@@ -66,9 +66,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const HomeDateDropdown: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
-    const [selectedDate, setSelectedDate] = React.useState<Date | null>(
-        new Date('2014-08-18T21:11:54'),
-    );
+    const [selectedDate, setSelectedDate] = React.useState<Date | null>(new Date());
 
     const handleDateChange = (date: Date | null) => {
         setSelectedDate(date);
@@ -92,7 +90,6 @@ const HomeDateDropdown: FunctionComponent<Props> = (props) => {
                 //     edge: 'start'
                 // }}
                 />
-                <span className={classes.expandIcon}><ExpandMoreIcon /></span>
             </MuiPickersUtilsProvider>
             {/*<span className={classes.icon}><EventIcon /></span>*/}
             {/*<span className={classes.date}>June 23, 2020</span>*/}
