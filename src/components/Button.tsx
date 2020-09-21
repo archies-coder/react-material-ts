@@ -1,8 +1,10 @@
-import { Theme, withStyles } from "@material-ui/core";
+import { ExtendButtonBase, Theme, withStyles } from "@material-ui/core";
 import Button, { ButtonTypeMap } from '@material-ui/core/Button';
 import React, { FunctionComponent } from 'react';
 
 interface OwnProps extends React.AllHTMLAttributes<ButtonTypeMap> {
+    fullWidth?: any
+    variant?: string
 }
 
 type Props = OwnProps;
