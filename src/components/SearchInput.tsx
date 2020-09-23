@@ -14,8 +14,8 @@ type Props = OwnProps;
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         inputContainer: {
-            padding: '33px',
-            marginRight: 20,
+            // padding: '33px',
+            // marginRight: 20,
             // width: '225px',
             // height: '40px'
             '& .MuiInputBase-input::placeholder': {
@@ -69,7 +69,7 @@ const SearchInput: FunctionComponent<Props> = (props) => {
     const classes = useStyles(props)
 
     return (
-      <Box>
+      <Box {...props}>
           <div className={classes.inputContainer}>
               <div className={classes.search}>
                   <div className={classes.searchIcon}>

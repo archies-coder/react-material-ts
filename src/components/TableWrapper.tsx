@@ -166,7 +166,18 @@ const StyledPaginationBox = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     root: {
-        padding: 30
+        // padding: 30
+        //  .MuiTableCell-head
+        '& .MuiTableCell-root': {
+            fontSize: '12px',
+            padding: '5px',
+            height: '45px',
+            borderBottom: 'none'
+        },
+        '& .MuiAvatar-root, & .MuiAvatar-circle, & .MuiAvatar-colorDefault': {
+            height: '30px',
+            width: '30px'
+        }
     },
     header: {
         '& > *': {
@@ -175,7 +186,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
     cell: {
         borderBottom: 'none',
-        padding: (config: IConfigObject) => config.cellOptions ? config.cellOptions.padding : 'auto'
+        // padding: (config: IConfigObject) => config.cellOptions ? config.cellOptions.padding : 'auto'
     },
     pagination: {
         // fontSize: '25px'
@@ -281,28 +292,6 @@ const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => {
         }
     </TableBody>
 
-    const tableHeader = <TableHead>
-        <TableRow>
-            <TablePagination
-                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-                colSpan={columns.length}
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                align="right"
-                page={page}
-                SelectProps={{
-                    inputProps: { 'aria-label': 'rows per page' },
-                    native: true,
-                }}
-                classes={{
-                    root: classes.pagination
-                }}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
-            />
-        </TableRow>
-    </TableHead>
 
     const tableFooter = <TableFooter>
         <TableRow>
@@ -323,7 +312,7 @@ const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => {
         </TableRow>
     </TableFooter>
     return (
-        <TableContainer classes={{
+        <TableContainer {...props} classes={{
             root: classes.root
         }}>
             <Table>
