@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Line } from 'react-chartjs-2';
+import { Theme } from "@material-ui/core";
 
 
 
@@ -18,6 +19,7 @@ export const MyChart2: FunctionComponent<any> = ({visitorStats}) => {
         //borderDash: [],
         borderDashOffset: 0.0,
         borderJoinStyle: 'miter',
+        borderWidth: 1,
         pointBorderColor: '#192949',//'rgba(75,192,192,1)',
         pointBackgroundColor: '#192949',
         pointBorderWidth: 1,
@@ -25,7 +27,7 @@ export const MyChart2: FunctionComponent<any> = ({visitorStats}) => {
         pointHoverBackgroundColor: 'rgba(75,192,192,1)',
         pointHoverBorderColor: 'rgba(220,220,220,1)',
         pointHoverBorderWidth: 2,
-        pointRadius: 5,
+        pointRadius: 4,
         pointHitRadius: 10,
         data: visitorStats
       }
@@ -40,11 +42,28 @@ export const MyChart2: FunctionComponent<any> = ({visitorStats}) => {
     legend: {
       display: false,
       labels: {
-        fontColor: 'rgb(255, 99, 132)'
+        fontColor: 'rgb(255, 99, 132)',
+        fontSize: 18
+      }
+    },
+    layout: {
+      padding: {
+          left: 20,
+          right: 20,
+          top: 20,
+          bottom: 20
       }
     },
     scales: {
-
+      scaleLabel: {
+        display: false,
+        fontSize: 100
+      },
+      ticks:{
+        fontSize:18,
+        lineHeight:.5,
+        fontStyle: 'bold'
+      },
       yAxes: [{
         display: false,
         gridLines: {
@@ -55,13 +74,20 @@ export const MyChart2: FunctionComponent<any> = ({visitorStats}) => {
         },
       }],
       xAxes: [{
+        display:true,
         gridLines: {
           display: false
         },
-        labels: [...visitorStats],
+        labels: ["Jun 2020",1,7,14,21],
         scaleLabel: {
-          display: false
+          display: false,
+          lineHeight: 2
         },
+        ticks:{
+          fontSize:25,
+          fontColor: '#192949',//'rgb(255, 99, 132)',
+          //fontFamily: ''
+        }
       }]
     }
   }

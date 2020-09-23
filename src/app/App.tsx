@@ -21,6 +21,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import { RootState } from './rootReducer'
+import {outhUser,setAuthUser} from 'features/auth/AuthSlice'
 import './styles.css'
 
 
@@ -62,6 +63,19 @@ export default function App() {
     const {isLoggedIn} = useSelector((state: RootState) => state.auth)
     const { mask } = useSelector((state: RootState) => state.backdrop)
 
+    if (!isLoggedIn) {
+        debugger
+        //localStorage.loginRedirect = rest.location.pathname
+        const user = sessionStorage.getItem('authUser');
+        
+        if(user){
+            JSON.parse(user)
+            //outhUser(JSON.parse(user));
+            dispatch(setAuthUser(JSON.parse(user)))
+        }else{
+            //return <Redirect to="/signin" />
+        }
+    }
 
     const Routes = <Box>
         <Backdrop className={classes.backdrop} open={mask}>
