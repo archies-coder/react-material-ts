@@ -65,6 +65,16 @@ const AuthSlice = createSlice({
         getSignUpSuccess(state: AuthState, { payload }: PayloadAction<any>) {
             console.log(payload)
         },
+        setAuthUser(state: AuthState, { payload }: PayloadAction<any>){
+            const { token, userType, name } = payload
+            if (token) {
+                state.token = token
+                localStorage.setItem('token', token)
+                state.isLoggedIn = true
+                state.userType = userType
+                state.name = name
+            }
+        },
         getSignInSuccess(state: AuthState, { payload }: PayloadAction<any>) {
             console.log(payload)
             const { token, usertype, name } = payload.data
@@ -74,6 +84,11 @@ const AuthSlice = createSlice({
                 state.isLoggedIn = true
                 state.userType = usertype
                 state.name = name
+                sessionStorage.setItem('authUser', JSON.stringify({
+                    "token":token,
+                    "userType":usertype,
+                    "name":name
+                }));
             }
         },
         getAuthFailure: stopLoading,
@@ -93,6 +108,7 @@ const AuthSlice = createSlice({
             debugger
             state = authInitialState
             localStorage.removeItem('token')
+            sessionStorage.removeItem('authUser')
         }
     }
 })
@@ -107,7 +123,8 @@ export const {
     setCurrentSignUpInput,
     resetSignUpInput,
     resetSignInInput,
-    logout
+    logout,
+    setAuthUser
 } = AuthSlice.actions
 
 export default AuthSlice.reducer
@@ -148,4 +165,10 @@ export const doRegister = (
         dispatch(getBackdropStop())
         dispatch(getAuthFailure())
     }
+}
+
+export const outhUser = (
+    user: any
+): AppThunk => async dispatch => {
+    dispatch(setAuthUser(user))
 }
