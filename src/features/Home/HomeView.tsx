@@ -236,7 +236,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
         <Grid item>
             <Grid container>
                 <Grid item xs={12} style={{ height: "20%", marginTop: 0, }}>
-                    <Paper className={classes.paper}>
+                    <Paper className={classes.paper} elevation={0}>
                         <Grid container>
                             <Grid item md={8}>
                                 <Box>
@@ -258,14 +258,14 @@ const HomeView: FunctionComponent<Props> = (props) => {
                     </Paper>
                 </Grid>
                 <Grid item xs style={{ height: "100%", marginTop: '30px' }}>
-                    <Paper className={classes.paper}>
+                    <Paper className={classes.paper} elevation={0}>
                         <Box display="flex" justifyContent="start">
-                            <SearchInput placeholder="Search visitor" />
-                            <SelectInput value="In Office" />
-                            <SelectInput value="All Purpose" />
-                            <SelectInput value="All Sites" />
+                            <SearchInput style={{marginTop: '33px', marginLeft: '27px'}} placeholder="Search visitor" />
+                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="In Office" />
+                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="All Purpose" />
+                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="All Sites" />
                         </Box>
-                        <TableWrapper config={TableConfig} />
+                        <TableWrapper style={{marginTop: '17px'}} config={TableConfig} />
                     </Paper>
                 </Grid>
             </Grid>

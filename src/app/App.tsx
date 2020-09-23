@@ -64,7 +64,7 @@ export default function App() {
     const { mask } = useSelector((state: RootState) => state.backdrop)
 
     if (!isLoggedIn) {
-        debugger
+        // debugger
         //localStorage.loginRedirect = rest.location.pathname
         const user = sessionStorage.getItem('authUser');
 

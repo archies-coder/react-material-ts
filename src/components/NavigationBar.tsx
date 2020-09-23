@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             textAlign: 'right',
-            margin: '31px 20px 30px 0',
+            margin: '25px 20px 22px 0',
             fontSize: '20px',
             fontWeight: 300,
             '& > *': {
@@ -23,13 +23,19 @@ const useStyles = makeStyles((theme: Theme) =>
                 marginLeft: '55px',
                 color: theme.palette.text.primary,
             },
+            '& .MuiSvgIcon-root': {
+                fontSize: '25px'
+            },
+            '& .MuiTypography-root, & .makeStyles-root-59, & .MuiTypography-body1': {
+                height: '25px !important'
+            }
         },
         navLink: {
             color: theme.palette.text.primary,
             textDecoration: 'none'
         },
         navItem: {
-            verticalAlign: 'text-bottom',
+            verticalAlign: 'top',
             color: theme.palette.text.primary,
         },
         profileName: {

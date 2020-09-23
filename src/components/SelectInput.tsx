@@ -18,17 +18,21 @@ type Props = OwnProps;
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     inputContainer: {
-        padding: (props: Props) => props.padding ? props.padding : 15,
+        // padding: (props: Props) => props.padding ? props.padding : 15,
         marginRight: 20,
         '& .MuiButtonBase-root, .MuiListItem-root, .MuiMenuItem-root, .Mui-selected, .MuiMenuItem-gutters, .MuiListItem-gutters, .MuiListItem-button, .Mui-selected': {
-            backgroundColor: '#fff',
+            // backgroundColor: '#fff',
         },
-        '& .makeStyles-inputRoot-46': {
-            backgroundColor: theme.palette.common.white,
-            '&:hover': {
-                backgroundColor: theme.palette.common.white,
-            },
-        }
+        // '& .makeStyles-inputRoot-46': {
+        //     backgroundColor: theme.palette.common.white,
+        //     '&:hover': {
+        //         backgroundColor: theme.palette.common.white,
+        //     },
+        // },
+        '& .MuiSelect-root, & .MuiSelect-select, & .MuiSelect-selectMenu, & .MuiInputBase-input, & .MuiInput-input': {
+            opacity: 1,
+            color: theme.palette.text.primary,
+        },
     },
     select: {
         position: 'relative',
@@ -43,12 +47,13 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
     inputRoot: {
         // color: '#000',
+
         // backgroundColor: theme.palette.common.white,
         borderRadius: theme.shape.borderRadius - 5,
-        backgroundColor: theme.palette.common.white,
-        '&:hover': {
-            backgroundColor: theme.palette.common.white,
-        },
+        // backgroundColor: theme.palette.common.white,
+        // '&:hover': {
+        //     backgroundColor: theme.palette.common.white,
+        // },
     },
     menuItem: {
         // backgroundColor: theme.palette.common.white,
