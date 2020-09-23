@@ -200,7 +200,7 @@ const InviteView: FunctionComponent<Props> = (props) => {
             <Paper className={classes.paper}>
                 <HomeDateDropdown />
                 <Box display="flex" justifyContent="start">
-                    <SearchInput placeholder="S earch visitor" />
+                    <SearchInput placeholder="Search visitor" />
                     <SelectInput value="In Office" />
                     <SelectInput value="All Purpose" />
                     <SelectInput value="All Sites" />

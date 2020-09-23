@@ -13,14 +13,14 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             textAlign: 'right',
-            margin: '24px 20px 0 0',
-            fontSize: '24px',
+            margin: '31px 20px 30px 0',
+            fontSize: '20px',
             fontWeight: 300,
             '& > *': {
                 color: theme.palette.text.primary,
             },
             '& > * + *': {
-                marginLeft: theme.spacing(8),
+                marginLeft: '55px',
                 color: theme.palette.text.primary,
             },
         },
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
         profileName: {
             verticalAlign: 'text-bottom',
             fontWeight: 600,
-            marginRight: '40px'
+            marginRight: '25px'
         }
     }),
 );

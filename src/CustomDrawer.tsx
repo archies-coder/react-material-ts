@@ -1,5 +1,5 @@
 import React, {FunctionComponent, useState} from 'react';
-import {Collapse, createStyles, Paper, Theme, Typography} from "@material-ui/core";
+import {Collapse, createStyles, Drawer, Paper, Theme, Typography} from "@material-ui/core";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -13,21 +13,26 @@ import OrganizationIcon from "./assets/icons/OrganizationIcon";
 import SettingsIcon from '@material-ui/icons/Settings';
 import PersonIcon from '@material-ui/icons/Person';
 
+const drawerWidth = 295;
+
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             flexGrow: 1,
             padding: 0,
             // backgroundColor: theme.palette.primary.main,
-            height: 'inherit',
-            overflow: 'hidden'
+            // height: 'inherit',
+            // overflow: 'hidden'
         },
         paper: {
             height: '100%',
+            width: drawerWidth,
+            flexShrink: 0,
             padding: theme.spacing(0),
             textAlign: 'center',
             color: '#A6ACB8',
             backgroundColor: theme.palette.text.primary,
+            // width: '295px',
 
             '& .MuiSvgIcon-root': {
                 color: '#158594'
@@ -68,11 +73,26 @@ const useStyles = makeStyles((theme: Theme) =>
             '& > *': {
                 fontWeight: 600
             }
-        }
+        },
+
+        drawer: {
+            width: drawerWidth,
+            flexShrink: 0,
+        },
+        drawerPaper: {
+            width: drawerWidth,
+        },
+        // necessary for content to be below app bar
+        toolbar: theme.mixins.toolbar,
+        content: {
+            flexGrow: 1,
+            backgroundColor: theme.palette.background.default,
+            padding: theme.spacing(3),
+        },
     }),
 );
 
-interface OwnProps {
+interface OwnProps extends React.AllHTMLAttributes<any> {
 }
 
 type Props = OwnProps;
@@ -168,61 +188,127 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
         });
     };
 
-    return <Paper className={classes.paper}>
-        <Typography variant="h5" className={classes.logo} noWrap>
-            Company Logo
+    return <Drawer
+            className={classes.drawer}
+            variant="permanent"
+            classes={{
+                paper: classes.paper,
+            }}
+            anchor="left"
+        >
+            <Divider />
+            <Typography variant="h5" className={classes.logo} noWrap>
+                Company Logo
         </Typography>
-        <Divider/>
-        <List>
-            {Object.keys(mappableRoutes).map((key, index) => (
-                mappableRoutes[key].children ? (
-                    <>
-                        {
-                            // @ts-ignore
-                            open[mappableRoutes[key].name] ?
-                                <ListItem button onClick={() => handleClick(mappableRoutes[key].name)}
-                                          className="listItem active-navlink">
-                                    <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
-                                    <ListItemText className={classes.listItemText} primary={key}/>
-                                    {/*@ts-ignore*/}
-                                    {open[mappableRoutes[key].name] ? <ExpandLess/> : <ExpandMore/>}
-                                </ListItem>
-                                :
-                                <ListItem button onClick={() => handleClick(mappableRoutes[key].name)}
-                                          className="listItem">
-                                    <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
-                                    <ListItemText className={classes.listItemText} primary={key}/>
-                                    {/*@ts-ignore*/}
-                                    {open[mappableRoutes[key].name] ? <ExpandLess/> : <ExpandMore/>}
-                                </ListItem>
-                        }
-                        {/*@ts-ignore*/}
-                        <Collapse in={open[mappableRoutes[key].name]} timeout="auto" unmountOnExit>
-                            <List component="div" disablePadding>
-                                {mappableRoutes[key].children.map(child => (
-                                    <ListItem
-                                        key={child.title}
-                                        component={NavLink}
-                                        exact
-                                        activeClassName={"active-navlink-menuItem"}
-                                        to={child.path ? child.path : ''}
-                                        button className={classes.nested}>
-                                        <ListItemText className={classes.listItemText} primary={child.title}/>
+            <Divider />
+            <List>
+                {Object.keys(mappableRoutes).map((key, index) => (
+                    mappableRoutes[key].children ? (
+                        <>
+                            {
+                                // @ts-ignore
+                                open[mappableRoutes[key].name] ?
+                                    <ListItem button onClick={() => handleClick(mappableRoutes[key].name)}
+                                        className="listItem active-navlink">
+                                        <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
+                                        <ListItemText className={classes.listItemText} primary={key} />
+                                        {/*@ts-ignore*/}
+                                        {open[mappableRoutes[key].name] ? <ExpandLess /> : <ExpandMore />}
                                     </ListItem>
-                                ))}
-                            </List>
-                        </Collapse>
-                    </>
-                ) : (
-                    <ListItem button key={key} component={NavLink} exact className="listItem"
-                              activeClassName={"active-navlink"} to={mappableRoutes[key].path}>
-                        <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
-                        <ListItemText className={classes.listItemText} primary={key}/>
-                    </ListItem>
-                )
-            ))}
-        </List>
-    </Paper>
+                                    :
+                                    <ListItem button onClick={() => handleClick(mappableRoutes[key].name)}
+                                        className="listItem">
+                                        <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
+                                        <ListItemText className={classes.listItemText} primary={key} />
+                                        {/*@ts-ignore*/}
+                                        {open[mappableRoutes[key].name] ? <ExpandLess /> : <ExpandMore />}
+                                    </ListItem>
+                            }
+                            {/*@ts-ignore*/}
+                                        <Collapse in={open[mappableRoutes[key].name]} timeout="auto" unmountOnExit>
+                                <List component="div" disablePadding>
+                                    {mappableRoutes[key].children.map(child => (
+                                        <ListItem
+                                            key={child.title}
+                                            component={NavLink}
+                                            exact
+                                            activeClassName={"active-navlink-menuItem"}
+                                            to={child.path ? child.path : ''}
+                                            button className={classes.nested}>
+                                            <ListItemText className={classes.listItemText} primary={child.title} />
+                                        </ListItem>
+                                    ))}
+                                </List>
+                            </Collapse>
+                        </>
+                    ) : (
+                            <ListItem button key={key} component={NavLink} exact className="listItem"
+                                activeClassName={"active-navlink"} to={mappableRoutes[key].path}>
+                                <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
+                                <ListItemText className={classes.listItemText} primary={key} />
+                            </ListItem>
+                        )
+                ))}
+            </List>
+        </Drawer>
+
+        {/* <Paper className={classes.paper}>
+            <Typography variant="h5" className={classes.logo} noWrap>
+                Company Logo
+        </Typography>
+            <Divider />
+            <List>
+                {Object.keys(mappableRoutes).map((key, index) => (
+                    mappableRoutes[key].children ? (
+                        <>
+                            {
+                                // @ts-ignore
+                                open[mappableRoutes[key].name] ?
+                                    <ListItem button onClick={() => handleClick(mappableRoutes[key].name)}
+                                        className="listItem active-navlink">
+                                        <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
+                                        <ListItemText className={classes.listItemText} primary={key} />
+                                        {/*@ts-ignore*/}
+        {/*{open[mappableRoutes[key].name] ? <ExpandLess /> : <ExpandMore />}
+                                    </ListItem>
+                                    :
+                                    <ListItem button onClick={() => handleClick(mappableRoutes[key].name)}
+                                        className="listItem">
+                                        <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
+                                        <ListItemText className={classes.listItemText} primary={key} />
+                                        {/*@ts-ignore*/}
+        {/*{open[mappableRoutes[key].name] ? <ExpandLess /> : <ExpandMore />}
+                                    </ListItem>
+                            }
+                            {/*@ts-ignore*/}
+        {/*<Collapse in={open[mappableRoutes[key].name]} timeout="auto" unmountOnExit>
+                                <List component="div" disablePadding>
+                                    {mappableRoutes[key].children.map(child => (
+                                        <ListItem
+                                            key={child.title}
+                                            component={NavLink}
+                                            exact
+                                            activeClassName={"active-navlink-menuItem"}
+                                            to={child.path ? child.path : ''}
+                                            button className={classes.nested}>
+                                            <ListItemText className={classes.listItemText} primary={child.title} />
+                                        </ListItem>
+                                    ))}
+                                </List>
+                            </Collapse>
+                        </>
+                    ) : (
+                            <ListItem button key={key} component={NavLink} exact className="listItem"
+                                activeClassName={"active-navlink"} to={mappableRoutes[key].path}>
+                                <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
+                                <ListItemText className={classes.listItemText} primary={key} />
+                            </ListItem>
+                        )
+                ))}
+            </List>
+        </Paper> */}
 }
 
 export default CustomDrawer;
+
+

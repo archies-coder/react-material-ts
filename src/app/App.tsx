@@ -28,9 +28,9 @@ import './styles.css'
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
+            display: 'flex',
             flexGrow: 1,
             padding: 0,
-            // backgroundColor: theme.palette.primary.main,
             height: 'inherit',
             overflow: 'hidden'
         },
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(0),
             textAlign: 'center',
             backgroundColor: '#192949',
-            overflowY: 'scroll'
+            overflowY: 'hidden'
         },
         fullHeight: {
             // height: '100vh',
@@ -67,7 +67,7 @@ export default function App() {
         debugger
         //localStorage.loginRedirect = rest.location.pathname
         const user = sessionStorage.getItem('authUser');
-        
+
         if(user){
             JSON.parse(user)
             //outhUser(JSON.parse(user));
@@ -82,13 +82,13 @@ export default function App() {
             <CircularProgress color="inherit" />
         </Backdrop>
         <Container maxWidth={"xl"} className={classes.root}>
-            <Grid container spacing={3} className={classes.fullHeightContainer}>
-                <Grid item md={2} >
-                    <Box className={classes.paper}>
+            {/* <Grid container spacing={3} className={classes.fullHeightContainer}> */}
+                {/* <Grid item> */}
+                    {/* <Box className={classes.paper}> */}
                         <CustomDrawer/>
-                    </Box>
-                </Grid>
-                <Grid item md={10}>
+                    {/* </Box> */}
+                {/* </Grid> */}
+                {/* <Grid item> */}
                     <NavGridContainer>
                         <Switch>
                             <Redirect from='/signin' to='/'/>
@@ -107,8 +107,8 @@ export default function App() {
                             <Route path="/user" component={UserManagementView} />
                         </Switch>
                     </NavGridContainer>
-                </Grid>
-            </Grid>
+                {/* </Grid> */}
+            {/* </Grid> */}
         </Container>
     </Box>
 
