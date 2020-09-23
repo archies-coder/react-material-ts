@@ -66,7 +66,7 @@ const AuthSlice = createSlice({
             console.log(payload)
         },
         getSignInSuccess(state: AuthState, { payload }: PayloadAction<any>) {
-            console.log(payload)
+            // console.log(payload)
             const { token, usertype, name } = payload.data
             if (token) {
                 state.token = token

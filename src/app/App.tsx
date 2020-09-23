@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
             color: theme.palette.primary.main,
         },
         fullHeightContainer: {
-            height: '100%',
+            // height: '100%',
             // overflow: 'auto'
         },
         paper: {
@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(0),
             textAlign: 'center',
             backgroundColor: '#192949',
+            overflowY: 'scroll'
         },
         fullHeight: {
             // height: '100vh',
@@ -68,9 +69,9 @@ export default function App() {
         </Backdrop>
         <Container maxWidth={"xl"} className={classes.root}>
             <Grid container spacing={3} className={classes.fullHeightContainer}>
-                <Grid item md={2}>
+                <Grid item md={2} >
                     <Box className={classes.paper}>
-                        <CustomDrawer />
+                        <CustomDrawer/>
                     </Box>
                 </Grid>
                 <Grid item md={10}>
