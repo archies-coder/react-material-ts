@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
             // alignItems: 'center',
             // alignSelf: 'center',
             // maxHeight: '175px',
-            margin: theme.spacing(0,2),
+            margin: theme.spacing(0,1),
             // backgroundColor: 'white',
             // width: '60%',
 
@@ -27,9 +27,9 @@ const useStyles = makeStyles((theme: Theme) =>
                 textAlign: 'center',
                 color: '#192949',
                 backgroundColor: '#E7ECF6',
-                margin: theme.spacing(1),
+                // margin: theme.spacing(1),
                 // marginTop: theme.spacing(3),
-                width: theme.spacing(16),
+                width: theme.spacing(20),
                 height: theme.spacing(14),
                 fontWeight: theme.typography.fontWeightBold,
             },
@@ -39,11 +39,11 @@ const useStyles = makeStyles((theme: Theme) =>
         //     backgroundColor: 'white'
         // },
         count: {
-            fontSize: '56px',
+            fontSize: '56.25px',
         },
         label: {
             lineHeight: '5px',
-            fontSize: '14px'
+            fontSize: '18.75px'
         },
     }),
 );

@@ -235,10 +235,10 @@ const HomeView: FunctionComponent<Props> = (props) => {
     return (
         <Grid item>
             <Grid container>
-                <Grid item xs={12} style={{ height: "40%", marginTop: 0, }}>
+                <Grid item xs={12} style={{ height: "20%", marginTop: 0, }}>
                     <Paper className={classes.paper}>
                         <Grid container>
-                            <Grid item md={7}>
+                            <Grid item md={8}>
                                 <Box>
                                     <Box alignItems="flex-start">
                                         <HomeDateDropdown />
@@ -248,7 +248,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
                                     </Box>
                                 </Box>
                             </Grid>
-                            <Grid item md={5}>
+                            <Grid item md={4}>
                                 <div className={classes.graph}>
                                     <MyChart2 visitorStats={[...visitorStats]}></MyChart2>
                                 </div>
@@ -257,7 +257,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
 
                     </Paper>
                 </Grid>
-                <Grid item xs style={{ height: "100%", marginTop: '22px' }}>
+                <Grid item xs style={{ height: "100%", marginTop: '30px' }}>
                     <Paper className={classes.paper}>
                         <Box display="flex" justifyContent="start">
                             <SearchInput placeholder="Search visitor" />
