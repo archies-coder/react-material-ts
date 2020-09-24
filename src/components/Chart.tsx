@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Line } from 'react-chartjs-2';
-import { Theme } from "@material-ui/core";
+import { Box, Paper, Theme } from "@material-ui/core";
 
 
 
@@ -29,7 +29,7 @@ export const MyChart2: FunctionComponent<any> = ({visitorStats}) => {
         pointHoverBorderWidth: 2,
         pointRadius: 4,
         pointHitRadius: 10,
-        data: visitorStats
+        data: [1,500,35,5,100]//visitorStats
       }
     ]
   };
@@ -51,17 +51,17 @@ export const MyChart2: FunctionComponent<any> = ({visitorStats}) => {
           left: 20,
           right: 20,
           top: 20,
-          bottom: 20
+          bottom: 0
       }
     },
     scales: {
       scaleLabel: {
         display: false,
-        fontSize: 100
+        //fontSize: 100
       },
       ticks:{
-        fontSize:18,
-        lineHeight:.5,
+        fontSize:18.75,
+        lineHeight:5,
         fontStyle: 'bold'
       },
       yAxes: [{
@@ -78,21 +78,28 @@ export const MyChart2: FunctionComponent<any> = ({visitorStats}) => {
         gridLines: {
           display: false
         },
-        labels: ["Jun 2020",1,7,14,21],
+        labels: ["Jun 20",1,7,14,21],
         scaleLabel: {
           display: false,
           lineHeight: 2
         },
         ticks:{
-          fontSize:25,
+          fontSize:18.75,
           fontColor: '#192949',//'rgb(255, 99, 132)',
           //fontFamily: ''
+          padding:20,
+          lineHeight:1,
+          maxRotation:0,
+          fontStyle: 'bold'
         }
       }]
     }
   }
   return (
-    <Line data={data} options={options} />
+    <Box>
+      <Line data={data} options={options} />
+    </Box>
+    
   )
 }
 
