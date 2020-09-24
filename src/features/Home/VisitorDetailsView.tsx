@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     paper: {
         backgroundColor: '#E7ECF6',
         borderRadius: theme.shape.borderRadius - 5,
-        marginRight: 30,
+        marginRight: 20,
         height: '100%',
     },
     header: {
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         marginTop: 117,
     },
     button: {
-        marginRight: 20
+        // marginRight: 20
     },
     selectInput: {
         '& > .makeStyles-inputContainer-32': {
@@ -225,16 +225,16 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                             </div>
                         </Grid>
                         <Grid item xs={6}>
-                            <Box display="flex" justifyContent="flex-end">
-                                <SelectInput value="Actions" style={{ marginTop: '-15px' }}
+                            <Box display="flex" justifyContent="flex-end" style={{position: 'relative', top: '32px', right: '86px'}}>
+                                <SelectInput value="Actions" style={{ height: '45px' }}
                                     menuOptions={selectInputMenu} />
                                 <Box className={classes.button}>
-                                    <CustomButton onClick={handleSubmit}>Save</CustomButton>
+                                    <CustomButton style={{ height: '45px', width: '168px'}} onClick={handleSubmit}>Save</CustomButton>
                                 </Box>
                             </Box>
                         </Grid>
                     </Grid>
-                    <Grid container>
+                    <Grid container style={{width: '1020px'}}>
                         <Grid item xs={6}>
                             <div className={classes.visitorInfo}>
                                 <span className={classes.headerSecondary}>Visitor's information</span>
@@ -244,7 +244,7 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                                             onChange={handleChange} />
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <TextInput label="Time Out" type="text" name="outTime"
+                                        <TextInput label="Time Out" type="text"  name="outTime"
                                             value={inputState.outTime}
                                             onChange={handleChange} />
                                     </Grid>
@@ -274,7 +274,7 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                                 value={inputState.country} />
                         </Grid>
                     </Grid>
-                    <Grid container>
+                    <Grid container style={{ width: '1020px' }}>
                         <Grid item xs={6}>
                             <div className={classes.appointment}>
                                 <span className={classes.headerSecondary}>Appointments requests</span>

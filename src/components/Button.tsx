@@ -13,15 +13,15 @@ const GradientButton = withStyles((theme: Theme) => ({
     root: {
         backgroundImage: 'linear-gradient(to right, #2C578A, #20849C)',
         color: theme.palette.common.white,
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: 'bold',
         padding: theme.spacing(1.5, 10),
         borderRadius: 50,
         height: '56px'
     },
     inputContainer: {
-        padding: 15,
-        marginRight: 20,
+        // padding: 15,
+        // marginRight: 20,
     },
 }))(Button)
 
