@@ -29,7 +29,7 @@ export const MyChart2: FunctionComponent<any> = ({visitorStats}) => {
         pointHoverBorderWidth: 2,
         pointRadius: 4,
         pointHitRadius: 10,
-        data: [1,500,35,5,100]//visitorStats
+        data: visitorStats
       }
     ]
   };
@@ -78,7 +78,7 @@ export const MyChart2: FunctionComponent<any> = ({visitorStats}) => {
         gridLines: {
           display: false
         },
-        labels: ["Jun 20",1,7,14,21],
+        labels: ["Jun 2020",1,7,14,21],
         scaleLabel: {
           display: false,
           lineHeight: 2
