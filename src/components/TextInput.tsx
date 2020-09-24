@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         borderRadius: theme.shape.borderRadius -5,
         // marginBottom: '17px',
 
-        '& .MuiInputBase-root.MuiFilledInput-root.MuiFilledInput-underline.makeStyles-input-29.MuiInputBase-formControl.MuiInputBase-marginDense.MuiFilledInput-marginDense': {
+        '& .MuiInputBase-root.MuiFilledInput-root.MuiFilledInput-underline.MuiInputBase-formControl.MuiInputBase-marginDense.MuiFilledInput-marginDense': {
             height: '36px',
             '& input': {
                 padding: '10px',
@@ -72,7 +72,7 @@ const TextInput: FunctionComponent<any> = (props) => {
             onChange={props.onChange}
             margin="dense"
             InputLabelProps={{variant: "outlined", color: 'primary', classes: {
-                shrink: true
+                // shrink: true
             }}}
             InputProps={{
                 className: classes.input,

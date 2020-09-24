@@ -18,11 +18,7 @@ const GradientButton = withStyles((theme: Theme) => ({
         padding: theme.spacing(1.5, 10),
         borderRadius: 50,
         height: '56px'
-    },
-    inputContainer: {
-        // padding: 15,
-        // marginRight: 20,
-    },
+    }
 }))(Button)
 
 const CustomButton: FunctionComponent<Props> = (props) => {
