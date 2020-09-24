@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) =>
             // vertical padding + font size from searchIcon
             // width: 'inherit',
             fontSize: '11.25px',
-            marginTop: '5px',
+            marginTop: '7px',
             color: theme.palette.text.primary,
             zIndex: 1000,
             paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
