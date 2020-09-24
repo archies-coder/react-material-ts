@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, {FunctionComponent, useState} from 'react';
 import {
     Box,
     Button,
@@ -19,7 +19,7 @@ import {
     Theme,
     withStyles
 } from "@material-ui/core";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import {makeStyles, useTheme} from "@material-ui/core/styles";
 import {
     FirstPage as FirstPageIcon,
     KeyboardArrowLeft,
@@ -28,7 +28,7 @@ import {
 } from "@material-ui/icons";
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import { Skeleton } from '@material-ui/lab';
+import {Skeleton} from '@material-ui/lab';
 
 interface IRowProps {
     [id: string]: any;
@@ -78,7 +78,7 @@ const useStyles1 = makeStyles((theme: Theme) =>
 function TablePaginationActions(props: TablePaginationActionsProps) {
     const classes = useStyles1();
     const theme = useTheme();
-    const { count, page, rowsPerPage, onChangePage } = props;
+    const {count, page, rowsPerPage, onChangePage} = props;
 
     const handleFirstPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         onChangePage(event, 0);
@@ -103,24 +103,24 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
                 disabled={page === 0}
                 aria-label="first page"
             >
-                {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+                {theme.direction === 'rtl' ? <LastPageIcon/> : <FirstPageIcon/>}
             </IconButton>
             <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
-                {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+                {theme.direction === 'rtl' ? <KeyboardArrowRight/> : <KeyboardArrowLeft/>}
             </IconButton>
             <IconButton
                 onClick={handleNextButtonClick}
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label="next page"
             >
-                {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+                {theme.direction === 'rtl' ? <KeyboardArrowLeft/> : <KeyboardArrowRight/>}
             </IconButton>
             <IconButton
                 onClick={handleLastPageButtonClick}
                 disabled={page >= Math.ceil(count / rowsPerPage) - 1}
                 aria-label="last page"
             >
-                {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+                {theme.direction === 'rtl' ? <FirstPageIcon/> : <LastPageIcon/>}
             </IconButton>
         </div>
     );
@@ -238,6 +238,9 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         },
         '& .MuiTable-root thead th': {
             fontWeight: 'bold'
+        },
+        '& .MuiTableSortLabel-icon': {
+            opacity: 1
         }
     },
     header: {
@@ -265,7 +268,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
 }))
 
-export const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => {
+export const TableWrapper: FunctionComponent<Props> = ({config, ...props}) => {
     const classes = useStyles(config)
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -315,7 +318,7 @@ export const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => 
     </TableHead>
 
     function EnhancedTableHead(props: EnhancedTableProps) {
-        const { isActive, classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+        const {isActive, classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort} = props;
         const createSortHandler = (property: string) => (event: React.MouseEvent<unknown>) => {
             onRequestSort(event, property);
         };
@@ -332,10 +335,10 @@ export const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => 
                         >
                             {headCell.isSort && <TableSortLabel
 
-                                IconComponent={KeyboardArrowDownIcon}
-                                active={orderBy === headCell.id}
-                                direction={orderBy === headCell.id ? order : 'asc'}
-                                onClick={createSortHandler(headCell.id)}
+                              IconComponent={KeyboardArrowDownIcon}
+                              active={orderBy === headCell.id}
+                              direction={orderBy === headCell.id ? order : 'asc'}
+                              onClick={createSortHandler(headCell.id)}
                             >
                                 {headCell.label}
                                 {orderBy === headCell.id ? (
@@ -364,8 +367,8 @@ export const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => 
     const body = <TableBody>
         {
             (rowsPerPage > 0
-                ? stableSort(rows, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                : rows
+                    ? stableSort(rows, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    : rows
             ).map((row: any, i: number) => (
                 <TableRow key={i}>
                     {
@@ -375,7 +378,7 @@ export const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => 
                         <Button aria-controls="simple-menu" aria-haspopup="true" onClick={(e) => {
                             handleClick(e, i + "-c")
                         }}>
-                            <MoreHorizIcon />
+                            <MoreHorizIcon/>
                         </Button>
                         <StyledMenu
                             id={"simple-menu-" + i + row['id']}
@@ -384,7 +387,7 @@ export const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => 
                             open={Boolean(menuId === (i + "-c"))}
                             onClose={handleClose}
                         >
-                            {menuOptions.map(({ item, key, callback }, i) => {
+                            {menuOptions.map(({item, key, callback}, i) => {
 
                                 return (
                                     <StyledMenuItem key={i} id={row[key] || row.id} onClick={(e) => {
@@ -409,11 +412,11 @@ export const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => 
             Array(20).fill(0).map((row: any, i: number) => (
                 <TableRow key={i}>
                     {
-                        columns.map((col: any) => <TableCell key={row.id || i}><Skeleton /></TableCell>)
+                        columns.map((col: any) => <TableCell key={row.id || i}><Skeleton/></TableCell>)
                     }
                     <TableCell className={classes.cell} align="center">
                         <Button aria-controls="simple-menu" aria-haspopup="true">
-                            <MoreHorizIcon />
+                            <MoreHorizIcon/>
                         </Button>
                     </TableCell>
                 </TableRow>
@@ -425,13 +428,13 @@ export const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => 
     const tableFooter = <TableFooter>
         <TableRow>
             <TablePagination
-                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                rowsPerPageOptions={[5, 10, 25, {label: 'All', value: -1}]}
                 colSpan={columns.length}
                 count={rows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{
-                    inputProps: { 'aria-label': 'rows per page' },
+                    inputProps: {'aria-label': 'rows per page'},
                     native: true,
                 }}
                 onChangePage={handleChangePage}

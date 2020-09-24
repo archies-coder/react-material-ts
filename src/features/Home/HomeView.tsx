@@ -22,9 +22,9 @@ import HomeDateDropdown from "./HomeDateDropdown";
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link } from "react-router-dom";
-import TableWrapper from "../../components/TableWrapper";
-import SearchInput from "../../components/SearchInput";
-import SelectInput from "../../components/SelectInput";
+import TableWrapper from "components/TableWrapper";
+import SearchInput from "components/SearchInput";
+import SelectInput from "components/SelectInput";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchVisitors } from 'features/Home/visitorSlice'
 import { fetchHomeStats } from 'features/Home/homeSlice'
@@ -126,7 +126,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
         },
         {
             id: "name",
-            label: 'Visitor name'
+            label: 'Visitor name',
         },
         {
             id: "mobile",
@@ -134,7 +134,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
         },
         {
             id: "tomeet",
-            label: 'Person to meet'
+            label: 'Person to meet',
         },
         {
             id: "purpose",
@@ -142,11 +142,13 @@ const HomeView: FunctionComponent<Props> = (props) => {
         },
         {
             id: "intime",
-            label: 'In Time'
+            label: 'In Time',
+            isSort: true
         },
         {
             id: "outime",
-            label: 'Out Time'
+            label: 'Out Time',
+            isSort: true
         }]
 
     let tableRows: any = []
@@ -265,7 +267,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
                             <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="All Purpose" />
                             <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="All Sites" />
                         </Box>
-                        <TableWrapper style={{marginTop: '17px'}} config={TableConfig} />
+                        <TableWrapper style={{marginTop: '17px', marginLeft: '32px', marginRight: '30px'}} config={TableConfig} />
                     </Paper>
                 </Grid>
             </Grid>

@@ -21,20 +21,20 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         height: '100%',
     },
     header: {
-        fontSize: '22px',
+        fontSize: '20px',
         fontWeight: 'bold',
         padding: theme.spacing(2, 0, 0, 4),
         color: theme.palette.text.primary
     },
     headerSecondary: {
-        fontSize: '20px',
+        fontSize: '18.75px',
         fontWeight: 'bold',
         padding: theme.spacing(0, 0, 2, 0),
         color: theme.palette.text.primary,
     },
     arrowBack: {
-        height: '30px',
-        verticalAlign: 'bottom',
+        height: '16px',
+        // verticalAlign: 'bottom',
         cursor: 'pointer',
     },
     imageContainer: {
@@ -43,8 +43,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     imageUpload: {
         position: 'relative',
         backgroundColor: '#fff',
-        height: '100px',
-        width: '100px',
+        height: 86,
+        width: 86,
         textAlign: 'center',
         borderRadius: theme.shape.borderRadius,
         '& > svg': {
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         padding: theme.spacing(1, 0, 2, 8),
     },
     rightInputs: {
-        marginTop: 134,
+        marginTop: 117,
     },
     button: {
         marginRight: 20

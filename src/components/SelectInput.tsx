@@ -3,6 +3,7 @@ import { createStyles, fade, InputLabel, MenuItem, Select, Theme } from "@materi
 import { makeStyles } from "@material-ui/core/styles";
 import theme from "../theme";
 import { RouteComponentProps } from "react-router-dom";
+import { ExpandMore } from '@material-ui/icons';
 
 interface IMenuOptions {
     title: string;
@@ -21,7 +22,11 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         // padding: (props: Props) => props.padding ? props.padding : 15,
         marginRight: 20,
         '& .MuiButtonBase-root, .MuiListItem-root, .MuiMenuItem-root, .Mui-selected, .MuiMenuItem-gutters, .MuiListItem-gutters, .MuiListItem-button, .Mui-selected': {
-            // backgroundColor: '#fff',
+            backgroundColor: '#fff',
+        },
+        '& .MuiListItem-root.Mui-selected, & .MuiListItem-root.Mui-selected:hover': {
+            backgroundColor: 'white !important',
+            padding: 0
         },
         // '& .makeStyles-inputRoot-46': {
         //     backgroundColor: theme.palette.common.white,
@@ -33,6 +38,13 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
             opacity: 1,
             color: theme.palette.text.primary,
         },
+        '& .MuiFormLabel-root, & .MuiInputLabel-root, & .MuiInputLabel-animated': {
+            fontSize: '11.25px',
+            position: 'absolute',
+            top: '15px',
+            left: '15px',
+            color: theme.palette.text.primary,
+        }
     },
     select: {
         position: 'relative',
@@ -44,6 +56,11 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         width: '135px',
         height: '40px',
         // padding: '12px'
+        '& .MuiSvgIcon-root': {
+            position: 'absolute',
+            top: '7px',
+            right: '15px',
+        }
     },
     inputRoot: {
         // color: '#000',
@@ -56,8 +73,18 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         // },
     },
     menuItem: {
+        backgroundColor: theme.palette.common.white,
+    },
+    menuPapaer: {
+        backgroundColor: theme.palette.common.white,
+        '& .MuiListItem-root.Mui-selected, & .MuiListItem-root.Mui-selected:hover': {
+            backgroundColor: 'white !important',
+            padding: theme.spacing(0.5, 1)
+        },
+    },
+    menuRoot: {
         // backgroundColor: theme.palette.common.white,
-    }
+    },
 }))
 
 const SelectInput: FunctionComponent<Props> = (props) => {
@@ -67,14 +94,15 @@ const SelectInput: FunctionComponent<Props> = (props) => {
             <div className={classes.select} {...props}>
                 <InputLabel id="demo-simple-select-label" style={{
                     // padding: '0 10px',
-                    position: 'absolute',
-                    top: '18px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
+                    // position: 'absolute',
+                    // top: '18px',
+                    // display: 'flex',
+                    // alignItems: 'center',
+                    // justifyContent: 'center',
                 }}>{props.value}</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
+                    IconComponent={() => <ExpandMore />}
                     disableUnderline
                     className={classes.inputRoot}
                     style={{
@@ -91,7 +119,11 @@ const SelectInput: FunctionComponent<Props> = (props) => {
                             vertical: "top",
                             horizontal: "right"
                         },
-                        getContentAnchorEl: null
+                        getContentAnchorEl: null,
+                        PopoverClasses: {
+                            paper: classes.menuPapaer,
+                            root: classes.menuRoot
+                        }
                     }}
                 >
                     {
