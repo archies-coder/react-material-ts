@@ -78,7 +78,7 @@ export const MyChart2: FunctionComponent<any> = ({visitorStats}) => {
         gridLines: {
           display: false
         },
-        labels: ["Jun 2020",1,7,14,21],
+        labels: ["Jun 20",1,7,14,21],
         scaleLabel: {
           display: false,
           lineHeight: 2
