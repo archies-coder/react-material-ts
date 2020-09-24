@@ -105,10 +105,9 @@ const AuthSlice = createSlice({
             state.currentSignInInput = InitialSignInState
         },
         logout(state: AuthState) {
-            debugger
             state = authInitialState
-            localStorage.removeItem('token')
-            sessionStorage.removeItem('authUser')
+            
+            debugger
         }
     }
 })
@@ -171,4 +170,12 @@ export const outhUser = (
     user: any
 ): AppThunk => async dispatch => {
     dispatch(setAuthUser(user))
+}
+
+export const doLogout = (): AppThunk => async dispatch => {
+    debugger
+    localStorage.removeItem('token')
+    sessionStorage.removeItem('authUser')
+    dispatch(logout())
+    window.location.reload()
 }

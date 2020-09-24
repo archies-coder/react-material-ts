@@ -6,7 +6,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import { Link as NavLink, Redirect, RouteComponentProps } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from 'features/auth/AuthSlice';
+import { doLogout } from 'features/auth/AuthSlice';
 import { RootState } from 'app/rootReducer';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -70,6 +70,12 @@ const NavigationBar: FunctionComponent<Props> = (props) => {
         setAnchorEl(null);
         // TODO due to 2 different route objects, logout is not working
     };
+
+    const handleLogout = () => {
+        dispatch(doLogout())
+        handleClose()
+        
+    };
     return (
         <Typography className={classes.root}>
             <Link variant="h6" color="textSecondary">
@@ -96,8 +102,8 @@ const NavigationBar: FunctionComponent<Props> = (props) => {
                     onClose={handleClose}
                     TransitionComponent={Fade}
                 >
-                    <MenuItem onClick={handleClose}>
-                        <NavLink to="/signin">Logout</NavLink>
+                    <MenuItem onClick={handleLogout}>
+                        <NavLink to="/logout">Logout</NavLink>
                     </MenuItem>
                 </Menu>
             </Link>

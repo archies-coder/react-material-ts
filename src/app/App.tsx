@@ -92,6 +92,7 @@ export default function App() {
                     <NavGridContainer>
                         <Switch>
                             <Redirect from='/signin' to='/'/>
+                            <Redirect from='/logout' to='/'/>
                             <Route exact path="/" component={HomeView} />
                             <Route exact path="/invites" component={InviteView} />
                             <Route exact path="/visitor" component={VisitorDetailsView} />
@@ -117,6 +118,7 @@ export default function App() {
             <CircularProgress color="inherit" />
         </Backdrop>
         <Switch>
+            <Redirect from='/logout' to='/'/>
             <AuthRoute exact path="/" component={HomeView} />
             <AuthRoute exact path="/invites" component={InviteView} />
             <AuthRoute exact path="/visitor" component={VisitorDetailsView} />
