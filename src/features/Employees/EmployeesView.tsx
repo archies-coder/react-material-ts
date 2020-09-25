@@ -34,10 +34,6 @@ const data = {
 //const columns = ['Visitor name', 'Mobile No.', 'Email', 'Organization']
 const columns = [
     {
-        id: "profilePicPath",
-        label: '',
-    },
-    {
         id: "name",
         label: 'Visitor name'
     },
@@ -103,10 +99,10 @@ const EmployeesView: FunctionComponent<Props> = (props) => {
     }
 
     return (
-        <Grid item xs style={{height: "100%", marginTop: '22px'}}>
+        <Grid item xs style={{height: "100%"}}>
             <Paper className={classes.paper}>
-            <SearchInput placeholder="Search Employees by name, email or mobile" width={500}/>
-                <TableWrapper config={TableConfig}/>
+            <SearchInput style={{margin: '0 23px 30px', paddingTop: '37px'}} placeholder="Search Employees by name, email or mobile" width={500}/>
+                <TableWrapper style={{marginLeft: '54px'}} config={TableConfig}/>
             </Paper>
         </Grid>
     );
