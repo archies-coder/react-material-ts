@@ -220,7 +220,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
                 </CustomMenuItem>)
             }
         }, {
-            key: 'id',
+            key: 'checkin_id',
             item: (id: any) => <CustomMenuItem to={'/visitor/' + id}>
                 View Details
             </CustomMenuItem>

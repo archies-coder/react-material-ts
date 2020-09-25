@@ -1,15 +1,77 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Links } from 'parse-link-header'
 
-import { VisitorInfo, VisitorsResult, getVisitorInfo, getVisitorData } from 'api/Apis'
+import { VisitorsResult, getVisitorInfo, getVisitorData } from 'api/Apis'
 import { AppThunk } from 'app/store'
 
+export interface VisitorInfo {
+    answer1: any,
+    answer2: any,
+    answer3: any,
+    answer4: any,
+    answer5: any,
+    belongings: any,
+    checkin_id: any,
+    city: any,
+    company: any,
+    country: any,
+    email: any,
+    gender: any,
+    idCardImagePath: any,
+    idtype: any,
+    intime: any,
+    mobile: any,
+    name: any,
+    ndastatus: any,
+    noofvisitor: any,
+    organisation: any,
+    outime: any,
+    policycheckstatus: any,
+    profilePicPath: any,
+    purpose: any,
+    signaturePath: any,
+    site: any,
+    tomeet: any,
+    usertype: any,
+    vehicleno: any
+}
 
+export const defaultVisitor: VisitorInfo = {
+    answer1: '',
+    answer2: '',
+    answer3: '',
+    answer4: '',
+    answer5: '',
+    belongings: '',
+    checkin_id: '',
+    city: '',
+    company: '',
+    country: '',
+    email: '',
+    gender: '',
+    idCardImagePath: '',
+    idtype: '',
+    intime: '',
+    mobile: '',
+    name: '',
+    ndastatus: '',
+    noofvisitor: '',
+    organisation: '',
+    outime: '',
+    policycheckstatus: '',
+    profilePicPath: '',
+    purpose: '',
+    signaturePath: '',
+    site: '',
+    tomeet: '',
+    usertype: '',
+    vehicleno: ''
+}
 
 interface VisitorState {
-    visitors: any[]
+    visitors: VisitorInfo[]
     visitorsById: any,
-    currentVisitor: any
+    currentVisitor: VisitorInfo
     currentPageVisitors: number[]
     pageCount: number
     pageLinks: Links | null
@@ -20,25 +82,7 @@ interface VisitorState {
 const visitorsInitialState: VisitorState = {
     visitors: [],
     visitorsById: {},
-    currentVisitor: {
-        id: 0,
-        avatar: '',
-        name: '',
-        mobileNo: '',
-        personToMeet: '',
-        purpose: '',
-        inTime: '',
-        outTime: '',
-        type: '',
-        noOfVisitors: '',
-        city: '',
-        email: '',
-        visitorCompany: '',
-        country: '',
-        site: '',
-        host: '',
-        gender: ''
-    },
+    currentVisitor: defaultVisitor,
     currentPageVisitors: [],
     pageCount: 0,
     pageLinks: {},
@@ -66,14 +110,13 @@ const visitors = createSlice({
             state.pageCount = pageCount
             state.isLoading = false
             state.error = null
-            state.visitors = visitors.map((obj, i) => ({
-                ...obj, id: i
-            }))
+            state.visitors = visitors
             // @ts-ignore
-            state.visitorsById = state.visitors.map(visitor => ({ ...visitor, id: visitor.id }))
+            state.visitors.map(visitor => (state.visitorsById[visitor.checkin_id]=visitor))
+            //state.visitorsById = state.visitors.map(visitor => ({ ...visitor, id: visitor.id }))
         },
         getVisitorsFailure: loadingFailed,
-        setCurrentVisitor(state, { payload }: PayloadAction<any>){
+        setCurrentVisitor(state, { payload }: PayloadAction<any>) {
             state.currentVisitor = payload
         }
     }

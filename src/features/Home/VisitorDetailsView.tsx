@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import { ArrowBackIos, CameraAlt } from "@material-ui/icons";
 import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice';
-import { setCurrentVisitor } from 'features/Home/visitorSlice';
+import { setCurrentVisitor, defaultVisitor } from 'features/Home/visitorSlice';
 import React, { FunctionComponent, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { RouteComponentProps } from 'react-router-dom';
@@ -113,16 +113,12 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
     }
 
     //const [inputState, setInputState] = useState(defaultInputState)
-    const setInputState = (a: any) => { }
     const handleChange = (e: any) => {
         dispatch(setCurrentVisitor({
             ...currentVisitor,
             [e.target.name]: e.target.value
         }));
-        setInputState({
-            ...inputState,
-            [e.target.name]: e.target.value
-        })
+
     }
 
     const {
@@ -132,68 +128,76 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
         isLoading: isLoadingVisitor,
         error
     } = useSelector((state: RootState) => state.visitors)
-    const inputState = currentVisitor
+    //const inputState = currentVisitor
     const {
         mask
     } = useSelector((state: RootState) => state.backdrop)
 
-
+    const {
+        answer1,
+        answer3,
+        answer4,
+        answer5,
+        belongings,
+        checkin_id,
+        city,
+        company,
+        country,
+        email,
+        gender,
+        idCardImagePath,
+        idtype,
+        intime,
+        mobile,
+        name,
+        ndastatus,
+        noofvisitor,
+        organisation,
+        outime,
+        policycheckstatus,
+        profilePicPath,
+        purpose,
+        signaturePath,
+        site,
+        tomeet,
+        usertype,
+        answer2,
+        vehicleno
+    } = currentVisitor
     const id = props.match.params.visitorId
     useEffect(() => {
-        if (visitorsById[id]) {
-            const tempId = visitorsById[id]
-            //setInputState(tempId)
-            dispatch(setCurrentVisitor(tempId));
-        }
+        dispatch(setCurrentVisitor(visitorsById[id] || defaultVisitor));
     }, [id])
 
     const handleSubmit = async (e: any) => {
         dispatch(getBackdropStart())
-        const {
-            name,
-            mobileNo,
-            personToMeet,
-            purpose,
-            gender,
-            inTime,
-            outTime,
-            type,
-            noOfVisitors,
-            city,
-            email,
-            visitorCompany,
-            country,
-            site,
-            host } = inputState
-
         let bodyFormData = new FormData();
-
         bodyFormData.append('profilepic', 'arjun_pass.jpg')
         bodyFormData.append('idcard', 'arjun_pass.jpg')
         bodyFormData.append('signature', 'arjun_pass.jpg')
         bodyFormData.append('name', name)
-        bodyFormData.append('mobile', mobileNo)
-        bodyFormData.append('tomeet', personToMeet)
+        bodyFormData.append('mobile', mobile)
+        bodyFormData.append('tomeet', tomeet)
         bodyFormData.append('email', email)
         bodyFormData.append('purpose', purpose)
         bodyFormData.append('gender', gender)
-        bodyFormData.append('visitorcount', noOfVisitors)
-        bodyFormData.append('company', visitorCompany)
+        bodyFormData.append('visitorcount', noofvisitor)
+        bodyFormData.append('company', company)
         bodyFormData.append('country', country)
-        bodyFormData.append('organisation', host)
+        bodyFormData.append('organisation', organisation)
         bodyFormData.append('site', site)
-        bodyFormData.append('vehicleno', "test")
-        bodyFormData.append('belongings', "test")
-        bodyFormData.append('idtype', 'pancard')
+        bodyFormData.append('vehicleno', vehicleno)
+        bodyFormData.append('belongings', belongings)
+        bodyFormData.append('idtype', idtype)
         bodyFormData.append('city', city)
-        bodyFormData.append('answer1', "yes")
-        bodyFormData.append('answer2', "yes")
-        bodyFormData.append('answer3', "yes")
-        bodyFormData.append('answer4', "yes")
-        bodyFormData.append('answer5', "yes")
-        bodyFormData.append('ndacheck', "1")
-        bodyFormData.append('policycheck', "1")
-        bodyFormData.append('usertype', type)
+        bodyFormData.append('answer1', answer1)
+        bodyFormData.append('answer2', answer2)
+        bodyFormData.append('answer3', answer3)
+        bodyFormData.append('answer4', answer4)
+        bodyFormData.append('answer5', answer5)
+        bodyFormData.append('ndacheck', ndastatus)
+        bodyFormData.append('policycheck', policycheckstatus)
+        bodyFormData.append('usertype', usertype)
         await apis.post('/product/reception/user/checkin', bodyFormData, {
             headers: {
                 "Accept": "*/*",
@@ -205,7 +209,6 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
             },
         })
             .then(() => dispatch(getBackdropStop())).catch(() => dispatch(getBackdropStop()))
-        setInputState(defaultInputState)
     }
 
     return (
@@ -225,69 +228,69 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                             </div>
                         </Grid>
                         <Grid item xs={6}>
-                            <Box display="flex" justifyContent="flex-end" style={{position: 'relative', top: '32px', right: '86px'}}>
+                            <Box display="flex" justifyContent="flex-end" style={{ position: 'relative', top: '32px', right: '86px' }}>
                                 <SelectInput value="Actions" style={{ height: '45px' }}
                                     menuOptions={selectInputMenu} />
                                 <Box className={classes.button}>
-                                    <CustomButton style={{ height: '45px', width: '168px'}} onClick={handleSubmit}>Save</CustomButton>
+                                    <CustomButton style={{ height: '45px', width: '168px' }} onClick={handleSubmit}>Save</CustomButton>
                                 </Box>
                             </Box>
                         </Grid>
                     </Grid>
-                    <Grid container style={{width: '1020px'}}>
+                    <Grid container style={{ width: '1020px' }}>
                         <Grid item xs={6}>
                             <div className={classes.visitorInfo}>
                                 <span className={classes.headerSecondary}>Visitor's information</span>
                                 <Grid container style={{ marginTop: '16px' }}>
                                     <Grid item xs={6}>
-                                        <TextInput label="Time In" name="inTime" value={inputState.inTime}
+                                        <TextInput label="Time In" name="intime" value={intime}
                                             onChange={handleChange} />
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <TextInput label="Time Out" type="text"  name="outTime"
-                                            value={inputState.outTime}
+                                        <TextInput label="Time Out" type="text" name="outime"
+                                            value={outime}
                                             onChange={handleChange} />
                                     </Grid>
                                 </Grid>
                                 <TextInput label="Visitor Name" name="name" onChange={handleChange}
-                                    value={inputState.name} />
-                                <TextInput label="Mobile Number" name="mobileNo" onChange={handleChange}
-                                    value={inputState.mobileNo} />
-                                <TextInput label="Visitor type" name="type" onChange={handleChange}
-                                    value={inputState.type} />
-                                <TextInput label="No. of visitors" name="noOfVisitors" onChange={handleChange}
-                                    value={inputState.noOfVisitors} />
+                                    value={name} />
+                                <TextInput label="Mobile Number" name="mobile" onChange={handleChange}
+                                    value={mobile} />
+                                <TextInput label="Visitor type" name="usertype" onChange={handleChange}
+                                    value={usertype} />
+                                <TextInput label="No. of visitors" name="noofvisitor" onChange={handleChange}
+                                    value={noofvisitor} />
                                 <TextInput label="City" name="city" onChange={handleChange}
-                                    value={inputState.city} />
+                                    value={city} />
                             </div>
                         </Grid>
                         <Grid item xs={6} className={classes.rightInputs}>
                             <TextInput label="Gender" name="gender" onChange={handleChange}
-                                value={inputState.gender} />
+                                value={gender} />
                             <TextInput label="Email" name="email" onChange={handleChange}
-                                value={inputState.email} />
+                                value={email} />
                             <TextInput label="Purpose to visit" name="purpose" onChange={handleChange}
-                                value={inputState.purpose} />
-                            <TextInput label="Visitor's Company" name="visitorCompany" onChange={handleChange}
-                                value={inputState.visitorCompany} />
+                                value={purpose} />
+                            <TextInput label="Visitor's Company" name="company" onChange={handleChange}
+                                value={company} />
                             <TextInput label="Country / Nationality" name="country" onChange={handleChange}
-                                value={inputState.country} />
+                                value={country} />
                         </Grid>
                     </Grid>
                     <Grid container style={{ width: '1020px' }}>
                         <Grid item xs={6}>
                             <div className={classes.appointment}>
                                 <span className={classes.headerSecondary}>Appointments requests</span>
-                                <TextInput label="Person to Visit" name="personToMeet" style={{ marginTop: '16px' }}
+                                <TextInput label="Person to Visit" name="tomeet" style={{ marginTop: '16px' }}
                                     onChange={handleChange}
-                                    value={inputState.personToMeet} />
+                                    value={tomeet} />
                                 <TextInput label="Site" name="site" onChange={handleChange}
-                                    value={inputState.site} />
+                                    value={site} />
                             </div>
                         </Grid>
                         <Grid item xs={6} style={{ marginTop: '52px' }}>
-                            <TextInput label="Host / Organization" name="host" onChange={handleChange}
-                                value={inputState.host} />
+                            <TextInput label="Host / Organization" name="organisation" onChange={handleChange}
+                                value={organisation} />
                         </Grid>
                     </Grid>
                 </form>
