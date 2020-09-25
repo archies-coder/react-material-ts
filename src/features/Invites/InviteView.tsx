@@ -113,6 +113,10 @@ const data = {
 //const columns = ['', 'Visitor name', 'Mobile No.', 'Person to meet', 'Purpose', 'In Time', 'Out Time']
 const columns = [
     {
+        id: "profilePicPath",
+        label: '',
+    },
+    {
         id: "name",
         label: 'Visitor name'
     },
@@ -185,7 +189,10 @@ const InviteView: FunctionComponent<Props> = (props) => {
 
     const TableConfig = {
         columns: columns,
-        data: invites,
+        data: invites.map(el => ({
+            ...el,
+            profilePicPath: <Avatar>NA</Avatar>
+        })),
         isLoading: isLoadingInvites,
         pagination: true,
         menuOptions: [{
@@ -198,7 +205,7 @@ const InviteView: FunctionComponent<Props> = (props) => {
     return (
         <Grid item xs={12} style={{ height: '100%' }}>
             <Paper className={classes.paper}>
-                <Box style={{ top: '30px'}}>
+                <Box style={{ paddingTop: '5px', paddingBottom: '5px'}}>
                     <HomeDateDropdown style={{ marginLeft: '37px', marginBottom: '10px'}} />
                 </Box>
                 <Box display="flex" justifyContent="start">
@@ -207,7 +214,7 @@ const InviteView: FunctionComponent<Props> = (props) => {
                     <SelectInput value="All Purpose" style={{marginLeft: '50px'}} />
                     <SelectInput value="All Sites" style={{marginLeft: '50px'}} />
                 </Box>
-                <TableWrapper config={TableConfig} />
+                <TableWrapper config={TableConfig} style={{ marginTop: '17px', marginLeft: '43px', marginRight: '300px' }} />
             </Paper>
         </Grid>
     );

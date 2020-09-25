@@ -31,7 +31,7 @@ const DateTimeInput: FunctionComponent<KeyboardDateTimePickerProps> = (props) =>
                 TextFieldComponent={TextInput}
                 {...props}
             />
-            <ExpandMore />
+            {/* <ExpandMore /> */}
         </MuiPickersUtilsProvider>
     );
 };

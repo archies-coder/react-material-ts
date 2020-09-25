@@ -411,7 +411,7 @@ export const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => 
                     {
                         columns.map((col: any) => <TableCell key={row.id || i}><Skeleton /></TableCell>)
                     }
-                    <TableCell className={classes.cell} align="center">
+                    <TableCell className={classes.cell} align="left">
                         <Button aria-controls="simple-menu" aria-haspopup="true">
                             <MoreHorizIcon />
                         </Button>
