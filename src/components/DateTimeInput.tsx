@@ -4,6 +4,7 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { KeyboardDateTimePickerProps, MuiPickersUtilsProvider, KeyboardDateTimePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import TextInput from "components/TextInput";
+import { ExpandMore } from '@material-ui/icons';
 interface OwnProps {
     value: string;
     id?: string;
@@ -30,7 +31,7 @@ const DateTimeInput: FunctionComponent<KeyboardDateTimePickerProps> = (props) =>
                 TextFieldComponent={TextInput}
                 {...props}
             />
-
+            <ExpandMore />
         </MuiPickersUtilsProvider>
     );
 };

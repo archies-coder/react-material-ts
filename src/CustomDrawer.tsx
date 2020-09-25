@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Collapse, createStyles, Drawer, Paper, Theme, Typography } from "@material-ui/core";
+import { Box, Collapse, createStyles, Drawer, Paper, Theme, Typography } from "@material-ui/core";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -12,6 +12,7 @@ import BusinessIcon from '@material-ui/icons/Business';
 import OrganizationIcon from "./assets/icons/OrganizationIcon";
 import SettingsIcon from '@material-ui/icons/Settings';
 import PersonIcon from '@material-ui/icons/Person';
+import logo from 'assets/logo/logo.png'
 
 const drawerWidth = 295;
 
@@ -62,11 +63,16 @@ const useStyles = makeStyles((theme: Theme) =>
             height: '100vh',
         },
         logo: {
-            height: '112px',
+            // height: '112px',
             // paddingTop: '30px',
+            display: 'inline-block',
             fontSize: '21.64px',
             fontWeight: 'bold',
-            fontFamily: 'Poppins, sans-serif',
+            marginLeft: '5px',
+            verticalAlign: 'super',
+            // fontFamily: 'Poppins, sans-serif',
+            '& img': {
+            }
         },
         nested: {
             paddingLeft: theme.spacing(10),
@@ -199,9 +205,12 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
         anchor="left"
     >
         <Divider />
-        <Typography variant="h5" className={classes.logo} noWrap>
-            Company Logo
-        </Typography>
+        <Box style={{ height: '112px', paddingTop: '26px' }}>
+            <img src={logo} style={{ height: '45px', width: '45px' }} />
+            <Typography variant="h5" className={classes.logo} noWrap>
+                 Company Logo
+            </Typography>
+        </Box>
         {/* <Divider /> */}
         <List>
             {Object.keys(mappableRoutes).map((key, index) => (
@@ -312,5 +321,4 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
 }
 
 export default CustomDrawer;
-
 

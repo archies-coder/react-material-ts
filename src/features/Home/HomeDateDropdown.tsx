@@ -5,6 +5,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import EventIcon from '@material-ui/icons/Event';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { DatePicker, MuiPickersUtilsProvider, } from '@material-ui/pickers';
+import { ExpandMore } from '@material-ui/icons';
 
 interface OwnProps {
 }
@@ -90,6 +91,7 @@ const HomeDateDropdown: FunctionComponent<Props> = (props) => {
                 //     edge: 'start'
                 // }}
                 />
+                <ExpandMore />
             </MuiPickersUtilsProvider>
             {/*<span className={classes.icon}><EventIcon /></span>*/}
             {/*<span className={classes.date}>June 23, 2020</span>*/}
