@@ -21,8 +21,15 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     inputContainer: {
         // padding: (props: Props) => props.padding ? props.padding : 15,
         marginRight: 20,
-        '& .MuiButtonBase-root, .MuiListItem-root, .MuiMenuItem-root, .Mui-selected, .MuiMenuItem-gutters, .MuiListItem-gutters, .MuiListItem-button, .Mui-selected': {
+        '& .MuiButtonBase-root.MuiListItem-root.MuiMenuItem-root.Mui-selected.MuiMenuItem-gutters.MuiListItem-gutters.MuiListItem-button.Mui-selected': {
             backgroundColor: '#fff',
+        },
+        '& .MuiInputBase-root.MuiInput-root, & .MuiSelect-select.MuiSelect-select, & .MuiSelect-nativeInput': {
+            height: 'inherit'
+        },
+        '& .MuiSelect-select.MuiSelect-select': {
+            padding: 0,
+            borderRadius: theme.shape.borderRadius - 5,
         },
         '& .MuiListItem-root.Mui-selected, & .MuiListItem-root.Mui-selected:hover': {
             backgroundColor: 'white !important',

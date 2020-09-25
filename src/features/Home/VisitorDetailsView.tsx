@@ -226,10 +226,10 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                         </Grid>
                         <Grid item xs={6}>
                             <Box display="flex" justifyContent="flex-end" style={{position: 'relative', top: '32px', right: '86px'}}>
-                                <SelectInput value="Actions" style={{ height: '45px' }}
+                                <SelectInput value="Actions" style={{ height: '45px', width: '171px' }}
                                     menuOptions={selectInputMenu} />
                                 <Box className={classes.button}>
-                                    <CustomButton style={{ height: '45px', width: '168px'}} onClick={handleSubmit}>Save</CustomButton>
+                                    <CustomButton style={{ height: '45px', width: '168px', marginTop: '1px'}} onClick={handleSubmit}>Save</CustomButton>
                                 </Box>
                             </Box>
                         </Grid>
