@@ -204,9 +204,9 @@ const StyledMenuItem = withStyles((theme) => ({
     root: {
         '&:focus': {
             // backgroundColor: theme.palette.primary.main,
-            '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-                color: theme.palette.primary.main,
-            },
+            // '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+            //     color: theme.palette.primary.main,
+            // },
         },
     },
 }))(MenuItem);

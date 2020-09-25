@@ -8,6 +8,7 @@ import { Link as NavLink, Redirect, RouteComponentProps } from 'react-router-dom
 import { useDispatch, useSelector } from 'react-redux';
 import { doLogout } from 'features/auth/AuthSlice';
 import { RootState } from 'app/rootReducer';
+import { CustomMenuItem } from './CustomMenuItem';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -59,7 +60,7 @@ const NavigationBar: FunctionComponent<Props> = (props) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
-    const {name} = useSelector((state: RootState) => state.auth)
+    const { name } = useSelector((state: RootState) => state.auth)
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -74,7 +75,7 @@ const NavigationBar: FunctionComponent<Props> = (props) => {
     const handleLogout = () => {
         dispatch(doLogout())
         handleClose()
-        
+
     };
     return (
         <Typography className={classes.root}>
@@ -92,21 +93,37 @@ const NavigationBar: FunctionComponent<Props> = (props) => {
                 <NotificationsActiveIcon /> <span className={classes.navItem}>Notification</span>
             </Link>
             <Link href="#" variant="h5" color="textSecondary">
-                    <span className={classes.profileName} aria-controls="fade-menu" aria-haspopup="true" onClick={handleClick}>{name}</span>
-                    {/* Open with fade transition */}
-                <Menu
-                    id="fade-menu"
-                    anchorEl={anchorEl}
-                    keepMounted
-                    open={open}
-                    onClose={handleClose}
-                    TransitionComponent={Fade}
-                >
-                    <MenuItem onClick={handleLogout}>
-                        <NavLink to="/logout">Logout</NavLink>
-                    </MenuItem>
-                </Menu>
+                <span
+                    className={classes.profileName}
+                    aria-controls="fade-menu"
+                    aria-haspopup="true"
+                    onClick={handleClick}>
+                    {name}
+                </span>
             </Link>
+            {/* Open with fade transition */}
+            <Menu
+                id="fade-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={open}
+                onClose={handleClose}
+                TransitionComponent={Fade}
+                elevation={1}
+                getContentAnchorEl={null}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+            >
+                <MenuItem onClick={handleLogout}>
+                    <CustomMenuItem to="/logout">Logout</CustomMenuItem>
+                    </MenuItem>
+            </Menu>
         </Typography>
     );
 };
