@@ -154,7 +154,7 @@ const InviteForm: FunctionComponent<Props> = (props) => {
                     </div>
                     <Box display="flex" justifyContent="flex-end">
                         <Box className={classes.button}>
-                            <CustomButton type="submit">Save</CustomButton>
+                            <CustomButton style={{ height: '45px', width: '168px', marginTop: '1px' }} type="submit">Save</CustomButton>
                         </Box>
                     </Box>
                     <Grid className={classes.inputGrid} container>
