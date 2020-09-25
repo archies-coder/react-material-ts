@@ -198,13 +198,14 @@ const InviteView: FunctionComponent<Props> = (props) => {
     return (
         <Grid item xs={12} style={{ height: '100%' }}>
             <Paper className={classes.paper}>
-                <HomeDateDropdown />
+                <Box style={{ top: '30px'}}>
+                    <HomeDateDropdown style={{ marginLeft: '37px', marginBottom: '10px'}} />
+                </Box>
                 <Box display="flex" justifyContent="start">
-                    <SearchInput placeholder="Search visitor" />
-                    <SelectInput value="In Office" />
-                    <SelectInput value="All Purpose" />
-                    <SelectInput value="All Sites" />
-
+                    <SearchInput placeholder="Search visitor" style={{marginLeft: '32px'}} />
+                    <SelectInput value="In Office" style={{marginLeft: '50px'}} />
+                    <SelectInput value="All Purpose" style={{marginLeft: '50px'}} />
+                    <SelectInput value="All Sites" style={{marginLeft: '50px'}} />
                 </Box>
                 <TableWrapper config={TableConfig} />
             </Paper>

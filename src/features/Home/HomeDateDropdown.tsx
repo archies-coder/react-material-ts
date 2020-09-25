@@ -7,7 +7,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { DatePicker, MuiPickersUtilsProvider, } from '@material-ui/pickers';
 import { ExpandMore } from '@material-ui/icons';
 
-interface OwnProps {
+interface OwnProps extends React.HTMLAttributes<any> {
 }
 
 type Props = OwnProps;
@@ -73,7 +73,7 @@ const HomeDateDropdown: FunctionComponent<Props> = (props) => {
         setSelectedDate(date);
     };
     return (
-        <Box className={classes.container}>
+        <Box className={classes.container} {...props}>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <span className={classes.icon}><EventIcon /></span>
                 <DatePicker
