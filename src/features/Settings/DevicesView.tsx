@@ -108,20 +108,22 @@ const DevicesView: FunctionComponent<Props> = (props) => {
     }
 
     return (
-        <Grid item xs style={{ height: "calc(100vh - 100px)" }}>
+        <Grid item xs style={{ height: "100%" }}>
             <Paper className={classes.paper}>
-                <Box display="flex" justifyContent="space-between">
-                    <SearchInput placeholder="Search Devices" width={400} />
-                    <SelectInput style={{ marginRight: '-80px' }} value="All Sites" />
-                    <SelectInput style={{ marginLeft: '40' }} value="All Status" />
-                    <CustomMenuItem style={{ color: 'white' }} to='/devices/device'>
-                        <CustomButton style={{ padding: '10px 40px', marginRight: '20px', marginTop: '20px' }}>
-                            Add Device
+                <Box display="flex" justifyContent="space-between" style={{ paddingTop: '37.5px', paddingBottom: '24px' }}>
+                    <SearchInput style={{ marginLeft: '28.5px', height: '39px' }} placeholder="Search Devices" width={400} />
+                    <Box display="flex">
+                        <SelectInput style={{ marginRight: '26px', width: '122px', height: '39px' }} value="All Sites" />
+                        <SelectInput style={{ marginRight: '26px', width: '122px', height: '39px' }} value="All Status" />
+                        <CustomMenuItem to='/devices/device'>
+                            <CustomButton style={{ marginRight: '63px', width: '116px', fontSize: '12px', height: '39px', padding: 0, marginTop: '2px' }}>
+                                Add Device
                     </CustomButton>
-                    </CustomMenuItem>
+                        </CustomMenuItem>
+                    </Box>
                 </Box>
                 <Box className={classes.tableContainer}>
-                    <TableWrapper config={TableConfig} />
+                    <TableWrapper style={{marginLeft: '65px', width: '839px'}} config={TableConfig} />
                 </Box>
             </Paper>
         </Grid>

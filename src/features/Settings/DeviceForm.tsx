@@ -71,7 +71,7 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
     }
 
     //const [inputState, setInputState] = useState<any>(defaultInputState)
-    
+
     const {
         devices,
         currentDevice,
@@ -84,7 +84,7 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
         iosversion,
         udid,
         email
-    } = currentDevice 
+    } = currentDevice
     const inputState = currentDevice;
     const setInputState=(device:any)=>{
         dispatch(setCurrentDevice(device));
@@ -99,7 +99,7 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
             dispatch(setCurrentDevice(tempId));
         }
     }, [id])
-    
+
     const handleChange = (e: any) => setInputState({
         ...inputState,
         [e.target.name]: e.target.value
@@ -126,7 +126,7 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
                     </div>
                     <Box display="flex" justifyContent="flex-end">
                         <Box className={classes.button}>
-                            <CustomButton type="submit">Save</CustomButton>
+                            <CustomButton style={{ height: '45px', width: '168px', marginTop: '1px' }} type="submit">Save</CustomButton>
                         </Box>
                     </Box>
                     <Grid className={classes.inputGrid} container>
