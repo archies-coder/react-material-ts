@@ -68,6 +68,7 @@ const HomeDateDropdown: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
     const [selectedDate, setSelectedDate] = React.useState<Date | null>(new Date());
+    const [isOpen, setIsOpen] = React.useState(false);
 
     const handleDateChange = (date: Date | null) => {
         setSelectedDate(date);
@@ -75,9 +76,12 @@ const HomeDateDropdown: FunctionComponent<Props> = (props) => {
     return (
         <Box className={classes.container} {...props}>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <span className={classes.icon}><EventIcon /></span>
+                <span className={classes.icon}><EventIcon onClick={() => setIsOpen(true)}/></span>
                 <DatePicker
-                    disableToolbar
+                    style={{ maxWidth: '135px' }}
+                    disableToolbar={false}
+                    //allowKeyboardControl = {false}
+                    //size= "small"
                     variant="inline"
                     format="MMM dd, yyyy"
                     margin="normal"
@@ -85,17 +89,13 @@ const HomeDateDropdown: FunctionComponent<Props> = (props) => {
                     autoOk
                     value={selectedDate}
                     onChange={handleDateChange}
-
-                // KeyboardButtonProps={{
-                //     'aria-label': 'change date',
-                //     edge: 'start'
-                // }}
+                    //keyboardIcon={<ExpandMore></ExpandMore>}
+                    open={isOpen}
+                    onOpen={() => setIsOpen(true)}
+                    onClose={() => setIsOpen(false)}
                 />
-                <ExpandMore />
+                <ExpandMore onClick={() => setIsOpen(true)} />
             </MuiPickersUtilsProvider>
-            {/*<span className={classes.icon}><EventIcon /></span>*/}
-            {/*<span className={classes.date}>June 23, 2020</span>*/}
-            {/*<span className={classes.expandIcon}><ExpandMoreIcon /></span>*/}
         </Box>
     );
 };
