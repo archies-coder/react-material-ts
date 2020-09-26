@@ -23,6 +23,8 @@ import { Redirect, Route, Switch } from 'react-router-dom'
 import { RootState } from './rootReducer'
 import {outhUser,setAuthUser} from 'features/auth/AuthSlice'
 import './styles.css'
+import VisitorsForm from "features/Settings/VisitorsForm"
+import Notification from "features/Settings/Notification"
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -106,6 +108,9 @@ export default function App() {
                             <Route exact path="/devices/device" component={DeviceForm} />
                             <Route path="/devices/device/:deviceId" component={DeviceForm} />
                             <Route path="/user" component={UserManagementView} />
+                            <Route exact path="/visitorsform" component={VisitorsForm} />
+                            <Route exact path="/notification" component={Notification} />
+
                         </Switch>
                     </NavGridContainer>
                 {/* </Grid> */}
@@ -132,6 +137,8 @@ export default function App() {
             <AuthRoute exact path="/devices/device" component={DeviceForm} />
             <AuthRoute exact path="/devices/device/:deviceId" component={DeviceForm} />
             <AuthRoute exact path="/user" component={UserManagementView} />
+            <AuthRoute exact path="/visitorsform" component={VisitorsForm} />
+            <AuthRoute exact path="/notification" component={Notification} />
             <Route exact path="/signin" component={SignIn} />
             <Route exact path="/signup" component={SignUp} />
         </Switch>

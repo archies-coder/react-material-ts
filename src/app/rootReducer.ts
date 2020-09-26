@@ -10,6 +10,7 @@ import siteReducer from 'features/SalesAndOrganisation/siteSlice'
 import deviceReducer from 'features/Settings/deviceSlice'
 import userReducer from 'features/UserManagement/userSlice'
 import authReducer from 'features/auth/AuthSlice'
+import notificationReducer from 'features/Settings/NotificationSlice'
 
 const rootReducer = combineReducers({
   backdrop: backDropReducer,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   sites: siteReducer,
   devices: deviceReducer,
   users: userReducer,
-  auth: authReducer
+  auth: authReducer,
+  notifications:notificationReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>

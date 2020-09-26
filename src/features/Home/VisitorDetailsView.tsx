@@ -166,7 +166,8 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
     } = currentVisitor
     const id = props.match.params.visitorId
     useEffect(() => {
-        dispatch(setCurrentVisitor(visitorsById[id] || defaultVisitor));
+        debugger
+        id != -1 && dispatch(setCurrentVisitor(visitorsById[id] || defaultVisitor));
     }, [id])
 
     const handleSubmit = async (e: any) => {

@@ -29,6 +29,7 @@ import { fetchInvites } from 'features/Invites/inviteSlice'
 import { RootState } from 'app/rootReducer'
 import { CustomMenuItem } from 'components/CustomMenuItem';
 import HomeDateDropdown from 'features/Home/HomeDateDropdown';
+import { defaultVisitor, setCurrentVisitor, VisitorInfo } from 'features/Home/visitorSlice';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -100,17 +101,8 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 
-const data = {
-    avatar: '',
-    name: 'Vijaya Tondon',
-    mobileNo: 9754821630,
-    personToMeet: 'Ramesh Chawla',
-    purpose: 'Meeting',
-    inTime: '11:30 am',
-    outTime: '2:30 pm',
-}
 
-//const columns = ['', 'Visitor name', 'Mobile No.', 'Person to meet', 'Purpose', 'In Time', 'Out Time']
+
 const columns = [
     {
         id: "profilePicPath",
@@ -156,11 +148,7 @@ const InviteView: FunctionComponent<Props> = (props) => {
 
     let tableRows: any = []
 
-    for (let i = 0; i < 2; i++) {
-        let copy: any = tableRows
-
-        tableRows = [data, ...copy]
-    }
+    
 
     const dispatch = useDispatch()
 
@@ -169,6 +157,7 @@ const InviteView: FunctionComponent<Props> = (props) => {
         currentPageInvites,
         pageCount,
         pageLinks,
+        invitesById,
         isLoading: isLoadingInvites,
         error
     } = useSelector((state: RootState) => state.invites)
@@ -187,6 +176,23 @@ const InviteView: FunctionComponent<Props> = (props) => {
         )
     }
 
+    const toVisitor = (id:any)=>{
+        const visitor = {...mapVisitorFromInvite(id)}
+        dispatch(setCurrentVisitor(visitor))
+    }
+    const mapVisitorFromInvite: (id:any)=>VisitorInfo = (id:any)=>{
+        
+        let visitor: VisitorInfo = {...defaultVisitor}
+        const invite = invitesById[id]
+        visitor.email = invite.email
+        //visitor.intime = invite.intime
+        visitor.mobile = invite.mobileno
+        visitor.name = invite.name
+        visitor.purpose = invite.purpose
+        visitor.tomeet = invite.tomeet
+        return {...visitor}
+    }
+
     const TableConfig = {
         columns: columns,
         data: invites.map(el => ({
@@ -196,7 +202,9 @@ const InviteView: FunctionComponent<Props> = (props) => {
         isLoading: isLoadingInvites,
         pagination: true,
         menuOptions: [{
-            item: (id: any) => <CustomMenuItem to={"/visitor/" + id}>
+            key: 'invite_id',
+            callback: toVisitor,
+            item: (id: any) => <CustomMenuItem to={"/visitor/-1"}>
                 View Details
             </CustomMenuItem>
         }]

@@ -116,7 +116,7 @@ const visitors = createSlice({
             //state.visitorsById = state.visitors.map(visitor => ({ ...visitor, id: visitor.id }))
         },
         getVisitorsFailure: loadingFailed,
-        setCurrentVisitor(state, { payload }: PayloadAction<any>) {
+        setCurrentVisitor(state, { payload }: PayloadAction<VisitorInfo>) {
             state.currentVisitor = payload
         }
     }
@@ -143,4 +143,5 @@ export const fetchVisitors = (
         dispatch(getVisitorsFailure(err.toString()))
     }
 }
+
 
