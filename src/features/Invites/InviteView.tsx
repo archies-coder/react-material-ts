@@ -201,6 +201,10 @@ const InviteView: FunctionComponent<Props> = (props) => {
         })),
         isLoading: isLoadingInvites,
         pagination: true,
+        pageChange:(page:number,count:number)=>{
+            dispatch(fetchInvites(page,count))
+        },
+        totalCount:pageCount,
         menuOptions: [{
             key: 'invite_id',
             callback: toVisitor,

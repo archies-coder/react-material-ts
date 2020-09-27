@@ -58,7 +58,7 @@ const invites = createSlice({
 
         getInvitesStart: startLoading,
         getInvitesSuccess(state, { payload }: PayloadAction<InvitesResult>) {
-            const { pageCount, invites } = payload
+            const { pageCount, invites  } = payload
             state.pageCount = pageCount
             state.isLoading = false
             state.error = null
@@ -79,11 +79,12 @@ export const {
 export default invites.reducer
 
 export const fetchInvites = (
-    page?: number
+    page?: number,
+    count?: number
 ): AppThunk => async dispatch => {
     try {
         dispatch(getInvitesStart())
-        const invites = await getInvitesData()
+        const invites = await getInvitesData(page,count)
 
         dispatch(getInvitesSuccess(invites))
     } catch (err) {

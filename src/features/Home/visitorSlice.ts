@@ -112,7 +112,7 @@ const visitors = createSlice({
             state.error = null
             state.visitors = visitors
             // @ts-ignore
-            state.visitors.map(visitor => (state.visitorsById[visitor.checkin_id]=visitor))
+            state.visitors.map(visitor => (state.visitorsById[visitor.checkin_id] = visitor))
             //state.visitorsById = state.visitors.map(visitor => ({ ...visitor, id: visitor.id }))
         },
         getVisitorsFailure: loadingFailed,
@@ -133,10 +133,11 @@ export default visitors.reducer
 
 export const fetchVisitors = (
     page?: number
+    , count?: number
 ): AppThunk => async dispatch => {
     try {
         dispatch(getVisitorsStart())
-        const visitors = await getVisitorData()
+        const visitors = await getVisitorData(page,count)
 
         dispatch(getVisitorsSuccess(visitors))
     } catch (err) {

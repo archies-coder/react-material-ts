@@ -116,14 +116,14 @@ interface VisitorModel {
   "vehicleno": any//"vehicleno"
 }
 
-export async function getVisitorData() {
-  const url = `/product/reception/checkin/user/data?page=0&count=10`
+export async function getVisitorData(page:number=0,count:number=10) {
+  const url = `/product/reception/checkin/user/data?page=${page}&count=${count}`
 
   const { data } = await apis.get(url)
   // debugger
   return {
     //pageLinks: '',
-    pageCount: 1,
+    pageCount: data.totalCount,
     visitors: data.data
   }
   // debugger
@@ -162,14 +162,14 @@ export async function getHomeStats() {
   return data
 }
 
-export async function getInvitesData() {
-  const url = `/product/reception/invite/user/data?page=0&count=10`
+export async function getInvitesData(page:number=0,count:number=10) {
+  const url = `/product/reception/invite/user/data?page=${page}&count=${count}`
 
   const { data } = await apis.get(url)
 
   return {
     //pageLinks: '',
-    pageCount: 1,
+    pageCount: data.totalCount,
     invites: data.data
   }
 

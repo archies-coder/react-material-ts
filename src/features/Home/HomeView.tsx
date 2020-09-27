@@ -175,7 +175,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
     } = useSelector((state: RootState) => state.home)
 
     useEffect(() => {
-        dispatch(fetchVisitors(0))
+        dispatch(fetchVisitors(0,10))
         dispatch(fetchHomeStats())
     }, [dispatch])
 
@@ -184,6 +184,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
         await checkout(id)
             .then(() => {
                 dispatch(fetchHomeStats())
+                dispatch(fetchVisitors(0,10))
                 dispatch(getBackdropStop())
             })
             .catch(() => dispatch(getBackdropStop()))
@@ -207,6 +208,10 @@ const HomeView: FunctionComponent<Props> = (props) => {
             profilePicPath: <Avatar src={el['profilePicPath']} />
         })),
         pagination:true,
+        pageChange:(page:number,count:number)=>{
+            dispatch(fetchVisitors(page,count))
+        },
+        totalCount:pageCount,
         menuOptions: [{
             key: 'checkin_id',
             callback: handleCheckOut,

@@ -60,6 +60,8 @@ interface IConfigObject {
     cellOptions?: ITableCellProps;
     isLoading?: Boolean;
     pagination?: Boolean;
+    pageChange?: Function;
+    totalCount?: number
 }
 
 interface OwnProps extends React.HTMLAttributes<any> {
@@ -277,7 +279,8 @@ export const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => 
     const rows = [...config.data]
     const columns = [...config.columns]
     const menuOptions = [...config.menuOptions]
-
+    const pageChange = config.pageChange
+    const totalCount = config.totalCount || rows.length
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: string) => {
         const isAsc = orderBy === property && order === 'asc';
         setOrder(isAsc ? 'desc' : 'asc');
@@ -296,6 +299,7 @@ export const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => 
 
     const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
         setPage(newPage);
+        pageChange && pageChange(newPage,rowsPerPage)
     };
 
     const handleChangeRowsPerPage = (
@@ -303,6 +307,7 @@ export const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => 
     ) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
+        pageChange && pageChange(0,parseInt(event.target.value, 10))
     };
 
 
@@ -360,13 +365,16 @@ export const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => 
         onRequestSort={handleRequestSort}
         rowCount={rows.length}
     />
-
+    const tableRows = pageChange ? (rowsPerPage > 0
+        ? stableSort(rows, getComparator(order, orderBy))
+        : rows
+    ): (rowsPerPage > 0
+        ? stableSort(rows, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        : rows
+    )
     const body = <TableBody>
         {
-            (rowsPerPage > 0
-                ? stableSort(rows, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                : rows
-            ).map((row: any, i: number) => (
+            tableRows.map((row: any, i: number) => (
                 <TableRow key={i}>
                     {
                         columns.map((col: any, j: number) => <TableCell key={i + '' + j}>{row[col.id]}</TableCell>)
@@ -427,7 +435,7 @@ export const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => 
             <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                 colSpan={columns.length}
-                count={rows.length}
+                count={totalCount}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{
