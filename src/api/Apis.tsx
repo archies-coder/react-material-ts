@@ -117,7 +117,7 @@ interface VisitorModel {
 }
 
 export async function getVisitorData() {
-  const url = `/product/reception/checkin/user/data`
+  const url = `/product/reception/checkin/user/data?page=0&count=10`
 
   const { data } = await apis.get(url)
   // debugger
@@ -156,14 +156,14 @@ export async function getVisitorInfo() {
 }
 
 export async function getHomeStats() {
-  const url = `/product/stats/data`
+  const url = `/product/stats/data?page=0&count=10`
 
   const { data } = await apis.get(url)
   return data
 }
 
 export async function getInvitesData() {
-  const url = `/product/reception/invite/user/data`
+  const url = `/product/reception/invite/user/data?page=0&count=10`
 
   const { data } = await apis.get(url)
 
@@ -176,7 +176,7 @@ export async function getInvitesData() {
 }
 
 export async function getEmployeesData() {
-  const url = `/product/reception/checkin/user/data`
+  const url = `/product/reception/checkin/user/data?page=0&count=10`
 
   const { data } = await apis.get(url)
 
@@ -189,7 +189,7 @@ export async function getEmployeesData() {
 }
 
 export async function getSitesData() {
-  const url = `/product/reception/checkin/user/data`
+  const url = `/product/reception/checkin/user/data?page=0&count=10`
 
   const { data } = await apis.get(url)
 
@@ -202,7 +202,7 @@ export async function getSitesData() {
 }
 
 export async function getDevicesData() {
-  const url = `/product/device/data`
+  const url = `/product/device/data?page=0&count=10`
 
   const { data } = await apis.get(url)
   // debugger
@@ -215,7 +215,7 @@ export async function getDevicesData() {
 }
 
 export async function getUsersData() {
-  const url = `/product/device/data`
+  const url = `/product/device/data?page=0&count=10`
 
   const { data } = await apis.get(url)
   // debugger
