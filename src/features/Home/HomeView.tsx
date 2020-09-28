@@ -98,6 +98,15 @@ const useStyles = makeStyles((theme: Theme) =>
             transition: theme.transitions.create('width'),
 
         },
+        label: {
+            textTransform: 'capitalize',
+        },
+        buttonRoot: {
+            fontSize: '12px',
+            backgroundColor: 'white',
+            borderRadius: theme.shape.borderRadius - 5,
+            boxShadow: 'none'
+        }
     })
 )
 
@@ -268,7 +277,11 @@ const HomeView: FunctionComponent<Props> = (props) => {
                     <Paper className={classes.paper} elevation={0}>
                         <Box display="flex" justifyContent="start">
                             <SearchInput style={{marginTop: '33px', marginLeft: '27px'}} placeholder="Search visitor" />
-                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="In Office" />
+                            {/* <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="In Office" /> */}
+                            <Button classes={{
+                                root: classes.buttonRoot, // class name, e.g. `classes-nesting-root-x`
+                                label: classes.label, // class name, e.g. `classes-nesting-label-x`
+                            }} variant="contained" style={{ marginTop: '33px', marginLeft: '27px', height: '40px'}}>In Office</Button>
                             <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="All Purpose" />
                             <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="All Sites" />
                         </Box>

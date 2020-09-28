@@ -32,7 +32,7 @@ const data = {
 
 //const columns = ['Check In ports', 'Site name', 'Device']
 const columns = [
-    
+
     {
         id: "checkinpoint",
         label: 'Check In Point'
@@ -88,8 +88,8 @@ const CheckInPointsView: FunctionComponent<Props> = (props) => {
     return (
         <Grid item xs style={{height: "100%", marginTop: '22px'}}>
             <Paper className={classes.paper}>
-                <Box display="flex" justifyContent="space-between">
-                    <SearchInput placeholder="Search Employees by name, email or mobile" width={500}/>
+                <Box display="flex" justifyContent="space-between" style={{paddingTop: '37px', paddingLeft: '30px'}} >
+                    <SearchInput placeholder="Search Employees by name, email or mobile" width={353} />
                     <SelectInput value="Action" />
                 </Box>
 
