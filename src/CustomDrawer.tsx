@@ -5,7 +5,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { NavLink } from "react-router-dom";
 import { ExpandLess, ExpandMore, HomeSharp, LibraryBooks } from '@material-ui/icons'
 import BusinessIcon from '@material-ui/icons/Business';
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
             height: '100%',
             width: drawerWidth,
             flexShrink: 0,
-            padding: theme.spacing(0),
+            // padding: theme.spacing(0),
             textAlign: 'center',
             color: '#A6ACB8',
             backgroundColor: theme.palette.text.primary,
@@ -59,8 +59,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
             }
         },
-        fullHeight: {
-            height: '100vh',
+        list: {
+            paddingLeft: '23px',
         },
         logo: {
             // height: '112px',
@@ -68,7 +68,7 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'inline-block',
             fontSize: '21.64px',
             fontWeight: 'bold',
-            marginLeft: '5px',
+            marginLeft: '10px',
             verticalAlign: 'super',
             // fontFamily: 'Poppins, sans-serif',
             '& img': {
@@ -99,6 +99,13 @@ const useStyles = makeStyles((theme: Theme) =>
         },
     }),
 );
+
+const StyledListItem = withStyles((theme: Theme) => ({
+    root: {
+        marginBottom: '7px',
+        paddingLeft: '38px'
+    }
+}))(ListItem)
 
 interface OwnProps extends React.AllHTMLAttributes<any> {
 }
@@ -187,7 +194,6 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
 
     const [open, setOpen] = useState(dropDownState)
 
-
     const handleClick = (name: string) => {
         // @ts-ignore
         const old = open[name]
@@ -206,7 +212,7 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
         anchor="left"
     >
         <Divider />
-        <Box style={{ height: '112px', paddingTop: '26px' }}>
+        <Box style={{ height: '112px', paddingTop: '26px', textAlign: 'start', paddingLeft: '38px' }}>
             <img src={logo} style={{ height: '45px', width: '45px' }} />
             <Typography variant="h5" className={classes.logo} noWrap>
                  Company Logo
@@ -220,21 +226,21 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
                         {
                             // @ts-ignore
                             open[mappableRoutes[key].name] ?
-                                <ListItem button onClick={() => handleClick(mappableRoutes[key].name)}
+                                <StyledListItem button onClick={() => handleClick(mappableRoutes[key].name)}
                                     className="listItem active-navlink">
                                     <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
                                     <ListItemText className={classes.listItemText} primary={key} />
                                     {/*@ts-ignore*/}
                                     {open[mappableRoutes[key].name] ? <ExpandLess /> : <ExpandMore />}
-                                </ListItem>
+                                </StyledListItem>
                                 :
-                                <ListItem button onClick={() => handleClick(mappableRoutes[key].name)}
+                                <StyledListItem button onClick={() => handleClick(mappableRoutes[key].name)}
                                     className="listItem">
                                     <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
                                     <ListItemText className={classes.listItemText} primary={key} />
                                     {/*@ts-ignore*/}
                                     {open[mappableRoutes[key].name] ? <ExpandLess /> : <ExpandMore />}
-                                </ListItem>
+                                </StyledListItem>
                         }
                         {/*@ts-ignore*/}
                         <Collapse in={open[mappableRoutes[key].name]} timeout="auto" unmountOnExit>
@@ -254,7 +260,7 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
                         </Collapse>
                     </>
                 ) : (
-                        <ListItem button key={key} component={NavLink} exact className="listItem"
+                        <ListItem style={{ marginBottom: '7px', paddingLeft: '38px'}} button key={key} component={NavLink} exact className="listItem"
                             activeClassName={"active-navlink"} to={mappableRoutes[key].path}>
                             <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
                             <ListItemText className={classes.listItemText} primary={key} />
