@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Links } from 'parse-link-header'
 
-import { getCheckInPointsData } from 'api/Apis'
+import { createCheckInPoint, getCheckInPointsData } from 'api/Apis'
 import { AppThunk } from 'app/store'
+import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice'
 
 
 export interface CheckInPoint {
@@ -16,6 +17,16 @@ export interface CheckInPointsResult {
     pageCount: number
     checkInPoints: CheckInPoint[]
 }
+export interface CheckInPointInputState {
+    sitename: string
+    device: string
+    checkinpoint: string
+}
+export const defaultInputState: CheckInPointInputState = {
+    sitename: '',
+    device: '',
+    checkinpoint: '',
+}
 
 interface CheckInPointState {
     checkInPoints: CheckInPoint[]
@@ -25,6 +36,8 @@ interface CheckInPointState {
     pageLinks: Links | null
     isLoading: boolean
     error: string | null
+    currentCheckInPoint: CheckInPointInputState
+
 }
 
 const checkInPointsInitialState: CheckInPointState = {
@@ -34,7 +47,8 @@ const checkInPointsInitialState: CheckInPointState = {
     pageCount: 0,
     pageLinks: {},
     isLoading: false,
-    error: null
+    error: null,
+    currentCheckInPoint: defaultInputState
 }
 
 function startLoading(state: CheckInPointState) {
@@ -62,13 +76,17 @@ const checkInPoint = createSlice({
             state.checkInPoints.map(checkInPoint => (state.checkInPointsById[checkInPoint.checkInPoint_id] = checkInPoint))
         },
         getCheckInPointsFailure: loadingFailed,
+        setCurrentCheckInPoint(state, { payload }: PayloadAction<any>) {
+            state.currentCheckInPoint = payload
+        }
     }
 })
 
 export const {
     getCheckInPointsStart,
     getCheckInPointsSuccess,
-    getCheckInPointsFailure
+    getCheckInPointsFailure,
+    setCurrentCheckInPoint
 } = checkInPoint.actions
 
 export default checkInPoint.reducer
@@ -87,3 +105,18 @@ export const fetchCheckInPoints = (
     }
 }
 
+export const saveCheckInPoint = (
+    site: any,
+    callback?: (() => void)
+): AppThunk => async dispatch => {
+    try {
+        dispatch(getBackdropStart())
+        await createCheckInPoint(site)
+            .then(() => dispatch(getBackdropStop())).catch(() => dispatch(getBackdropStop()))
+        //return setInputState(defaultInputState)
+        callback && callback();
+        //dispatch(saveInvitesSuccess(invites))
+    } catch (err) {
+        dispatch(getBackdropStop())
+    }
+}

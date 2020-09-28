@@ -273,6 +273,14 @@ export async function createSite(json: string) {
     },
   })
 }
+export async function createCheckInPoint(json: string) {
+  return await apis.post('/product/register/checkinpoint', json, {
+    headers: {
+      "Content-Type": "application/json",
+      // "Content-Length": 2617
+    },
+  })
+}
 
 export async function signIn(username: string, password: string) {
   return await apis.post('/product/login', JSON.stringify({
