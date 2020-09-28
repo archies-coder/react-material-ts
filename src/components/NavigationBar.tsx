@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             textAlign: 'right',
-            margin: '25px 20px 22px 0',
+            margin: '18px 20px 15px 0',
             fontSize: '20px',
             fontWeight: 300,
             '& > *': {

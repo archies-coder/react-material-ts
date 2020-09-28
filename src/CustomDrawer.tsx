@@ -12,7 +12,7 @@ import BusinessIcon from '@material-ui/icons/Business';
 import OrganizationIcon from "./assets/icons/OrganizationIcon";
 import SettingsIcon from '@material-ui/icons/Settings';
 import PersonIcon from '@material-ui/icons/Person';
-import logo from 'assets/logo/logo.png'
+import logo from 'assets/logo/logosmall.png'
 
 const drawerWidth = 295;
 
@@ -134,7 +134,7 @@ const mappableRoutes: MappableRoutesDictionary = {
         path: '/employees',
         icon: <OrganizationIcon className="white-text" />
     },
-    'Sales & Organization': {
+    'Master': {
         path: '/sites',
         name: 'sales',
         icon: <BusinessIcon className="white-text" />,
