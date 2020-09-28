@@ -113,7 +113,7 @@ export const saveSite = (
     try {
         dispatch(getBackdropStart())
         await createSite(site)
-            .then(() => dispatch(getBackdropStart())).catch(() => dispatch(getBackdropStop()))
+            .then(() => dispatch(getBackdropStop())).catch(() => dispatch(getBackdropStop()))
         //return setInputState(defaultInputState)
         callback && callback();
         //dispatch(saveInvitesSuccess(invites))
