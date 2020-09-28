@@ -8,6 +8,7 @@ import { CustomMenuItem } from 'components/CustomMenuItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'app/rootReducer';
 import { fetchCheckInPoints } from './checkInPointSlice';
+import CustomButton from 'components/Button';
 
 interface OwnProps {}
 
@@ -32,7 +33,7 @@ const data = {
 
 //const columns = ['Check In ports', 'Site name', 'Device']
 const columns = [
-    
+
     {
         id: "checkinpoint",
         label: 'Check In Point'
@@ -86,14 +87,19 @@ const CheckInPointsView: FunctionComponent<Props> = (props) => {
     }, [dispatch])
 
     return (
-        <Grid item xs style={{height: "100%", marginTop: '22px'}}>
+        <Grid item xs style={{height: "100%"}}>
             <Paper className={classes.paper}>
-                <Box display="flex" justifyContent="space-between">
-                    <SearchInput placeholder="Search Employees by name, email or mobile" width={500}/>
+                <Box display="flex" justifyContent="space-between" style={{ paddingTop: '37px', paddingLeft: '30px', paddingBottom: '25.5px'}} >
+                    <SearchInput placeholder="Search Employees by name, email or mobile" width={353} />
                     <SelectInput value="Action" />
+                    <CustomMenuItem to='/checkinpoints/add'>
+                        <CustomButton style={{ width: '150px', fontSize: '12px', height: '39px', padding: 0 }}>
+                            Add Checkin point
+                        </CustomButton>
+                    </CustomMenuItem>
                 </Box>
 
-                <TableWrapper config={TableConfig}/>
+                <TableWrapper style={{paddingLeft: '66px'}} config={TableConfig}/>
             </Paper>
         </Grid>
     );

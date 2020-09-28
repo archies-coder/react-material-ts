@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
         footer: {
             fontSize: '22px',
             fontWeight: 'bold',
-            padding: theme.spacing(6, 0, 0, 4),
+            padding: theme.spacing(5, 0, 0, 4),
             // paddingTop: '100px',
             color: theme.palette.text.primary
         },
@@ -114,7 +114,7 @@ const UserManagementView: FunctionComponent<Props> = (props) => {
     }
 
     return (
-        <Grid item xs style={{height: "calc(100vh - 100px)"}}>
+        <Grid item xs style={{height: "100%"}}>
             <Paper className={classes.paper}>
                 <div className={classes.header}>
                     <ArrowBackIos className={classes.arrowBack} onClick={() => props.history.push('/')}/>

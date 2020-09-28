@@ -26,6 +26,7 @@ import './styles.css'
 import VisitorsForm from "features/Settings/VisitorsForm"
 import Notification from "features/Settings/Notification"
 import SiteForm from "features/SalesAndOrganisation/SiteForm"
+import CheckInPointForm from "features/SalesAndOrganisation/CheckInPointForm"
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -103,7 +104,8 @@ export default function App() {
                             <Route path="/employees" component={EmployeesView} />
                             <Route exact path="/sites" component={SitesView} />
                             <Route exact path="/sites/add" component={SiteForm} />
-                            <Route path="/checkinpoints" component={CheckInPointsView} />
+                            <Route exact path="/checkinpoints/add" component={CheckInPointForm} />
+                            <Route exact path="/checkinpoints" component={CheckInPointsView} />
                             <Route exact path="/devices" component={DevicesView} />
                             <Route path="/agreement" component={AgreementView} />
                             <Route path="/invites/visitor" component={InviteForm} />
@@ -134,6 +136,7 @@ export default function App() {
             <AuthRoute exact path="/sites" component={SitesView} />
             <AuthRoute exact path="/sites/add" component={SiteForm} />
             <AuthRoute exact path="/checkinpoints" component={CheckInPointsView} />
+            <AuthRoute exact path="/checkinpoints/add" component={CheckInPointForm} />
             <AuthRoute exact path="/devices" component={DevicesView} />
             <AuthRoute exact path="/agreement" component={AgreementView} />
             <AuthRoute exact path="/invites/visitor" component={InviteForm} />
