@@ -161,8 +161,13 @@ const HomeView: FunctionComponent<Props> = (props) => {
         pageCount,
         pageLinks,
         isLoading: isLoadingVisitor,
-        error
+        error,
+        purpose
     } = useSelector((state: RootState) => state.visitors)
+
+    const {
+        sites
+    } = useSelector((state: RootState) => state.sites)
 
     const {
         checked_out,
@@ -269,7 +274,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
                         <Box display="flex" justifyContent="start">
                             <SearchInput style={{marginTop: '33px', marginLeft: '27px'}} placeholder="Search visitor" />
                             <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="In Office" />
-                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="All Purpose" />
+                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} menuOptions={purpose.map(item=>({title:item}))} value="All Purpose" />
                             <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="All Sites" />
                         </Box>
                         <TableWrapper style={{marginTop: '17px', marginLeft: '32px', marginRight: '30px'}} config={TableConfig} />

@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Links } from 'parse-link-header'
 
-import { VisitorsResult, getVisitorInfo, getVisitorData } from 'api/Apis'
+import { VisitorsResult, getVisitorInfo, getVisitorData, getPurpose } from 'api/Apis'
 import { AppThunk } from 'app/store'
+import { fetchSites } from 'features/SalesAndOrganisation/siteSlice'
 
 export interface VisitorInfo {
     answer1: any,
@@ -77,6 +78,8 @@ interface VisitorState {
     pageLinks: Links | null
     isLoading: boolean
     error: string | null
+    purpose: any[],
+    filter:any
 }
 
 const visitorsInitialState: VisitorState = {
@@ -87,7 +90,9 @@ const visitorsInitialState: VisitorState = {
     pageCount: 0,
     pageLinks: {},
     isLoading: false,
-    error: null
+    error: null,
+    purpose: [],
+    filter:{}
 }
 
 function startLoading(state: VisitorState) {
@@ -115,6 +120,10 @@ const visitors = createSlice({
             state.visitors.map(visitor => (state.visitorsById[visitor.checkin_id] = visitor))
             //state.visitorsById = state.visitors.map(visitor => ({ ...visitor, id: visitor.id }))
         },
+        getPurposeSuccess(state,{payload}: PayloadAction<any>){
+            const { purpose } = payload
+            state.purpose = purpose
+        },
         getVisitorsFailure: loadingFailed,
         setCurrentVisitor(state, { payload }: PayloadAction<VisitorInfo>) {
             state.currentVisitor = payload
@@ -126,7 +135,8 @@ export const {
     getVisitorsStart,
     getVisitorsSuccess,
     getVisitorsFailure,
-    setCurrentVisitor
+    setCurrentVisitor,
+    getPurposeSuccess
 } = visitors.actions
 
 export default visitors.reducer
@@ -136,10 +146,13 @@ export const fetchVisitors = (
     , count?: number
 ): AppThunk => async dispatch => {
     try {
+        dispatch(fetchSites())
         dispatch(getVisitorsStart())
         const visitors = await getVisitorData(page,count)
-
         dispatch(getVisitorsSuccess(visitors))
+        
+        const purpose = await getPurpose()
+        dispatch(getPurposeSuccess(purpose))
     } catch (err) {
         dispatch(getVisitorsFailure(err.toString()))
     }
