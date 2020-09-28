@@ -26,7 +26,7 @@ import TableWrapper from "components/TableWrapper";
 import SearchInput from "components/SearchInput";
 import SelectInput from "components/SelectInput";
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchVisitors } from 'features/Home/visitorSlice'
+import { fetchInOfficeVisitors, fetchVisitors } from 'features/Home/visitorSlice'
 import { fetchHomeStats } from 'features/Home/homeSlice'
 import { RootState } from 'app/rootReducer'
 import { MyChart2 } from 'components/Chart'
@@ -171,7 +171,8 @@ const HomeView: FunctionComponent<Props> = (props) => {
         pageLinks,
         isLoading: isLoadingVisitor,
         error,
-        purpose
+        purpose,
+        filter
     } = useSelector((state: RootState) => state.visitors)
 
     const {
@@ -231,10 +232,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
             callback: handleCheckOut,
             item: (id: any) => {
 
-                return (<CustomMenuItem to='/' onClick={() => {
-
-                }
-                }>
+                return (<CustomMenuItem to='/'>
                     {'Check Out'}
                 </CustomMenuItem>)
             }
@@ -281,14 +279,15 @@ const HomeView: FunctionComponent<Props> = (props) => {
                 <Grid item xs style={{ height: "100%", marginTop: '30px' }}>
                     <Paper className={classes.paper} elevation={0}>
                         <Box display="flex" justifyContent="start">
-                            <SearchInput style={{marginTop: '33px', marginLeft: '27px'}} placeholder="Search visitor" />
+                            <SearchInput style={{marginTop: '33px', marginLeft: '27px'}} placeholder="Search visitor" value={filter.visitor}/>
                             {/* <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="In Office" /> */}
-                            <Button classes={{
+                            <Button onClick={()=>{dispatch(fetchInOfficeVisitors())}}
+                            classes={{
                                 root: classes.buttonRoot, // class name, e.g. `classes-nesting-root-x`
                                 label: classes.label, // class name, e.g. `classes-nesting-label-x`
                             }} variant="contained" style={{ marginTop: '33px', marginLeft: '27px', height: '40px'}}>In Office</Button>
-                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} menuOptions={purpose.map(item=>({title:item}))} value="All Purpose" />
-                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="All Sites" />
+                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} menuOptions={purpose.map(item=>({title:item}))} defaultValue="All Purpose" value={filter.purpose||''}/>
+                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} defaultValue ="All Sites" value={filter.site||''}/>
                         </Box>
                         <TableWrapper style={{marginTop: '17px', marginLeft: '32px', marginRight: '30px'}} config={TableConfig} />
                     </Paper>
