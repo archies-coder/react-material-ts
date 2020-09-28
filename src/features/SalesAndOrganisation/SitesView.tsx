@@ -32,7 +32,7 @@ const data = {
 
 //const columns = ['Site name', 'Address', 'CheckPoints']
 const columns = [
-    
+
     {
         id: "sitename",
         label: 'Site name'
@@ -93,12 +93,12 @@ const SitesView: FunctionComponent<Props> = (props) => {
     return (
       <Grid item xs style={{height: "100%", marginTop: '22px'}}>
           <Paper className={classes.paper}>
-              <Box display="flex" justifyContent="space-between">
-                  <SearchInput placeholder="Search Employees by name, email or mobile" width={500}/>
-                  <SelectInput value="Action" menuOptions={selectInputMenu} />
+              <Box display="flex" justifyContent="space-between" style={{ paddingTop: '38px', paddingBottom: '26px' }}>
+                  <SearchInput placeholder="Search Employees by name, email or mobile" width={354} style={{paddingLeft: '30px'}} />
+                    <SelectInput value="Action" menuOptions={selectInputMenu} style={{width: '122px'}} />
               </Box>
 
-              <TableWrapper config={TableConfig}/>
+              <TableWrapper config={TableConfig} style={{width: '870px', paddingLeft: '60px'}} />
           </Paper>
       </Grid>
   );

@@ -77,8 +77,6 @@ const selectInputMenu = [{
     title: 'Check Out'
 }, {
     title: 'Alert'
-}, {
-    title: 'Delete'
 }]
 
 
