@@ -5,8 +5,9 @@ import {makeStyles} from "@material-ui/core/styles";
 import SearchInput from "../../components/SearchInput";
 import {ArrowBackIos} from "@material-ui/icons";
 import { CustomMenuItem } from 'components/CustomMenuItem';
+import { RouteComponentProps } from 'react-router-dom';
 
-interface OwnProps {
+interface OwnProps extends RouteComponentProps<any> {
 }
 
 type Props = OwnProps;
@@ -22,12 +23,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
             '&  .MuiTableCell-root': {
                 borderBottom: '1px solid #192949',
-                padding: '20px auto'
+                padding: '14.5px 0 14.5px 0'
             },
 
             '& .MuiTableRow-root:last-child': {
                 '&  .MuiTableCell-root': {
                     borderBottom: 'none',
+                    // borderBottom: '1px solid #192949',
+
                     padding: '20px auto'
                 }
             }
@@ -41,7 +44,8 @@ const useStyles = makeStyles((theme: Theme) =>
         footer: {
             fontSize: '22px',
             fontWeight: 'bold',
-            padding: theme.spacing(2, 0, 0, 4),
+            padding: theme.spacing(6, 0, 0, 4),
+            // paddingTop: '100px',
             color: theme.palette.text.primary
         },
         arrowBack: {
@@ -50,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) =>
             cursor: 'pointer',
         },
         footerText: {
-            marginRight: 50
+            marginRight: 56
         }
     })
 )
@@ -62,16 +66,17 @@ const data = {
 }
 
 //const columns = ['Roles', 'Status', '']
-const columns = [
-
-    {
+const columns = [{
         id: "role",
         label: 'Roles'
     },
     {
         id: "status",
         label: 'Status'
-    },]
+    },{
+        id: '',
+        label: ''
+    }]
 const UserManagementView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
@@ -87,6 +92,7 @@ const UserManagementView: FunctionComponent<Props> = (props) => {
 
     const TableConfig = {
         columns: columns,
+        pagination: false,
         data: [{
             role: 'Reception',
             status: 'Assigned'
@@ -111,7 +117,7 @@ const UserManagementView: FunctionComponent<Props> = (props) => {
         <Grid item xs style={{height: "calc(100vh - 100px)"}}>
             <Paper className={classes.paper}>
                 <div className={classes.header}>
-                    <ArrowBackIos className={classes.arrowBack}/>
+                    <ArrowBackIos className={classes.arrowBack} onClick={() => props.history.push('/')}/>
                     <span> Roles </span>
                 </div>
                 <SearchInput style={{paddingLeft: '31.5px', paddingBottom: '25px'}} placeholder="Search Roles"/>
