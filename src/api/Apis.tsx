@@ -189,14 +189,14 @@ export async function getEmployeesData(page:number=0,count:number=10) {
 }
 
 export async function getSitesData(page:number=0,count:number=10) {
-  const url = `/product/reception/checkin/user/data?page=${page}&count=${count}`
+  const url = `/product/site/data?page=${page}&count=${count}`
 
   const { data } = await apis.get(url)
 
   return {
     //pageLinks: '',
     pageCount: data.totalCount,
-    sites: data.data
+    sites: data.data.map((item:any,i:any)=>({...item,site_id:i}))
   }
 
 }

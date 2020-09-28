@@ -126,7 +126,7 @@ const columns = [
     },
     {
         id: "scheduletime",
-        label: 'In Time'
+        label: 'Schedule Time'
     }]
 interface OwnProps {
 }

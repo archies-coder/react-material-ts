@@ -32,33 +32,22 @@ const data = {
 
 //const columns = ['Site name', 'Address', 'CheckPoints']
 const columns = [
+    
     {
-        id: "profilePicPath",
-        label: '',
-    },
-    {
-        id: "name",
-        label: 'Visitor name'
+        id: "sitename",
+        label: 'Site name'
     },
     {
         id: "mobile",
         label: 'Mobile No.'
     },
     {
-        id: "tomeet",
-        label: 'Person to meet'
+        id: "address",
+        label: 'Address'
     },
     {
-        id: "purpose",
-        label: 'Purpose'
-    },
-    {
-        id: "intime",
-        label: 'In Time'
-    },
-    {
-        id: "outtime",
-        label: 'Out Time'
+        id: "checkinpoint",
+        label: 'Checkinpoint'
     }]
 
 const selectInputMenu = [{
