@@ -22,14 +22,18 @@ import HomeDateDropdown from "./HomeDateDropdown";
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import SearchIcon from '@material-ui/icons/Search';
 import { Link } from "react-router-dom";
-import TableWrapper from "../../components/TableWrapper";
-import SearchInput from "../../components/SearchInput";
-import SelectInput from "../../components/SelectInput";
+import TableWrapper from "components/TableWrapper";
+import SearchInput from "components/SearchInput";
+import SelectInput from "components/SelectInput";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchVisitors } from 'features/Home/visitorSlice'
 import { fetchHomeStats } from 'features/Home/homeSlice'
 import { RootState } from 'app/rootReducer'
 import { MyChart2 } from 'components/Chart'
+import { CustomMenuItem } from 'components/CustomMenuItem';
+import Axios from 'axios';
+import { apis, checkout } from 'api/Apis';
+import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -41,7 +45,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         graph: {
             //backgroundColor: 'blue',
-            height: '100%'
+            height: '100%',
+            padding: 20
         },
         cell: {
             borderBottom: 'none'
@@ -114,16 +119,6 @@ const HomeView: FunctionComponent<Props> = (props) => {
         setAnchorEl(null);
     };
 
-    const data = {
-        avatar: '',
-        name: 'Vijaya Tondon',
-        mobileNo: 9754821630,
-        personToMeet: 'Ramesh Chawla',
-        purpose: 'Meeting',
-        inTime: '11:30 am',
-        outTime: '2:30 pm',
-    }
-
     const columns = [
         {
             id: "profilePicPath",
@@ -131,7 +126,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
         },
         {
             id: "name",
-            label: 'Visitor name'
+            label: 'Visitor name',
         },
         {
             id: "mobile",
@@ -139,7 +134,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
         },
         {
             id: "tomeet",
-            label: 'Person to meet'
+            label: 'Person to meet',
         },
         {
             id: "purpose",
@@ -147,20 +142,16 @@ const HomeView: FunctionComponent<Props> = (props) => {
         },
         {
             id: "intime",
-            label: 'In Time'
+            label: 'In Time',
+            isSort: true
         },
         {
-            id: "outtime",
-            label: 'Out Time'
+            id: "outime",
+            label: 'Out Time',
+            isSort: true
         }]
 
     let tableRows: any = []
-
-    for (let i = 0; i < 10; i++) {
-        let copy: any = tableRows
-
-        tableRows = [data, ...copy]
-    }
 
     const dispatch = useDispatch()
 
@@ -184,9 +175,20 @@ const HomeView: FunctionComponent<Props> = (props) => {
     } = useSelector((state: RootState) => state.home)
 
     useEffect(() => {
-        dispatch(fetchVisitors(0))
+        dispatch(fetchVisitors(0,10))
         dispatch(fetchHomeStats())
     }, [dispatch])
+
+    const handleCheckOut = async (id: any) => {
+        dispatch(getBackdropStart())
+        await checkout(id)
+            .then(() => {
+                dispatch(fetchHomeStats())
+                dispatch(fetchVisitors(0,10))
+                dispatch(getBackdropStop())
+            })
+            .catch(() => dispatch(getBackdropStop()))
+    }
 
 
     if (error) {
@@ -200,13 +202,35 @@ const HomeView: FunctionComponent<Props> = (props) => {
 
     const TableConfig = {
         columns: columns,
-        data: visitors,
+        isLoading: isLoadingHomeStats,
+        data: visitors.map(el => ({
+            ...el,
+            profilePicPath: <Avatar src={el['profilePicPath']} />
+        })),
+        pagination:true,
+        pageChange:(page:number,count:number)=>{
+            dispatch(fetchVisitors(page,count))
+        },
+        totalCount:pageCount,
         menuOptions: [{
-            title: 'View Details',
-            path: "/visitor"
+            key: 'checkin_id',
+            callback: handleCheckOut,
+            item: (id: any) => {
+
+                return (<CustomMenuItem to='/' onClick={() => {
+
+                }
+                }>
+                    {'Check Out'}
+                </CustomMenuItem>)
+            }
+        }, {
+            key: 'checkin_id',
+            item: (id: any) => <CustomMenuItem to={'/visitor/' + id}>
+                View Details
+            </CustomMenuItem>
         }]
     }
-
     const homeStatsConfig = {
         checked_out,
         in_office,
@@ -216,35 +240,43 @@ const HomeView: FunctionComponent<Props> = (props) => {
         isLoadingHomeStats,
     }
     return (
-        <>
-            <Grid item xs={12} style={{ height: "30%", marginTop: 0, }}>
-                <Paper className={classes.paper}>
-                    <Grid container>
-                        <Grid item md={7}>
-                            <HomeDateDropdown />
-                            <HomeStats config={homeStatsConfig} />
+        <Grid item>
+            <Grid container>
+                <Grid item xs={12} style={{ height: "20%", marginTop: 0, }}>
+                    <Paper className={classes.paper} elevation={0}>
+                        <Grid container>
+                            <Grid item md={8}>
+                                <Box>
+                                    <Box alignItems="flex-start">
+                                        <HomeDateDropdown />
+                                    </Box>
+                                    <Box alignItems="flex-end">
+                                        <HomeStats config={homeStatsConfig} />
+                                    </Box>
+                                </Box>
+                            </Grid>
+                            <Grid item md={4}>
+                                <div className={classes.graph}>
+                                    <MyChart2 visitorStats={[...visitorStats]}></MyChart2>
+                                </div>
+                            </Grid>
                         </Grid>
-                        <Grid item md={5}>
-                            <div className={classes.graph}>
-                                <MyChart2 visitorStats={[...visitorStats]}></MyChart2>
-                            </div>
-                        </Grid>
-                    </Grid>
 
-                </Paper>
+                    </Paper>
+                </Grid>
+                <Grid item xs style={{ height: "100%", marginTop: '30px' }}>
+                    <Paper className={classes.paper} elevation={0}>
+                        <Box display="flex" justifyContent="start">
+                            <SearchInput style={{marginTop: '33px', marginLeft: '27px'}} placeholder="Search visitor" />
+                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="In Office" />
+                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="All Purpose" />
+                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="All Sites" />
+                        </Box>
+                        <TableWrapper style={{marginTop: '17px', marginLeft: '32px', marginRight: '30px'}} config={TableConfig} />
+                    </Paper>
+                </Grid>
             </Grid>
-            <Grid item xs style={{ height: "70%", marginTop: '22px' }}>
-                <Paper className={classes.paper}>
-                    <Box display="flex" justifyContent="start">
-                        <SearchInput placeholder="Search visitor" />
-                        <SelectInput value="In Office" />
-                        <SelectInput value="All Purpose" />
-                        <SelectInput value="All Sites" />
-                    </Box>
-                    <TableWrapper config={TableConfig} />
-                </Paper>
-            </Grid>
-        </>
+        </Grid>
     );
 };
 

@@ -6,6 +6,7 @@ import SearchInput from "../../components/SearchInput";
 import { RootState } from 'app/rootReducer'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchEmployees } from 'features/Employees/employeeSlice'
+import { CustomMenuItem } from 'components/CustomMenuItem';
 interface OwnProps {
 }
 
@@ -32,10 +33,6 @@ const data = {
 
 //const columns = ['Visitor name', 'Mobile No.', 'Email', 'Organization']
 const columns = [
-    {
-        id: "profilePicPath",
-        label: '',
-    },
     {
         id: "name",
         label: 'Visitor name'
@@ -68,7 +65,7 @@ const EmployeesView: FunctionComponent<Props> = (props) => {
 
     useEffect(() => {
         dispatch(fetchEmployees())
-        
+
     }, [dispatch])
 
 
@@ -93,19 +90,24 @@ const EmployeesView: FunctionComponent<Props> = (props) => {
     const TableConfig = {
         columns: columns,
         data: employees,
+        isLoading: isLoadingEmployee,
+        pagination:true,
+        pageChange:(page:number,count:number)=>{
+            dispatch(fetchEmployees(page,count))
+        },
+        totalCount:pageCount,
         menuOptions: [{
-            title: 'View Details',
-            path: "/visitor/" + 2
-        }, {
-            title: 'Delete'
+            item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+                Check Out
+            </CustomMenuItem>
         }]
     }
 
     return (
-        <Grid item xs style={{height: "100%", marginTop: '22px'}}>
+        <Grid item xs style={{height: "100%"}}>
             <Paper className={classes.paper}>
-            <SearchInput placeholder="Search Employees by name, email or mobile" width={500}/>
-                <TableWrapper config={TableConfig}/>
+            <SearchInput style={{margin: '0 23px 30px', paddingTop: '37px'}} placeholder="Search Employees by name, email or mobile" width={500}/>
+                <TableWrapper style={{marginLeft: '54px'}} config={TableConfig}/>
             </Paper>
         </Grid>
     );

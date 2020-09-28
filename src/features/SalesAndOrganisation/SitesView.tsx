@@ -1,9 +1,13 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import {Box, createStyles, Grid, Paper, Theme} from "@material-ui/core";
 import SearchInput from "../../components/SearchInput";
 import TableWrapper from "../../components/TableWrapper";
 import {makeStyles} from "@material-ui/core/styles";
 import SelectInput from "../../components/SelectInput";
+import { CustomMenuItem } from 'components/CustomMenuItem';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'app/rootReducer';
+import { fetchSites } from './siteSlice';
 
 interface OwnProps {}
 
@@ -28,33 +32,18 @@ const data = {
 
 //const columns = ['Site name', 'Address', 'CheckPoints']
 const columns = [
+
     {
-        id: "profilePicPath",
-        label: '',
+        id: "sitename",
+        label: 'Site name'
     },
     {
-        id: "name",
-        label: 'Visitor name'
+        id: "address",
+        label: 'Address'
     },
     {
-        id: "mobile",
-        label: 'Mobile No.'
-    },
-    {
-        id: "tomeet",
-        label: 'Person to meet'
-    },
-    {
-        id: "purpose",
-        label: 'Purpose'
-    },
-    {
-        id: "intime",
-        label: 'In Time'
-    },
-    {
-        id: "outtime",
-        label: 'Out Time'
+        id: "checkinpoint",
+        label: 'Check In ports'
     }]
 
 const selectInputMenu = [{
@@ -68,32 +57,44 @@ const selectInputMenu = [{
 const SitesView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
-    let tableRows: any = []
+    const dispatch = useDispatch()
 
-    for (let i = 0; i < 10; i++) {
-        let copy: any = tableRows
-        tableRows = [data, ...copy]
-    }
+    const {
+        sites,
+        pageCount,
+        pageLinks,
+        isLoading: isLoadingVisitor,
+        error
+    } = useSelector((state: RootState) => state.sites)
 
     const TableConfig = {
         columns: columns,
-        data: tableRows,
+        data: sites,
+        pagination:true,
+        pageChange:(page:number,count:number)=>{
+            dispatch(fetchSites(page,count))
+        },
+        totalCount:pageCount,
         menuOptions: [{
-            title: 'View Details',
-            path: "/visitor/" + 2
+            item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+                Check Out
+            </CustomMenuItem>
         }]
     }
 
+    useEffect(() => {
+        dispatch(fetchSites(0,10))
+    }, [dispatch])
 
     return (
       <Grid item xs style={{height: "100%", marginTop: '22px'}}>
           <Paper className={classes.paper}>
-              <Box display="flex" justifyContent="space-between">
-                  <SearchInput placeholder="Search Employees by name, email or mobile" width={500}/>
-                  <SelectInput value="Action" menuOptions={selectInputMenu} />
+              <Box display="flex" justifyContent="space-between" style={{ paddingTop: '38px', paddingBottom: '26px' }}>
+                  <SearchInput placeholder="Search Employees by name, email or mobile" width={354} style={{paddingLeft: '30px'}} />
+                    <SelectInput value="Action" menuOptions={selectInputMenu} style={{width: '122px'}} />
               </Box>
 
-              <TableWrapper config={TableConfig}/>
+              <TableWrapper config={TableConfig} style={{width: '870px', paddingLeft: '60px'}} />
           </Paper>
       </Grid>
   );

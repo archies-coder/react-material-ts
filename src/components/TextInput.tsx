@@ -6,7 +6,7 @@ interface OwnProps {
     value: string;
     id?: string;
     label: string;
-    onChange: (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
+    onChange: any;
 }
 
 type Props = OwnProps;
@@ -20,7 +20,16 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         marginTop: 0,
         fontWeight: 500,
         backgroundColor: theme.palette.common.white,
-        borderRadius: theme.shape.borderRadius,
+        borderRadius: theme.shape.borderRadius -5,
+        // marginBottom: '17px',
+
+        '& .MuiInputBase-root.MuiFilledInput-root.MuiFilledInput-underline.MuiInputBase-formControl.MuiInputBase-marginDense.MuiFilledInput-marginDense': {
+            height: '36px',
+            '& input': {
+                padding: '10px',
+                borderRadius: theme.shape.borderRadius - 5
+            }
+        },
 
         '& .MuiInputBase-root,': {
             borderRadius: theme.shape.borderRadius,
@@ -28,8 +37,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
             margin: theme.spacing(0, 2, 1.5, 0),
         },
 
-        '& .MuiFilledInput-underline:before, & .MuiFilledInput-underline:after': {
-            borderBottom: 'none'
+        '& .MuiFilledInput-underline:before, & .MuiFilledInput-underline:after, & .MuiInput-underline:before, & .MuiInput-underline:after': {
+            borderBottom: 'none !important'
         },
 
         '& .MuiInputBase-input': {
@@ -39,28 +48,35 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
             '&:hover': {
                 backgroundColor: fade(theme.palette.common.white, 0.75),
             },
+        },
+        '& .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-marginDense.MuiInputLabel-outlined': {
+            color: theme.palette.text.primary,
+            fontSize: '12px'
         }
     },
     input: {
         // color: 'white'
-        fontSize: '14px'
+        // fontSize: '12px'
     }
 }))
 
-const TextInput: FunctionComponent<Props | TextFieldProps> = (props) => {
+const TextInput: FunctionComponent<any> = (props) => {
     const classes = useStyles()
     return (
         <TextField
-            id="email"
+            // id="email"
             variant="filled"
-            label="Email"
+            // label="Email"
             className={classes.textField}
             value={props.value}
             onChange={props.onChange}
-            margin="normal"
-            InputLabelProps={{variant: "outlined"}}
+            margin="dense"
+            InputLabelProps={{variant: "outlined", color: 'primary', classes: {
+                // shrink: true
+            }}}
             InputProps={{
                 className: classes.input,
+                color: 'primary '
             }}
             {...props}
         />

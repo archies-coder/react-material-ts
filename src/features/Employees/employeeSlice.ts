@@ -79,10 +79,11 @@ export default employees.reducer
 
 export const fetchEmployees = (
     page?: number
+    , count?: number
 ): AppThunk => async dispatch => {
     try {
         dispatch(getEmployeesStart())
-        const employees = await getEmployeesData()
+        const employees = await getEmployeesData(page,count)
 
         dispatch(getEmployeesSuccess(employees))
     } catch (err) {

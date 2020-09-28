@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Links } from 'parse-link-header'
 
-import { getInvitesData } from 'api/Apis'
+import { getInvitesData, createInvite } from 'api/Apis'
 import { AppThunk } from 'app/store'
+import {getBackdropStart, getBackdropStop} from 'app/BackdropSlice'
 
 
 export interface Invite {
@@ -57,7 +58,7 @@ const invites = createSlice({
 
         getInvitesStart: startLoading,
         getInvitesSuccess(state, { payload }: PayloadAction<InvitesResult>) {
-            const { pageCount, invites } = payload
+            const { pageCount, invites  } = payload
             state.pageCount = pageCount
             state.isLoading = false
             state.error = null
@@ -78,11 +79,12 @@ export const {
 export default invites.reducer
 
 export const fetchInvites = (
-    page?: number
+    page?: number,
+    count?: number
 ): AppThunk => async dispatch => {
     try {
         dispatch(getInvitesStart())
-        const invites = await getInvitesData()
+        const invites = await getInvitesData(page,count)
 
         dispatch(getInvitesSuccess(invites))
     } catch (err) {
@@ -90,3 +92,20 @@ export const fetchInvites = (
     }
 }
 
+export const saveInvite = (
+    invite: any,
+    callback?:Function
+): AppThunk => async dispatch => {
+    try {
+        //dispatch(saveInviteStart())
+        dispatch(getBackdropStart())
+        await createInvite(invite)
+            .then(() => dispatch(getBackdropStop())).catch(() => dispatch(getBackdropStop()))
+        //return setInputState(defaultInputState)
+        callback && callback();
+        //dispatch(saveInvitesSuccess(invites))
+    } catch (err) {
+        //dispatch(saveInvitesFailure(err.toString()))
+        dispatch(getBackdropStop())
+    }
+}

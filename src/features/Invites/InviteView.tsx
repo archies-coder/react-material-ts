@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState, useEffect} from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import {
     Avatar,
     Box, Button,
@@ -20,13 +20,16 @@ import {
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import TableWrapper from "../../components/TableWrapper";
 import SearchInput from "../../components/SearchInput";
 import SelectInput from "../../components/SelectInput";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchInvites } from 'features/Invites/inviteSlice'
 import { RootState } from 'app/rootReducer'
+import { CustomMenuItem } from 'components/CustomMenuItem';
+import HomeDateDropdown from 'features/Home/HomeDateDropdown';
+import { defaultVisitor, setCurrentVisitor, VisitorInfo } from 'features/Home/visitorSlice';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -34,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: '#E7ECF6',
             borderRadius: theme.shape.borderRadius - 5,
             marginRight: 30,
-            height: '100%'
+            // height: '100%'
         },
         cell: {
             borderBottom: 'none'
@@ -98,20 +101,11 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 
-const data = {
-    avatar: '',
-    name: 'Vijaya Tondon',
-    mobileNo: 9754821630,
-    personToMeet: 'Ramesh Chawla',
-    purpose: 'Meeting',
-    inTime: '11:30 am',
-    outTime: '2:30 pm',
-}
 
-//const columns = ['', 'Visitor name', 'Mobile No.', 'Person to meet', 'Purpose', 'In Time', 'Out Time']
+
 const columns = [
     {
-        id: "invite_id",
+        id: "profilePicPath",
         label: '',
     },
     {
@@ -132,11 +126,7 @@ const columns = [
     },
     {
         id: "scheduletime",
-        label: 'In Time'
-    },
-    {
-        id: "outtime",
-        label: 'Out Time'
+        label: 'Schedule Time'
     }]
 interface OwnProps {
 }
@@ -158,11 +148,7 @@ const InviteView: FunctionComponent<Props> = (props) => {
 
     let tableRows: any = []
 
-    for (let i = 0; i < 2; i++) {
-        let copy: any = tableRows
-
-        tableRows = [data, ...copy]
-    }
+    
 
     const dispatch = useDispatch()
 
@@ -171,10 +157,11 @@ const InviteView: FunctionComponent<Props> = (props) => {
         currentPageInvites,
         pageCount,
         pageLinks,
+        invitesById,
         isLoading: isLoadingInvites,
         error
     } = useSelector((state: RootState) => state.invites)
-    
+
     useEffect(() => {
         dispatch(fetchInvites())
     }, [dispatch])
@@ -189,26 +176,57 @@ const InviteView: FunctionComponent<Props> = (props) => {
         )
     }
 
+    const toVisitor = (id:any)=>{
+        const visitor = {...mapVisitorFromInvite(id)}
+        dispatch(setCurrentVisitor(visitor))
+    }
+    const mapVisitorFromInvite: (id:any)=>VisitorInfo = (id:any)=>{
+        
+        let visitor: VisitorInfo = {...defaultVisitor}
+        const invite = invitesById[id]
+        visitor.email = invite.email
+        //visitor.intime = invite.intime
+        visitor.mobile = invite.mobileno
+        visitor.name = invite.name
+        visitor.purpose = invite.purpose
+        visitor.tomeet = invite.tomeet
+        return {...visitor}
+    }
+
     const TableConfig = {
         columns: columns,
-        data: invites,
+        data: invites.map(el => ({
+            ...el,
+            profilePicPath: <Avatar>NA</Avatar>
+        })),
+        isLoading: isLoadingInvites,
+        pagination: true,
+        pageChange:(page:number,count:number)=>{
+            dispatch(fetchInvites(page,count))
+        },
+        totalCount:pageCount,
         menuOptions: [{
-            title: 'View Details',
-            path: "/visitor/" + 2
+            key: 'invite_id',
+            callback: toVisitor,
+            item: (id: any) => <CustomMenuItem to={"/visitor/-1"}>
+                Check In
+            </CustomMenuItem>
         }]
     }
 
     return (
-        <Grid item xs style={{height: "calc(100vh - 100px)"}}>
+        <Grid item xs={12} style={{ height: '100%' }}>
             <Paper className={classes.paper}>
-                <Box display="flex" justifyContent="start">
-                    <SearchInput placeholder="S earch visitor"/>
-                    <SelectInput value="In Office"/>
-                    <SelectInput value="All Purpose"/>
-                    <SelectInput value="All Sites"/>
-
+                <Box style={{ paddingTop: '5px', paddingBottom: '5px'}}>
+                    <HomeDateDropdown style={{ marginLeft: '37px', marginBottom: '10px'}} />
                 </Box>
-                <TableWrapper config={TableConfig}/>
+                <Box display="flex" justifyContent="start">
+                    <SearchInput placeholder="Search visitor" style={{marginLeft: '32px'}} />
+                    <SelectInput value="In Office" style={{marginLeft: '50px'}} />
+                    <SelectInput value="All Purpose" style={{marginLeft: '50px'}} />
+                    <SelectInput value="All Sites" style={{marginLeft: '50px'}} />
+                </Box>
+                <TableWrapper config={TableConfig} style={{ marginTop: '17px', marginLeft: '43px', marginRight: '300px' }} />
             </Paper>
         </Grid>
     );

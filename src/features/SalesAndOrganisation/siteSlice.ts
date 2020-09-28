@@ -6,14 +6,10 @@ import { AppThunk } from 'app/store'
 
 
 export interface Site {
-    email: any //"admin@gmail.com",
-    intime: any //"2020-09-14 20:28:34",
-    site_id: any //"arj1600095514",
-    mobileno: any //"123456789",
-    name: any //"arjunp",
-    purpose: any //"tomeet",
-    scheduletime: any //"2020-09-12 15:00"
-    tomeet: any //"arjun2"
+    address: any,//Mumbai,
+    checkinpoint: any,//Gate 1,
+    createdOn: any,//2020-09-27 16:10:07,
+    sitename: any,//test
 }
 export interface SitesResult {
     //pageLinks: Links | null
@@ -63,7 +59,7 @@ const sites = createSlice({
             state.error = null
             state.sites = sites
             // @ts-ignore
-            state.sites.map(site => (state.sitesById[site.site_id]=site))
+            state.sites.map(site => (state.sitesById[site.site_id] = site))
         },
         getSitesFailure: loadingFailed,
     }
@@ -79,10 +75,11 @@ export default sites.reducer
 
 export const fetchSites = (
     page?: number
+    , count?: number
 ): AppThunk => async dispatch => {
     try {
         dispatch(getSitesStart())
-        const sites = await getSitesData()
+        const sites = await getSitesData(page, count)
 
         dispatch(getSitesSuccess(sites))
     } catch (err) {

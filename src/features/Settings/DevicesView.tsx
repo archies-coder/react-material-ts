@@ -1,13 +1,15 @@
-import React, {FunctionComponent, useEffect} from 'react';
-import {Box, createStyles, Grid, Paper, Theme} from "@material-ui/core";
+import React, { FunctionComponent, useEffect } from 'react';
+import { Box, createStyles, Grid, Paper, Theme } from "@material-ui/core";
 import SearchInput from "../../components/SearchInput";
 import TableWrapper from "../../components/TableWrapper";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import SelectInput from "../../components/SelectInput";
 import CustomButton from "../../components/Button";
 import { RootState } from 'app/rootReducer'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchDevices } from 'features/Settings/deviceSlice'
+import { CustomMenuItem } from 'components/CustomMenuItem';
+import { Link } from "react-router-dom";
 interface OwnProps {
 }
 
@@ -41,7 +43,7 @@ const data = {
 
 //const columns = ['Device name', 'App Version', 'Ios Version', 'Check In Ports']
 const columns = [
-    
+
     {
         id: "devicename",
         label: 'Device name'
@@ -55,7 +57,7 @@ const columns = [
         label: 'Ios Version'
     },
     {
-        id: "checkinpoints",
+        id: "checkinpoint",
         label: 'Check In Ports'
     }]
 const DevicesView: FunctionComponent<Props> = (props) => {
@@ -68,13 +70,15 @@ const DevicesView: FunctionComponent<Props> = (props) => {
         pageCount,
         pageLinks,
         isLoading: isLoadingDevice,
-        error
+        error,
+        devicesById
     } = useSelector((state: RootState) => state.devices)
 
     useEffect(() => {
         dispatch(fetchDevices())
-        
+
     }, [dispatch])
+
 
 
     if (error) {
@@ -95,23 +99,36 @@ const DevicesView: FunctionComponent<Props> = (props) => {
     const TableConfig = {
         columns: columns,
         data: devices,
+        pagination:true,
+        pageChange:(page:number,count:number)=>{
+            dispatch(fetchDevices(page,count))
+        },
+        totalCount:pageCount,
         menuOptions: [{
-            title: 'View Details',
-            path: "/visitor/" + 2
+            key: 'udid',
+            item: (id: any) => <CustomMenuItem to={'/devices/device/' + id} onClick={() => console.log(id)} >
+                View Details
+            </CustomMenuItem>
         }]
     }
 
     return (
-        <Grid item xs style={{height: "calc(100vh - 100px)"}}>
+        <Grid item xs style={{ height: "100%" }}>
             <Paper className={classes.paper}>
-                <Box display="flex" justifyContent="space-between">
-                    <SearchInput placeholder="Search Devices" width={400}/>
-                    <SelectInput style={{marginRight: '-80px'}} value="All Sites"/>
-                    <SelectInput style={{marginLeft: '40'}} value="All Status"/>
-                    <CustomButton style={{padding: '10px 40px', marginRight: '20px'}}>Add Device</CustomButton>
+                <Box display="flex" justifyContent="space-between" style={{ paddingTop: '37.5px', paddingBottom: '24px' }}>
+                    <SearchInput style={{ marginLeft: '28.5px', height: '39px' }} placeholder="Search Devices" width={400} />
+                    <Box display="flex">
+                        <SelectInput style={{ marginRight: '26px', width: '122px', height: '39px' }} value="All Sites" />
+                        <SelectInput style={{ marginRight: '26px', width: '122px', height: '39px' }} value="All Status" />
+                        <CustomMenuItem to='/devices/device'>
+                            <CustomButton style={{ marginRight: '63px', width: '116px', fontSize: '12px', height: '39px', padding: 0, marginTop: '2px' }}>
+                                Add Device
+                    </CustomButton>
+                        </CustomMenuItem>
+                    </Box>
                 </Box>
                 <Box className={classes.tableContainer}>
-                    <TableWrapper config={TableConfig}/>
+                    <TableWrapper style={{marginLeft: '65px', width: '839px'}} config={TableConfig} />
                 </Box>
             </Paper>
         </Grid>

@@ -7,11 +7,15 @@ import NavigationBar from "./NavigationBar";
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         fullHeightContainer: {
-            height: '100vh',
-            overflow: 'auto'
+            // height: '100vh',
+            // overflow: 'auto',
+            flexGrow: 1,
+            backgroundColor: theme.palette.background.default,
+            // padding: theme.spacing(3),
+            marginLeft: '30px'
         },
         nav: {
-            height: '80px',
+            // height: '80px',
             // backgroundColor: '#eee',
             marginBottom: 0
         }
@@ -24,12 +28,14 @@ type Props = OwnProps;
 const NavGridContainer: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
     return (
-        <Grid container justify="flex-start" className={classes.fullHeightContainer}>
+        <main className={classes.fullHeightContainer}>
+        <Grid container>
             <Grid item xs={12} className={classes.nav}>
                 <NavigationBar />
             </Grid>
             {props.children}
         </Grid>
+        </main>
     );
 };
 

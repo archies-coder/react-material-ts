@@ -1,8 +1,19 @@
+@font-face {
+  font-family: 'Proxima Nova';
+  src: url("../assets//fonts/ProximaNova-Regular.otf") format("opentype") /* Legacy iOS */
+}
+
+@font-face {
+    font-family: 'Proxima Nova';
+    font-weight: bold;
+    src: url("../assets/fonts/Proxima\ Nova\ Bold.otf") format("opentype");
+}
+
 html,
 body {
     height: 100%;
     overflow: auto;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Proxima Nova', sans-serif;
 }
 
 * {

@@ -5,8 +5,9 @@ import DateFnsUtils from '@date-io/date-fns';
 import EventIcon from '@material-ui/icons/Event';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { DatePicker, MuiPickersUtilsProvider, } from '@material-ui/pickers';
+import { ExpandMore } from '@material-ui/icons';
 
-interface OwnProps {
+interface OwnProps extends React.HTMLAttributes<any> {
 }
 
 type Props = OwnProps;
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
             // marginTop: '15px',
             cursor: 'pointer',
 
-            margin: '15px 0 0 15px',
+            // margin: '15px 0 0 15px',
             '& .MuiInput-underline:before, & .MuiInput-underline:after': {
                 borderBottom: 'none !important'
             },
@@ -66,19 +67,21 @@ const useStyles = makeStyles((theme: Theme) =>
 const HomeDateDropdown: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
-    const [selectedDate, setSelectedDate] = React.useState<Date | null>(
-        new Date('2014-08-18T21:11:54'),
-    );
+    const [selectedDate, setSelectedDate] = React.useState<Date | null>(new Date());
+    const [isOpen, setIsOpen] = React.useState(false);
 
     const handleDateChange = (date: Date | null) => {
         setSelectedDate(date);
     };
     return (
-        <Box className={classes.container}>
+        <Box className={classes.container} {...props}>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <span className={classes.icon}><EventIcon /></span>
+                <span className={classes.icon}><EventIcon onClick={() => setIsOpen(true)}/></span>
                 <DatePicker
-                    disableToolbar
+                    style={{ maxWidth: '135px' }}
+                    disableToolbar={false}
+                    //allowKeyboardControl = {false}
+                    //size= "small"
                     variant="inline"
                     format="MMM dd, yyyy"
                     margin="normal"
@@ -86,17 +89,13 @@ const HomeDateDropdown: FunctionComponent<Props> = (props) => {
                     autoOk
                     value={selectedDate}
                     onChange={handleDateChange}
-
-                // KeyboardButtonProps={{
-                //     'aria-label': 'change date',
-                //     edge: 'start'
-                // }}
+                    //keyboardIcon={<ExpandMore></ExpandMore>}
+                    open={isOpen}
+                    onOpen={() => setIsOpen(true)}
+                    onClose={() => setIsOpen(false)}
                 />
-                <span className={classes.expandIcon}><ExpandMoreIcon /></span>
+                <ExpandMore onClick={() => setIsOpen(true)} />
             </MuiPickersUtilsProvider>
-            {/*<span className={classes.icon}><EventIcon /></span>*/}
-            {/*<span className={classes.date}>June 23, 2020</span>*/}
-            {/*<span className={classes.expandIcon}><ExpandMoreIcon /></span>*/}
         </Box>
     );
 };

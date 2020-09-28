@@ -1,6 +1,6 @@
 import axios from 'axios'
 import parseLink, { Links } from 'parse-link-header'
-
+import { VisitorInfo } from 'features/Home/visitorSlice';
 
 export const apis = axios.create({
   baseURL: 'http://52.66.55.89:18446',
@@ -52,37 +52,7 @@ interface UserModel {
   usertype: any
 }
 
-export interface VisitorInfo  {
-  answer1: any,
-  answer2: any,
-  answer3: any,
-  answer4: any,
-  answer5: any,
-  belongings: any,
-  checkin_id: any,
-  city: any,
-  company: any,
-  country: any,
-  email: any,
-  gender: any,
-  idCardImagePath: any,
-  idtype: any,
-  intime: any,
-  mobile: any,
-  name: any,
-  ndastatus: any,
-  noofvisitor: any,
-  organisation: any,
-  outime: any,
-  policycheckstatus: any,
-  profilePicPath: any,
-  purpose: any,
-  signaturePath: any,
-  site: any,
-  tomeet: any,
-  usertype: any,
-  vehicleno: any
-}
+
 
 // export interface VisitorInfo {
 //   avatar: any,
@@ -146,17 +116,17 @@ interface VisitorModel {
   "vehicleno": any//"vehicleno"
 }
 
-export async function getVisitorData() {
-  const url = `/product/reception/checkin/user/data`
+export async function getVisitorData(page:number=0,count:number=10) {
+  const url = `/product/reception/checkin/user/data?page=${page}&count=${count}`
 
   const { data } = await apis.get(url)
-  debugger
+  // debugger
   return {
     //pageLinks: '',
-    pageCount: 1,
+    pageCount: data.totalCount,
     visitors: data.data
   }
-  debugger
+  // debugger
 }
 
 export async function getVisitorInfo() {
@@ -186,60 +156,138 @@ export async function getVisitorInfo() {
 }
 
 export async function getHomeStats() {
-  const url = `/product/stats/data`
+  const url = `/product/stats/data?page=0&count=10`
 
   const { data } = await apis.get(url)
   return data
 }
 
-export async function getInvitesData() {
-  const url = `/product/reception/invite/user/data`
+export async function getInvitesData(page:number=0,count:number=10) {
+  const url = `/product/reception/invite/user/data?page=${page}&count=${count}`
 
   const { data } = await apis.get(url)
 
   return {
     //pageLinks: '',
-    pageCount: 1,
+    pageCount: data.totalCount,
     invites: data.data
   }
 
 }
 
-export async function getEmployeesData(){
-  const url = `/product/reception/checkin/user/data`
+export async function getEmployeesData(page:number=0,count:number=10) {
+  const url = `/product/reception/checkin/user/data?page=${page}&count=${count}`
 
   const { data } = await apis.get(url)
 
   return {
     //pageLinks: '',
-    pageCount: 1,
+    pageCount: data.totalCount,
     employees: data.data
   }
 
 }
 
-export async function getSitesData(){
-  const url = `/product/reception/checkin/user/data`
+export async function getSitesData(page:number=0,count:number=10) {
+  const url = `/product/site/data?page=${page}&count=${count}`
 
   const { data } = await apis.get(url)
 
   return {
     //pageLinks: '',
-    pageCount: 1,
-    sites: data.data
+    pageCount: data.totalCount,
+    sites: data.data.map((item:any,i:any)=>({...item,site_id:i}))
+  }
+
+}
+export async function getCheckInPointsData(page:number=0,count:number=10) {
+  const url = `/product/checkinpoint/data?page=${page}&count=${count}`
+
+  const { data } = await apis.get(url)
+
+  return {
+    //pageLinks: '',
+    pageCount: data.totalCount,
+    checkInPoints: data.data.map((item:any,i:any)=>({...item,checkinpoint_id:i}))
   }
 
 }
 
-export async function getDevicesData(){
-  const url = `/product/device/data`
+export async function getDevicesData(page:number=0,count:number=10) {
+  const url = `/product/device/data?page=${page}&count=${count}`
 
   const { data } = await apis.get(url)
-  debugger
+  // debugger
   return {
     //pageLinks: '',
-    pageCount: 1,
+    pageCount: data.totalCount || 20,
     devices: data.data
   }
 
+}
+
+export async function getUsersData() {
+  const url = `/product/device/data?page=0&count=10`
+
+  const { data } = await apis.get(url)
+  // debugger
+  return {
+    //pageLinks: '',
+    pageCount: 1,
+    users: data.data
+  }
+
+}
+
+export async function checkout(id: any) {
+  await apis.post('/product/reception/user/checkout', JSON.stringify({
+    "checkin_id": id
+  }), {
+    headers: {
+      "Cache-Control": "no-cache",
+      'Content-Type': 'application/json'
+    }
+  })
+}
+export async function createInvite(json: string) {
+  return await apis.post('/product/reception/user/invite', json, {
+    headers: {
+      "Content-Type": "application/json",
+      // "Content-Length": 2617
+    },
+  })
+}
+export async function createDevice(json: string) {
+  return await apis.post('/product/acountDetail/device/register', json, {
+    headers: {
+      "Content-Type": "application/json",
+      // "Content-Length": 2617
+    },
+  })
+}
+
+export async function signIn(username: string, password: string) {
+  return await apis.post('/product/login', JSON.stringify({
+    "username": username,
+    "password": password
+  }), {
+    headers: {
+      'Content-type': 'application/json'
+    }
+  })
+}
+// panwar.arjunp@gmail.com 12345
+
+export async function signUp(username: string, password: string, name: string, userType: string) {
+  return await apis.post('/product/accountDetail/register',
+    JSON.stringify({
+      "username": username,
+      "password": password,
+      "name": name,
+      "usertype": userType
+    }), {
+    headers: {
+      'Content-type': 'application/json'
+    }
+  })
 }

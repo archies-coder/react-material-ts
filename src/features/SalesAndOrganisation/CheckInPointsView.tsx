@@ -1,9 +1,13 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import {Box, createStyles, Grid, Paper, Theme} from "@material-ui/core";
 import SearchInput from "../../components/SearchInput";
 import TableWrapper from "../../components/TableWrapper";
 import {makeStyles} from "@material-ui/core/styles";
 import SelectInput from "../../components/SelectInput";
+import { CustomMenuItem } from 'components/CustomMenuItem';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'app/rootReducer';
+import { fetchCheckInPoints } from './checkInPointSlice';
 
 interface OwnProps {}
 
@@ -28,37 +32,32 @@ const data = {
 
 //const columns = ['Check In ports', 'Site name', 'Device']
 const columns = [
+    
     {
-        id: "profilePicPath",
-        label: '',
+        id: "checkinpoint",
+        label: 'Check In Point'
     },
     {
-        id: "name",
-        label: 'Visitor name'
+        id: "sitename",
+        label: 'Site name'
     },
     {
-        id: "mobile",
-        label: 'Mobile No.'
-    },
-    {
-        id: "tomeet",
-        label: 'Person to meet'
-    },
-    {
-        id: "purpose",
-        label: 'Purpose'
-    },
-    {
-        id: "intime",
-        label: 'In Time'
-    },
-    {
-        id: "outtime",
-        label: 'Out Time'
+        id: "device",
+        label: 'Device'
     }]
 
 const CheckInPointsView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
+
+    const dispatch = useDispatch()
+
+    const {
+        checkInPoints,
+        pageCount,
+        pageLinks,
+        isLoading: isLoadingVisitor,
+        error
+    } = useSelector((state: RootState) => state.checkinpoints)
 
     let tableRows: any = []
 
@@ -69,13 +68,22 @@ const CheckInPointsView: FunctionComponent<Props> = (props) => {
 
     const TableConfig = {
         columns: columns,
-        data: tableRows,
+        data: checkInPoints,
+        pagination:true,
+        pageChange:(page:number,count:number)=>{
+            dispatch(fetchCheckInPoints(page,count))
+        },
+        totalCount:pageCount,
         menuOptions: [{
-            title: 'View Details',
-            path: "/visitor/" + 2
+            item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+                Check Out
+            </CustomMenuItem>
         }]
     }
 
+    useEffect(() => {
+        dispatch(fetchCheckInPoints(0,10))
+    }, [dispatch])
 
     return (
         <Grid item xs style={{height: "100%", marginTop: '22px'}}>

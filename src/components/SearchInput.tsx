@@ -3,9 +3,10 @@ import {Box, createStyles, fade, InputBase, Paper, Theme} from "@material-ui/cor
 import SearchIcon from "@material-ui/icons/Search";
 import {makeStyles} from "@material-ui/core/styles";
 
-interface OwnProps {
+interface OwnProps extends React.HTMLAttributes<any> {
     placeholder: string;
     width?: number;
+    height?: number
 }
 
 type Props = OwnProps;
@@ -13,21 +14,30 @@ type Props = OwnProps;
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         inputContainer: {
-            padding: 15,
-            marginRight: 20,
+            // padding: '33px',
+            // marginRight: 20,
+            // width: '225px',
+            // height: '40px'
+            '& .MuiInputBase-input::placeholder': {
+                opacity: 1,
+                color: theme.palette.text.primary,
+            }
         },
         search: {
             position: 'relative',
-            width: (props: Props) => props.width ? props.width : '300px',
-            borderRadius: theme.shape.borderRadius,
-            backgroundColor: fade(theme.palette.common.white, 0.5),
+            width: (props: Props) => props.width ? props.width : '225px',
+            height: (props: Props) => props.height ? props.height : '40px',
+            // height: '40px',
+            borderRadius: theme.shape.borderRadius - 5,
+            backgroundColor: theme.palette.common.white,
+
             '&:hover': {
-                backgroundColor: fade(theme.palette.common.white, 0.75),
+                backgroundColor: theme.palette.common.white,
             },
 
         },
         searchIcon: {
-            padding: theme.spacing(0, 2),
+            padding: theme.spacing(0, 1),
             height: '100%',
             position: 'absolute',
             pointerEvents: 'none',
@@ -36,21 +46,21 @@ const useStyles = makeStyles((theme: Theme) =>
             justifyContent: 'center',
         },
         inputRoot: {
-            color: '#000',
+            color: theme.palette.text.primary,
             width: '100%'
         },
         inputInput: {
-            padding: theme.spacing(2, 2, 2, 2),
+            // padding: theme.spacing(2, 2, 2, 2),
             // vertical padding + font size from searchIcon
             // width: 'inherit',
+            fontSize: '11.25px',
+            marginTop: '7px',
+            color: theme.palette.text.primary,
+            zIndex: 1000,
             paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-            transition: theme.transitions.create('width'),
-            [theme.breakpoints.up('sm')]: {
-                width: '100%',
-                '&:focus': {
-                    // width: '20ch',
-                },
-            },
+            // transition: theme.transitions.create('width'),
+            height: '100%',
+
         },
     })
 )
@@ -59,7 +69,7 @@ const SearchInput: FunctionComponent<Props> = (props) => {
     const classes = useStyles(props)
 
     return (
-      <Box>
+      <Box {...props}>
           <div className={classes.inputContainer}>
               <div className={classes.search}>
                   <div className={classes.searchIcon}>
