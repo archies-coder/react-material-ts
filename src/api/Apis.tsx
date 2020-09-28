@@ -116,8 +116,8 @@ interface VisitorModel {
   "vehicleno": any//"vehicleno"
 }
 
-export async function getVisitorData(page:number=0,count:number=10) {
-  const url = `/product/reception/checkin/user/data?page=${page}&count=${count}`
+export async function getVisitorData(page:number=0,count:number=10,visitor:String = '',purpose:String = '', site:String='') {
+  const url = `/product/reception/checkin/user/data?page=${page}&count=${count}&visitor=${visitor}&purpose=${purpose}&site=${site}`
 
   const { data } = await apis.get(url)
   // debugger
@@ -130,7 +130,7 @@ export async function getVisitorData(page:number=0,count:number=10) {
 }
 
 export async function getInOfficeVisitorData(page:number=0,count:number=10) {
-  const url = `/product/reception/checkin/user/data?page=${page}&count=${count}`
+  const url = `/product/reception/checkin/in/user/data?page=${page}&count=${count}`
 
   const { data } = await apis.get(url)
   // debugger

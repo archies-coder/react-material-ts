@@ -26,7 +26,7 @@ import TableWrapper from "components/TableWrapper";
 import SearchInput from "components/SearchInput";
 import SelectInput from "components/SelectInput";
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchInOfficeVisitors, fetchVisitors } from 'features/Home/visitorSlice'
+import { fetchInOfficeVisitors, fetchVisitors, setFilter } from 'features/Home/visitorSlice'
 import { fetchHomeStats } from 'features/Home/homeSlice'
 import { RootState } from 'app/rootReducer'
 import { MyChart2 } from 'components/Chart'
@@ -118,11 +118,24 @@ const HomeView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
+    const [filter,setFilter]=useState({visitor:"",purpose:"",site:""})
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
 
+
+    const handleFilterChange= (f:any)=>{
+        debugger;
+        const newFilter = {...filter,...f} 
+        setFilter(newFilter)
+        const {
+            purpose:purpose1,
+            site:site1,
+            visitor:visitor1
+        } = newFilter
+
+        dispatch(fetchVisitors(0,pageCount,visitor1,purpose1,site1))
+    }
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -164,14 +177,16 @@ const HomeView: FunctionComponent<Props> = (props) => {
     const dispatch = useDispatch()
 
     const {
+        sites
+    } = useSelector((state: RootState) => state.sites)
+    const {
         visitors,
         currentPageVisitors,
         pageCount,
         pageLinks,
         isLoading: isLoadingVisitor,
         error,
-        purpose,
-        filter
+        purpose
     } = useSelector((state: RootState) => state.visitors)
 
     const {
@@ -274,15 +289,15 @@ const HomeView: FunctionComponent<Props> = (props) => {
                 <Grid item xs style={{ height: "100%", marginTop: '30px' }}>
                     <Paper className={classes.paper} elevation={0}>
                         <Box display="flex" justifyContent="start">
-                            <SearchInput style={{marginTop: '33px', marginLeft: '27px'}} placeholder="Search visitor" value={filter.visitor}/>
+                            <SearchInput style={{marginTop: '33px', marginLeft: '27px'}} onChange = {(e:any)=>{debugger;handleFilterChange({visitor:e.target.value})}} value = {filter.visitor} placeholder="Search visitor" />
                             {/* <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="In Office" /> */}
-                            <Button onClick={()=>{dispatch(fetchInOfficeVisitors())}}
+                            <Button onClick={()=>{setFilter({site:"",purpose:"",visitor:""});dispatch(fetchInOfficeVisitors())}}
                             classes={{
                                 root: classes.buttonRoot, // class name, e.g. `classes-nesting-root-x`
                                 label: classes.label, // class name, e.g. `classes-nesting-label-x`
                             }} variant="contained" style={{ marginTop: '33px', marginLeft: '27px', height: '40px'}}>In Office</Button>
-                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} menuOptions={purpose.map(item=>({title:item}))} defaultValue="All Purpose" value={filter.purpose||''}/>
-                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} defaultValue ="All Sites" value={filter.site||''}/>
+                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} onChange = {(e:any)=>{debugger; handleFilterChange({purpose:e.target.value})}} menuOptions={purpose.map(item=>({title:item}))} defaultValue="All Purpose" value={filter.purpose}/>
+                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} onChange = {(e:any)=>{debugger; handleFilterChange({site:e.target.value})}} menuOptions={sites.map(item=>({title:item.sitename}))} defaultValue ="All Sites" value={filter.site}/>
                         </Box>
                         <TableWrapper style={{marginTop: '17px', marginLeft: '32px', marginRight: '30px'}} config={TableConfig} />
                     </Paper>

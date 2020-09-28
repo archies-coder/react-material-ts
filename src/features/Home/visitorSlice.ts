@@ -92,7 +92,7 @@ const visitorsInitialState: VisitorState = {
     isLoading: false,
     error: null,
     purpose: [],
-    filter:{}
+    filter:{visitor:"",purpose:"All Purpose",site:"All Sites"}
 }
 
 function startLoading(state: VisitorState) {
@@ -127,6 +127,9 @@ const visitors = createSlice({
         getVisitorsFailure: loadingFailed,
         setCurrentVisitor(state, { payload }: PayloadAction<VisitorInfo>) {
             state.currentVisitor = payload
+        },
+        setFilter(state,{payload}: PayloadAction<any>){
+            state.filter = {...state.filter, ...payload}
         }
     }
 })
@@ -136,23 +139,27 @@ export const {
     getVisitorsSuccess,
     getVisitorsFailure,
     setCurrentVisitor,
-    getPurposeSuccess
+    getPurposeSuccess,
+    setFilter
 } = visitors.actions
 
 export default visitors.reducer
 
 export const fetchVisitors = (
     page?: number
-    , count?: number
+    , count?: number,
+    visitor?: string,
+    purpose?: string,
+    site?: string
 ): AppThunk => async dispatch => {
     try {
         dispatch(fetchSites())
         dispatch(getVisitorsStart())
-        const visitors = await getVisitorData(page,count)
+        const visitors = await getVisitorData(page,count,visitor,purpose,site)
         dispatch(getVisitorsSuccess(visitors))
         
-        const purpose = await getPurpose()
-        dispatch(getPurposeSuccess(purpose))
+        const pur = await getPurpose()
+        dispatch(getPurposeSuccess(pur))
     } catch (err) {
         dispatch(getVisitorsFailure(err.toString()))
     }

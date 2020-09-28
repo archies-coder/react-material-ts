@@ -111,6 +111,7 @@ const SelectInput: FunctionComponent<Props> = (props) => {
                     labelId="demo-simple-select-label"
                     IconComponent={() => <ExpandMore />}
                     disableUnderline
+                    onChange={props.onChange}
                     className={classes.inputRoot}
                     style={{
                         borderBottom: 'none',
@@ -134,8 +135,12 @@ const SelectInput: FunctionComponent<Props> = (props) => {
                     }}
                 >
                     {
-                        props.menuOptions ? props.menuOptions.map(item => <MenuItem className={classes.menuItem}
-                            key={item.title}>{item.title}</MenuItem>) : <MenuItem>1</MenuItem>
+                        props.menuOptions ? [<MenuItem value="">
+                        <em>{props.defaultValue}</em>
+                      </MenuItem>,...props.menuOptions.map(item => <MenuItem className={classes.menuItem}
+                            value={item.title}
+                            key={item.title}
+                        >{item.title}</MenuItem>)] : <MenuItem>1</MenuItem>
                     }
                 </Select>
             </div>
