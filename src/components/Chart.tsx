@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Box, Paper, Theme } from "@material-ui/core";
+import { addDays, format, subDays } from 'date-fns';
 
 
 
@@ -78,13 +79,13 @@ export const MyChart2: FunctionComponent<any> = ({visitorStats}) => {
         gridLines: {
           display: false
         },
-        labels: ["Jun 20",1,7,14,21],
+        labels: [format(subDays(new Date(), 0), 'MMM dd'),format(subDays(new Date(), 1), 'dd'),format(subDays(new Date(), 2), 'dd'),format(subDays(new Date(), 3), 'dd'),format(subDays(new Date(), 4), 'dd')],
         scaleLabel: {
           display: false,
           lineHeight: 2
         },
         ticks:{
-          fontSize:18.75,
+          fontSize:18.25,
           fontColor: '#192949',//'rgb(255, 99, 132)',
           //fontFamily: ''
           padding:20,

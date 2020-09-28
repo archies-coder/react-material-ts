@@ -209,7 +209,7 @@ const InviteView: FunctionComponent<Props> = (props) => {
             key: 'invite_id',
             callback: toVisitor,
             item: (id: any) => <CustomMenuItem to={"/visitor/-1"}>
-                View Details
+                Check In
             </CustomMenuItem>
         }]
     }

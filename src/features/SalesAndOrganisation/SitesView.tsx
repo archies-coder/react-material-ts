@@ -39,16 +39,12 @@ const columns = [
         label: 'Site name'
     },
     {
-        id: "mobile",
-        label: 'Mobile No.'
-    },
-    {
         id: "address",
         label: 'Address'
     },
     {
         id: "checkinpoint",
-        label: 'Checkinpoint'
+        label: 'Check In ports'
     }]
 
 const selectInputMenu = [{
