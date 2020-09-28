@@ -11,6 +11,6 @@ type CheckBoxComponentProps = {
 export const CheckBoxComponent: FunctionComponent<CheckBoxComponentProps> = ({isChecked, handleChange, title}) =>
 <FormControlLabel
     // @ts-ignore
-        control={<CustomCheckBox checked={isChecked} onChange={handleChange} name={title}/>}
+        control={<Checkbox checked={isChecked} onChange={handleChange} name={title}/>}
     label={title}
 />

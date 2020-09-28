@@ -99,13 +99,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
         },
         label: {
-            textTransform: 'capitalize',
+            textTransform: 'capitalize'
         },
         buttonRoot: {
-            fontSize: '12px',
             backgroundColor: 'white',
-            borderRadius: theme.shape.borderRadius - 5,
-            boxShadow: 'none'
+            boxShadow: 'none',
+            borderRadius: theme.shape.borderRadius - 5
         }
     })
 )
@@ -174,10 +173,6 @@ const HomeView: FunctionComponent<Props> = (props) => {
         purpose,
         filter
     } = useSelector((state: RootState) => state.visitors)
-
-    const {
-        sites
-    } = useSelector((state: RootState) => state.sites)
 
     const {
         checked_out,
