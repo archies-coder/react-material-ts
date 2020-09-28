@@ -226,6 +226,19 @@ export async function getDevicesData(page:number=0,count:number=10) {
 
 }
 
+export async function getPurpose(page:number=0,count:number=10) {
+  const url = `/product/reception/meeting/purpose/data?page=${page}&count=${count}`
+
+  const { data } = await apis.get(url)
+  // debugger
+  return {
+    //pageLinks: '',
+    pageCount: data.totalCount || 20,
+    purpose: data.data
+  }
+
+}
+
 export async function getUsersData() {
   const url = `/product/device/data?page=0&count=10`
 
