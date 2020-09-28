@@ -91,6 +91,11 @@ const EmployeesView: FunctionComponent<Props> = (props) => {
         columns: columns,
         data: employees,
         isLoading: isLoadingEmployee,
+        pagination:true,
+        pageChange:(page:number,count:number)=>{
+            dispatch(fetchEmployees(page,count))
+        },
+        totalCount:pageCount,
         menuOptions: [{
             item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
                 Check Out
