@@ -215,7 +215,7 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
         <Box style={{ height: '112px', paddingTop: '26px', textAlign: 'start', paddingLeft: '38px' }}>
             <img src={logo} style={{ height: '45px', width: '45px' }} />
             <Typography variant="h5" className={classes.logo} noWrap>
-                 Company Logo
+                 AUROCHEMICALS
             </Typography>
         </Box>
         {/* <Divider /> */}
