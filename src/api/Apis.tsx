@@ -200,6 +200,18 @@ export async function getSitesData(page:number=0,count:number=10) {
   }
 
 }
+export async function getCheckInPointsData(page:number=0,count:number=10) {
+  const url = `/product/checkinpoint/data?page=${page}&count=${count}`
+
+  const { data } = await apis.get(url)
+
+  return {
+    //pageLinks: '',
+    pageCount: data.totalCount,
+    checkInPoints: data.data.map((item:any,i:any)=>({...item,checkinpoint_id:i}))
+  }
+
+}
 
 export async function getDevicesData(page:number=0,count:number=10) {
   const url = `/product/device/data?page=${page}&count=${count}`

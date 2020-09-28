@@ -11,6 +11,7 @@ import deviceReducer from 'features/Settings/deviceSlice'
 import userReducer from 'features/UserManagement/userSlice'
 import authReducer from 'features/auth/AuthSlice'
 import notificationReducer from 'features/Settings/NotificationSlice'
+import checkInPointReducer from 'features/SalesAndOrganisation/checkInPointSlice'
 
 const rootReducer = combineReducers({
   backdrop: backDropReducer,
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   devices: deviceReducer,
   users: userReducer,
   auth: authReducer,
-  notifications:notificationReducer
+  notifications:notificationReducer,
+  checkinpoints:checkInPointReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>
