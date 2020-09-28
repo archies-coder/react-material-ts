@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import {Box, createStyles, fade, InputBase, Paper, Theme} from "@material-ui/core";
+import {Box, createStyles, fade, InputBase, InputBaseProps, Paper, Theme} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import {makeStyles} from "@material-ui/core/styles";
 
@@ -9,7 +9,7 @@ interface OwnProps extends React.HTMLAttributes<any> {
     height?: number
 }
 
-type Props = OwnProps;
+type Props = OwnProps & InputBaseProps;
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -76,6 +76,8 @@ const SearchInput: FunctionComponent<Props> = (props) => {
                       <SearchIcon/>
                   </div>
                   <InputBase
+                  value={props.value}
+                  onChange={props.onChange}
                       placeholder={props.placeholder}
                       classes={{
                           root: classes.inputRoot,
