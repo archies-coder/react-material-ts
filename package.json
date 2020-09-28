@@ -17,6 +17,7 @@
         "@types/react-router-dom": "^5.1.5",
         "axios": "^0.20.0",
         "chart.js": "^2.9.3",
+        "clsx": "^1.1.1",
         "date-fns": "^2.16.1",
         "node-sass": "^4.14.1",
         "parse-link-header": "^1.0.1",

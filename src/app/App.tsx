@@ -140,7 +140,7 @@ export default function App() {
             <AuthRoute exact path="/visitorsform" component={VisitorsForm} />
             <AuthRoute exact path="/notification" component={Notification} />
             <Route exact path="/signin" component={SignIn} />
-            <Route exact path="/signup" component={SignUp} />
+            {/* <Route exact path="/signup" component={SignUp} /> */}
         </Switch>
     </Box>
 

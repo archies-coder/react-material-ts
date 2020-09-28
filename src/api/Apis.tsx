@@ -201,14 +201,14 @@ export async function getSitesData(page:number=0,count:number=10) {
 
 }
 
-export async function getDevicesData() {
-  const url = `/product/device/data?page=0&count=10`
+export async function getDevicesData(page:number=0,count:number=10) {
+  const url = `/product/device/data?page=${page}&count=${count}`
 
   const { data } = await apis.get(url)
   // debugger
   return {
     //pageLinks: '',
-    pageCount: 1,
+    pageCount: data.totalCount || 20,
     devices: data.data
   }
 

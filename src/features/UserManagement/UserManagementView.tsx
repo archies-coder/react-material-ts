@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
         header: {
             fontSize: '22px',
             fontWeight: 'bold',
-            padding: theme.spacing(2, 0, 0, 4),
+            padding: '31.5px 0 38px 31.5px',
             color: theme.palette.text.primary
         },
         footer: {
@@ -63,34 +63,15 @@ const data = {
 
 //const columns = ['Roles', 'Status', '']
 const columns = [
+
     {
-        id: "profilePicPath",
-        label: '',
+        id: "role",
+        label: 'Roles'
     },
     {
-        id: "name",
-        label: 'Visitor name'
-    },
-    {
-        id: "mobile",
-        label: 'Mobile No.'
-    },
-    {
-        id: "tomeet",
-        label: 'Person to meet'
-    },
-    {
-        id: "purpose",
-        label: 'Purpose'
-    },
-    {
-        id: "intime",
-        label: 'In Time'
-    },
-    {
-        id: "outtime",
-        label: 'Out Time'
-    }]
+        id: "status",
+        label: 'Status'
+    },]
 const UserManagementView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
@@ -133,8 +114,8 @@ const UserManagementView: FunctionComponent<Props> = (props) => {
                     <ArrowBackIos className={classes.arrowBack}/>
                     <span> Roles </span>
                 </div>
-                <SearchInput placeholder="Search Roles"/>
-                <TableWrapper config={TableConfig}/>
+                <SearchInput style={{paddingLeft: '31.5px', paddingBottom: '25px'}} placeholder="Search Roles"/>
+                <TableWrapper style={{width: '877px', marginLeft: '53px'}} config={TableConfig}/>
                 <div className={classes.footer}>
                     <span className={classes.footerText}>Gate 11</span>
                     <span className={classes.footerText}>33 Narscicco Station</span>

@@ -99,6 +99,11 @@ const DevicesView: FunctionComponent<Props> = (props) => {
     const TableConfig = {
         columns: columns,
         data: devices,
+        pagination:true,
+        pageChange:(page:number,count:number)=>{
+            dispatch(fetchDevices(page,count))
+        },
+        totalCount:pageCount,
         menuOptions: [{
             key: 'udid',
             item: (id: any) => <CustomMenuItem to={'/devices/device/' + id} onClick={() => console.log(id)} >

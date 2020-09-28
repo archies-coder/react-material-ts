@@ -83,10 +83,11 @@ export default devices.reducer
 
 export const fetchDevices = (
     page?: number
+    , count?: number
 ): AppThunk => async dispatch => {
     try {
         dispatch(getDevicesStart())
-        const devices = await getDevicesData()
+        const devices = await getDevicesData(page,count)
 
         dispatch(getDevicesSuccess(devices))
     } catch (err) {
