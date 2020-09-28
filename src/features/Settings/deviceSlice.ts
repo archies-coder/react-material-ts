@@ -10,6 +10,8 @@ export interface Device {
     createdOn: any,
     devicename: any,
     iosversion: any,
+    appversion:any,
+    checkinpoint:any,
     pincode: any,
     udid: any
 }

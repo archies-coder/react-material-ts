@@ -66,6 +66,8 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
         id: Number,
         name: '',
         iosVersion: Number,
+        checkinpoint: '',
+        appversion: '',
         email: '',
         udid: '',
     }
@@ -82,11 +84,13 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
     const {
         devicename,
         iosversion,
+        appversion,
+        checkinpoint,
         udid,
         email
     } = currentDevice
     const inputState = currentDevice;
-    const setInputState=(device:any)=>{
+    const setInputState = (device: any) => {
         dispatch(setCurrentDevice(device));
     }
 
@@ -110,6 +114,8 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
         dispatch(saveDevice(JSON.stringify({
             "devicename": devicename,
             "iosversion": iosversion,
+            "appversion": appversion,
+            "checkinpoint": checkinpoint,
             "email": email,
             "udid": udid
         }), () => setInputState(defaultInputState)))
@@ -142,7 +148,14 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
                                 name="iosversion"
                                 onChange={handleChange}
                                 value={iosversion} />
-                            {/*</div>*/}
+                            <TextInput
+                                required
+                                //type="email"
+                                label="appversion"
+                                onChange={handleChange}
+                                name="appversion"
+                                value={appversion} />
+
                         </Grid>
                         <Grid item xs={6}>
                             <TextInput
@@ -158,6 +171,13 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
                                 onChange={handleChange}
                                 name="udid"
                                 value={udid} />
+
+                            <TextInput
+                                required
+                                label="checkinpoint"
+                                onChange={handleChange}
+                                name="checkinpoint"
+                                value={checkinpoint} />
                         </Grid>
                     </Grid>
                     <Grid container>

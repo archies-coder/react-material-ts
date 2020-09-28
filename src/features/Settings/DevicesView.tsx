@@ -57,7 +57,7 @@ const columns = [
         label: 'Ios Version'
     },
     {
-        id: "checkinpoints",
+        id: "checkinpoint",
         label: 'Check In Ports'
     }]
 const DevicesView: FunctionComponent<Props> = (props) => {
