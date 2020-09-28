@@ -188,14 +188,14 @@ export async function getEmployeesData(page:number=0,count:number=10) {
 
 }
 
-export async function getSitesData() {
-  const url = `/product/reception/checkin/user/data?page=0&count=10`
+export async function getSitesData(page:number=0,count:number=10) {
+  const url = `/product/reception/checkin/user/data?page=${page}&count=${count}`
 
   const { data } = await apis.get(url)
 
   return {
     //pageLinks: '',
-    pageCount: 1,
+    pageCount: data.totalCount,
     sites: data.data
   }
 

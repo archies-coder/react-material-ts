@@ -79,10 +79,11 @@ export default sites.reducer
 
 export const fetchSites = (
     page?: number
+    , count?: number
 ): AppThunk => async dispatch => {
     try {
         dispatch(getSitesStart())
-        const sites = await getSitesData()
+        const sites = await getSitesData(page,count)
 
         dispatch(getSitesSuccess(sites))
     } catch (err) {

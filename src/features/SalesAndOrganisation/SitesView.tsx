@@ -1,10 +1,13 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import {Box, createStyles, Grid, Paper, Theme} from "@material-ui/core";
 import SearchInput from "../../components/SearchInput";
 import TableWrapper from "../../components/TableWrapper";
 import {makeStyles} from "@material-ui/core/styles";
 import SelectInput from "../../components/SelectInput";
 import { CustomMenuItem } from 'components/CustomMenuItem';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'app/rootReducer';
+import { fetchSites } from './siteSlice';
 
 interface OwnProps {}
 
@@ -69,16 +72,24 @@ const selectInputMenu = [{
 const SitesView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
-    let tableRows: any = []
+    const dispatch = useDispatch()
 
-    for (let i = 0; i < 10; i++) {
-        let copy: any = tableRows
-        tableRows = [data, ...copy]
-    }
+    const {
+        sites,
+        pageCount,
+        pageLinks,
+        isLoading: isLoadingVisitor,
+        error
+    } = useSelector((state: RootState) => state.sites)
 
     const TableConfig = {
         columns: columns,
-        data: tableRows,
+        data: sites,
+        pagination:true,
+        pageChange:(page:number,count:number)=>{
+            dispatch(fetchSites(page,count))
+        },
+        totalCount:pageCount,
         menuOptions: [{
             item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
                 Check Out
@@ -86,6 +97,9 @@ const SitesView: FunctionComponent<Props> = (props) => {
         }]
     }
 
+    useEffect(() => {
+        dispatch(fetchSites(0,10))
+    }, [dispatch])
 
     return (
       <Grid item xs style={{height: "100%", marginTop: '22px'}}>
