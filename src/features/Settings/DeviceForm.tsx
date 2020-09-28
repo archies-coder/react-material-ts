@@ -132,7 +132,7 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
                     </div>
                     <Box display="flex" justifyContent="flex-end">
                         <Box className={classes.button}>
-                            <CustomButton style={{ height: '45px', width: '168px', marginTop: '1px' }} type="submit">Save</CustomButton>
+                            <CustomButton style={{ height: '45px', width: '168px', marginTop: '1px', padding: 0 }} type="submit">Save</CustomButton>
                         </Box>
                     </Box>
                     <Grid className={classes.inputGrid} container>
@@ -178,10 +178,6 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
                                 onChange={handleChange}
                                 name="checkinpoint"
                                 value={checkinpoint} />
-                        </Grid>
-                    </Grid>
-                    <Grid container>
-                        <Grid item xs={6} style={{ marginTop: '52px' }}>
                         </Grid>
                     </Grid>
                 </form>
