@@ -25,6 +25,7 @@ import {outhUser,setAuthUser} from 'features/auth/AuthSlice'
 import './styles.css'
 import VisitorsForm from "features/Settings/VisitorsForm"
 import Notification from "features/Settings/Notification"
+import SiteForm from "features/SalesAndOrganisation/SiteForm"
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -100,7 +101,8 @@ export default function App() {
                             <Route exact path="/visitor" component={VisitorDetailsView} />
                             <Route path="/visitor/:visitorId" component={VisitorDetailsView} />
                             <Route path="/employees" component={EmployeesView} />
-                            <Route path="/sites" component={SitesView} />
+                            <Route exact path="/sites" component={SitesView} />
+                            <Route exact path="/sites/add" component={SiteForm} />
                             <Route path="/checkinpoints" component={CheckInPointsView} />
                             <Route exact path="/devices" component={DevicesView} />
                             <Route path="/agreement" component={AgreementView} />
@@ -130,6 +132,7 @@ export default function App() {
             <AuthRoute exact path="/visitor/:visitorId" component={VisitorDetailsView} />
             <AuthRoute exact path="/employees" component={EmployeesView} />
             <AuthRoute exact path="/sites" component={SitesView} />
+            <AuthRoute exact path="/sites/add" component={SiteForm} />
             <AuthRoute exact path="/checkinpoints" component={CheckInPointsView} />
             <AuthRoute exact path="/devices" component={DevicesView} />
             <AuthRoute exact path="/agreement" component={AgreementView} />

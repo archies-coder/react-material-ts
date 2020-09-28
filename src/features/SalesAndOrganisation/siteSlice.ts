@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Links } from 'parse-link-header'
 
-import { getSitesData } from 'api/Apis'
+import { createSite, getSitesData } from 'api/Apis'
 import { AppThunk } from 'app/store'
+import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice'
 
 
 export interface Site {
@@ -17,6 +18,18 @@ export interface SitesResult {
     sites: Site[]
 }
 
+export interface SiteInputState {
+    sitename: string
+    address: string
+    checkinpoint: string
+}
+
+export const defaultInputState: SiteInputState = {
+    sitename: '',
+    address: '',
+    checkinpoint: '',
+}
+
 interface SiteState {
     sites: Site[]
     sitesById: Record<string, Site>
@@ -25,6 +38,7 @@ interface SiteState {
     pageLinks: Links | null
     isLoading: boolean
     error: string | null
+    currentSite: SiteInputState
 }
 
 const sitesInitialState: SiteState = {
@@ -34,7 +48,8 @@ const sitesInitialState: SiteState = {
     pageCount: 0,
     pageLinks: {},
     isLoading: false,
-    error: null
+    error: null,
+    currentSite: defaultInputState
 }
 
 function startLoading(state: SiteState) {
@@ -62,13 +77,17 @@ const sites = createSlice({
             state.sites.map(site => (state.sitesById[site.site_id] = site))
         },
         getSitesFailure: loadingFailed,
+        setCurrentSite(state, { payload }: PayloadAction<any>) {
+            state.currentSite = payload
+        }
     }
 })
 
 export const {
     getSitesStart,
     getSitesSuccess,
-    getSitesFailure
+    getSitesFailure,
+    setCurrentSite
 } = sites.actions
 
 export default sites.reducer
@@ -84,6 +103,22 @@ export const fetchSites = (
         dispatch(getSitesSuccess(sites))
     } catch (err) {
         dispatch(getSitesFailure(err.toString()))
+    }
+    }
+
+export const saveSite = (
+    site: any,
+    callback?: (() => void)
+): AppThunk => async dispatch => {
+    try {
+        dispatch(getBackdropStart())
+        await createSite(site)
+            .then(() => dispatch(getBackdropStart())).catch(() => dispatch(getBackdropStop()))
+        //return setInputState(defaultInputState)
+        callback && callback();
+        //dispatch(saveInvitesSuccess(invites))
+    } catch (err) {
+        dispatch(getBackdropStop())
     }
 }
 

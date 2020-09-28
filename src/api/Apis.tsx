@@ -258,6 +258,14 @@ export async function createInvite(json: string) {
   })
 }
 export async function createDevice(json: string) {
+  // return await apis.post('/product/acountDetail/device/register', json, {
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     // "Content-Length": 2617
+  //   },
+  // })
+}
+export async function createSite(json: string) {
   return await apis.post('/product/acountDetail/device/register', json, {
     headers: {
       "Content-Type": "application/json",
