@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Links } from 'parse-link-header'
 
-import { VisitorsResult, getVisitorInfo, getVisitorData, getPurpose } from 'api/Apis'
+import { VisitorsResult, getVisitorInfo, getVisitorData, getPurpose, getInOfficeVisitorData } from 'api/Apis'
 import { AppThunk } from 'app/store'
 import { fetchSites } from 'features/SalesAndOrganisation/siteSlice'
 
@@ -158,4 +158,20 @@ export const fetchVisitors = (
     }
 }
 
+export const fetchInOfficeVisitors = (
+    page?: number
+    , count?: number
+): AppThunk => async dispatch => {
+    try {
+        dispatch(fetchSites())
+        dispatch(getVisitorsStart())
+        const visitors = await getInOfficeVisitorData()
+        dispatch(getVisitorsSuccess(visitors))
+        
+        const purpose = await getPurpose()
+        dispatch(getPurposeSuccess(purpose))
+    } catch (err) {
+        dispatch(getVisitorsFailure(err.toString()))
+    }
+}
 

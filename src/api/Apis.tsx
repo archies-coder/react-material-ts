@@ -129,6 +129,19 @@ export async function getVisitorData(page:number=0,count:number=10) {
   // debugger
 }
 
+export async function getInOfficeVisitorData(page:number=0,count:number=10) {
+  const url = `/product/reception/checkin/user/data?page=${page}&count=${count}`
+
+  const { data } = await apis.get(url)
+  // debugger
+  return {
+    //pageLinks: '',
+    pageCount: data.totalCount,
+    visitors: data.data
+  }
+  // debugger
+}
+
 export async function getVisitorInfo() {
   const url = ``
 
