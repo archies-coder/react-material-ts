@@ -32,13 +32,13 @@ const Notification: FunctionComponent<Props> = (props) => {
     const {
         notificationById
     } = useSelector((state: RootState) => state.notifications)
-    
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const key = event.target.name.split("-")
         const name = key[1]
         const id = key[0]
         const value = event.target.checked
-        debugger
+        // debugger
         dispatch(updateNotification({name:name,id:id,value:value}));
       };
 

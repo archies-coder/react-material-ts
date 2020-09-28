@@ -15,7 +15,7 @@ interface IHeadConfigObj {
 //     breakPoint: Number
 // }
 const chechBoxRenderer = (value: Notification, onChangeHandle: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void, name: any) => {
-    debugger
+    // debugger
     const key = name.split('-')
 
     return <Checkbox checked={key[1] === "email" ? value.email : value.sms} onChange={onChangeHandle} name={name} />

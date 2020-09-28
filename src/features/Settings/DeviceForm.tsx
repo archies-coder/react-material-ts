@@ -91,7 +91,7 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
     }
 
     const id = props.match.params.deviceId
-    debugger;
+    // debugger;
     useEffect(() => {
         if (devicesById[id]) {
             const tempId = devicesById[id]

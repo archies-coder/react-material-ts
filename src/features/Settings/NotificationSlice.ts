@@ -109,7 +109,7 @@ export const updateNotification = (
     callback?: (() => void)
 ): AppThunk => async dispatch => {
     try {
-        debugger
+        // debugger
         //dispatch(getBackdropStart())
         // await createNotification(notification)
         // .then(() => dispatch(getBackdropStop())).catch(() => dispatch(getBackdropStop()))
