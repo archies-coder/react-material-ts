@@ -5,7 +5,7 @@ import { CheckBoxComponent } from 'components/CheckBoxComponent';
 import { config } from './VisitorFormConfig';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'app/rootReducer';
-import { fetchVisitorConfigs } from './visitorConfigSlice';
+import { fetchVisitorConfigs, setVisitorConfig } from './visitorConfigSlice';
 
 interface OwnProps {
 }
@@ -38,7 +38,7 @@ const VisitorsForm: FunctionComponent<Props> = (props) => {
     } = useSelector((state: RootState) => state.visitorConfig)
 
     useEffect(() => {
-        dispatch(fetchVisitorConfigs())
+        //dispatch(fetchVisitorConfigs())
     }, [dispatch])
 
     return (
@@ -50,7 +50,7 @@ const VisitorsForm: FunctionComponent<Props> = (props) => {
                             key={obj.name}
                             title={obj.name}
                             isChecked={(visitorConfigsById[obj.id]&&visitorConfigsById[obj.id].value) || false}
-                            handleChange={() => console.log('checked')} />
+                            handleChange={(e) => {debugger;dispatch(setVisitorConfig({key:obj.id,value:e.target.checked}))}} />
                     )}
                 </FormGroup>
             </Paper>

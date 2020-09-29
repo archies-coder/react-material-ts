@@ -59,7 +59,8 @@ const visitorConfig = createSlice({
         getVisitorConfigsFailure: loadingFailed,
         setVisitorConfig(state, { payload }: PayloadAction<any>) {
             const { key, value } = payload
-            state.visitorConfigs.find(i => i.key === key).value = value
+            state.visitorConfigs.find(i => i.key === key)?state.visitorConfigs.find(i => i.key === key).value = value:state.visitorConfigs.push({key:key,value:value})
+            state.visitorConfigs.map(visitorConfig => (state.visitorConfigsById[visitorConfig.key] = visitorConfig))
         }
     }
 })
