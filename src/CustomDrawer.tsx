@@ -13,6 +13,8 @@ import OrganizationIcon from "./assets/icons/OrganizationIcon";
 import SettingsIcon from '@material-ui/icons/Settings';
 import PersonIcon from '@material-ui/icons/Person';
 import logo from 'assets/logo/logosmall.png'
+import { useSelector } from 'react-redux';
+import { RootState } from 'app/rootReducer';
 
 const drawerWidth = 295;
 
@@ -192,6 +194,8 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
         sales: false
     }
 
+    const { roles } = useSelector((state: RootState) => state.auth)
+
     const [open, setOpen] = useState(dropDownState)
 
     const handleClick = (name: string) => {
@@ -220,7 +224,7 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
         </Box>
         {/* <Divider /> */}
         <List>
-            {Object.keys(mappableRoutes).map((key, index) => (
+            {Object.keys(mappableRoutes).filter(r=>(roles[r]===true)).map((key, index) => (
                 mappableRoutes[key].children ? (
                     <>
                         {

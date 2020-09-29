@@ -3,8 +3,9 @@ import parseLink, { Links } from 'parse-link-header'
 import { VisitorInfo } from 'features/Home/visitorSlice';
 import { Tune } from '@material-ui/icons';
 
+export const serverUrl= 'http://52.66.55.89:18446'
 export const apis = axios.create({
-  baseURL: 'http://52.66.55.89:18446',
+  baseURL: serverUrl,
   timeout: 10000,
   //headers: {'X-Custom-Header': 'foobar'}
 });

@@ -32,7 +32,7 @@ import { RootState } from 'app/rootReducer'
 import { MyChart2 } from 'components/Chart'
 import { CustomMenuItem } from 'components/CustomMenuItem';
 import Axios from 'axios';
-import { apis, checkout } from 'api/Apis';
+import { apis, checkout, serverUrl } from 'api/Apis';
 import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -231,7 +231,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
         isLoading: isLoadingVisitor,
         data: visitors.map(el => ({
             ...el,
-            profilePicPath: <Avatar src={el['profilePicPath']} />
+            profilePicPath: <Avatar src={serverUrl+el['profilePicPath']} />
         })),
         pagination:true,
         pageChange:(page:number,count:number)=>{
