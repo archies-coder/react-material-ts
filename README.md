@@ -1,10 +1,10 @@
 # Create React App example with TypeScript
 
-##Demo
+## Demo
 
 [demo](https://aurochemicals.netlify.app/)
 
-###How to run
+### How to run
 Open link in browser and allow insecure content from the browser site settings
 
 Enter Credentials:
