@@ -1,6 +1,7 @@
 import axios from 'axios'
 import parseLink, { Links } from 'parse-link-header'
 import { VisitorInfo } from 'features/Home/visitorSlice';
+import { Tune } from '@material-ui/icons';
 
 export const apis = axios.create({
   baseURL: 'http://52.66.55.89:18446',
@@ -320,4 +321,49 @@ export async function signUp(username: string, password: string, name: string, u
       'Content-type': 'application/json'
     }
   })
+}
+
+export async function getVisitorConfigData() {
+  //const url = `/product/reception/checkin/user/data?page=${page}&count=${count}&visitor=${visitor}&purpose=${purpose}&site=${site}`
+
+  //const { data } = await apis.get(url)
+  // debugger
+  const data ={
+    answer1: true,
+    answer2: false,
+    answer3: false,
+    answer4: false,
+    answer5: false,
+    belongings: false,
+    checkin_id: false,
+    city: true,
+    company: true,
+    country: true,
+    email: true,
+    gender: true,
+    idCardImagePath: true,
+    idtype: true,
+    intime: true,
+    mobile: true,
+    name: true,
+    ndastatus: true,
+    noofvisitor: true,
+    organisation: true,
+    outime: true,
+    policycheckstatus: true,
+    profilePicPath: true,
+    purpose: true,
+    signaturePath: true,
+    site: true,
+    tomeet: true,
+    usertype: true,
+    vehicleno: true
+  }
+  return {
+    //pageLinks: '',
+    pageCount: 10,//data.totalCount,
+    //@ts-ignore
+    visitorConfigs: Object.keys(data).map((i:string)=>({key:i,value:data[i]}))//data.data
+  }
+  // debugger
 }

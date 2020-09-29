@@ -8,7 +8,7 @@ import SignIn from 'features/auth/SignIn'
 import SignUp from 'features/auth/SignUp'
 import EmployeesView from "features/Employees/EmployeesView"
 import HomeView from "features/Home/HomeView"
-import VisitorDetailsView from "features/Home/VisitorDetailsView"
+import VisitorDetailsView from "features/Home/VisitorDetailsView1"
 import InviteForm from "features/Invites/InviteForm"
 import InviteView from "features/Invites/InviteView"
 import CheckInPointsView from "features/SalesAndOrganisation/CheckInPointsView"

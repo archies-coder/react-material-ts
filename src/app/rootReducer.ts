@@ -12,7 +12,7 @@ import userReducer from 'features/UserManagement/userSlice'
 import authReducer from 'features/auth/AuthSlice'
 import notificationReducer from 'features/Settings/NotificationSlice'
 import checkInPointReducer from 'features/SalesAndOrganisation/checkInPointSlice'
-
+import visitorConfigReducer from 'features/Settings/visitorConfigSlice'
 const rootReducer = combineReducers({
   backdrop: backDropReducer,
   home: homeReducer,
@@ -24,7 +24,8 @@ const rootReducer = combineReducers({
   users: userReducer,
   auth: authReducer,
   notifications:notificationReducer,
-  checkinpoints:checkInPointReducer
+  checkinpoints:checkInPointReducer,
+  visitorConfig: visitorConfigReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>
