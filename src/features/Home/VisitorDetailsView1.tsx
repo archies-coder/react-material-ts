@@ -7,13 +7,14 @@ import { setCurrentVisitor, defaultVisitor } from 'features/Home/visitorSlice';
 import React, { FunctionComponent, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { RouteComponentProps } from 'react-router-dom';
-import { apis } from '../../api/Apis';
+import { apis, serverUrl } from '../../api/Apis';
 import { RootState } from "../../app/rootReducer";
 import CustomButton from "../../components/Button";
 import SelectInput from "../../components/SelectInput";
 import TextInput from "../../components/TextInput";
 import { config as VisitorFormConfig } from 'features/Settings/VisitorFormConfig';
 import { fetchVisitorConfigs } from "features/Settings/visitorConfigSlice";
+import img from 'assets/logo/logo.png'
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     paper: {
@@ -94,7 +95,7 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
     const {
         visitorConfigsById,
         isLoading,
-        error : configError
+        error: configError
     } = useSelector((state: RootState) => state.visitorConfig)
     const defaultInputState = {
         id: 0,
@@ -216,23 +217,27 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
             .then(() => dispatch(getBackdropStop())).catch(() => dispatch(getBackdropStop()))
     }
 
-    const visitorSectionFields = VisitorFormConfig.filter(i => i.section === "VI"&& visitorConfigsById[i.id]&&visitorConfigsById[i.id].value).map((o, i) => (
+    const visitorSectionFields = VisitorFormConfig.filter(i => i.section === "VI" && visitorConfigsById[i.id] && visitorConfigsById[i.id].value).map((o, i) => (
         <Grid item xs={6}
-            // style={{ marginTop: '52px' }}
+            // style={{ marginLeft: '52px' }}
             key={o.id}>
             {/* {(o.render && o.render(notificationById[i], handleChange, i + "-" + o.key)) || obj[o.key]} */}
-            <TextInput label={o.name} name={o.id} onChange={handleChange}
+            {/* <TextInput style={{ width: 446, marginLeft: '64px' }} label={o.name} name={o.id} onChange={handleChange}
+                //@ts-ignore
+                value={currentVisitor[o.id]} /> */}
+            <TextInput style={i % 2 === 0 ? { width: 446, marginLeft: '64px' } : { width: 446, marginLeft: '28px' }} label={o.name} name={o.id} onChange={handleChange}
                 //@ts-ignore
                 value={currentVisitor[o.id]} />
         </Grid>
     ))
-    const appointmentSectionFields = VisitorFormConfig.filter(i => i.section === "AR" && visitorConfigsById[i.id]&&visitorConfigsById[i.id].value).map((o, i) => (
+    const appointmentSectionFields = VisitorFormConfig.filter(i => i.section === "AR" && visitorConfigsById[i.id] && visitorConfigsById[i.id].value).map((o, i) => (
         <Grid item xs={6}
             // style={{ marginTop: '52px' }}
             key={o.id}>
             {/* {(o.render && o.render(notificationById[i], handleChange, i + "-" + o.key)) || obj[o.key]} */}
-            <TextInput label={o.name} name={o.id} onChange={handleChange}
-                value={[o.id]} />
+            <TextInput style={i % 2 === 0 ? { width: 446, marginLeft: '64px' } : { width: 446, marginLeft: '28px' }} label={o.name} name={o.id} onChange={handleChange}
+                //@ts-ignore
+                value={currentVisitor[o.id]} />
         </Grid>
     ))
 
@@ -249,23 +254,44 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                     </div>
                     <Grid container>
                         <Grid item xs={6}>
-                            <div className={classes.imageContainer}>
-                                <div className={classes.imageUpload}>
-                                    <CameraAlt alignmentBaseline={"central"} color={"disabled"} fontSize={"large"} />
-                                </div>
-                            </div>
+                            <Box display="flex">
+                                <Box p={1} flexGrow={1} className={classes.imageContainer}>
+                                    <div className={classes.imageUpload}>
+                                        {profilePicPath ?
+                                            <img height={85} width={85} src={serverUrl + profilePicPath} />
+                                         :
+                                         <CameraAlt alignmentBaseline={"central"} color={"disabled"} fontSize={"large"} />}
+                                    </div>
+                                </Box>
+                                <Box p={1} flexGrow={1} className={classes.imageContainer}>
+                                    <div className={classes.imageUpload}>
+                                        {idCardImagePath ?
+                                            <img height={85} width={85} src={serverUrl + idCardImagePath} />
+                                            :
+                                            <CameraAlt alignmentBaseline={"central"} color={"disabled"} fontSize={"large"} />}
+                                    </div>
+                                </Box>
+                                <Box p={1} flexGrow={1} className={classes.imageContainer}>
+                                    <div className={classes.imageUpload}>
+                                        {signaturePath || true ?
+                                            <img height={85} width={85} src={serverUrl + signaturePath} />
+                                            :
+                                            <CameraAlt alignmentBaseline={"central"} color={"disabled"} fontSize={"large"} />}
+                                    </div>
+                                </Box>
+                            </Box>
                         </Grid>
                         <Grid item xs={6}>
                             <Box display="flex" justifyContent="flex-end" style={{ position: 'relative', top: '32px', right: '86px' }}>
-                                <SelectInput value="Actions" style={{ height: '45px', width: '171px' }}
+                                <SelectInput value="Actions" width={147} style={{ height: '45px' }}
                                     menuOptions={selectInputMenu} />
                                 <Box className={classes.button}>
-                                    <CustomButton style={{ height: '45px', width: '168px', marginTop: '1px' }} onClick={handleSubmit}>Save</CustomButton>
+                                    <CustomButton style={{ height: '38px', width: '168px', marginTop: '1px' }} onClick={handleSubmit}>Save</CustomButton>
                                 </Box>
                             </Box>
                         </Grid>
                     </Grid>
-                    <Grid container style={{ width: '1020px' }}>
+                    <Grid container>
                         <Grid item xs={6}>
                             <div className={classes.visitorInfo}>
                                 <span className={classes.headerSecondary}>Visitor's information</span>

@@ -157,7 +157,7 @@ export const fetchVisitors = (
         dispatch(getVisitorsStart())
         const visitors = await getVisitorData(page,count,visitor,purpose,site)
         dispatch(getVisitorsSuccess(visitors))
-        
+
         const pur = await getPurpose()
         dispatch(getPurposeSuccess(pur))
     } catch (err) {
@@ -174,7 +174,7 @@ export const fetchInOfficeVisitors = (
         dispatch(getVisitorsStart())
         const visitors = await getInOfficeVisitorData()
         dispatch(getVisitorsSuccess(visitors))
-        
+
         const purpose = await getPurpose()
         dispatch(getPurposeSuccess(purpose))
     } catch (err) {
