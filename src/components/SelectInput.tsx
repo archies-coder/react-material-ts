@@ -63,13 +63,24 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         // }
     },
     nativeInput: {
-        fontSize: '11.25px',
+        fontSize: 11.25,
         position: 'absolute',
-        top: '15px',
-        left: '15px',
+        top: 15,
+        left: 15,
         alignItems: 'center',
-        paddingTop: '25px!important',
+        paddingTop: 25,
+        textAlign:"justify",
         color: theme.palette.text.primary,
+        borderRadius: theme.shape.borderRadius - 5,
+    },
+    selectMenu:{
+        position: 'relative',
+        borderRadius: theme.shape.borderRadius - 5,
+        backgroundColor: theme.palette.common.white,
+        '&:hover': {
+            backgroundColor: theme.palette.common.white,
+        },
+        width: 135,
     },
     select: {
         //padding: 0,
@@ -79,6 +90,10 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         backgroundColor: theme.palette.common.white,
         '&:hover': {
             backgroundColor: theme.palette.common.white,
+        },
+        '&:focus': {
+            backgroundColor: theme.palette.common.white,
+            borderRadius: theme.shape.borderRadius - 5,
         },
         width: 135,
         //height: 40,
@@ -162,7 +177,7 @@ const SelectInput: FunctionComponent<Props> = (props) => {
                 >
                     {
                         props.menuOptions ? [<MenuItem classes={menuClasses} key={0} value=" ">
-                            <em>{props.defaultValue}</em>
+                            {props.defaultValue}
                         </MenuItem>, ...props.menuOptions.map(item => <MenuItem classes={menuClasses}
                             value={item.title}
                             key={item.title}
