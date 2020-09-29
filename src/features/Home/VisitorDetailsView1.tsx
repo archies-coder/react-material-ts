@@ -237,7 +237,7 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
     ))
 
     useEffect(() => {
-        dispatch(fetchVisitorConfigs())
+        //dispatch(fetchVisitorConfigs())
     }, [dispatch])
     return (
         <Grid item xs={12}>

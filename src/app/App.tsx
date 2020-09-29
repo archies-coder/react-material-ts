@@ -17,16 +17,17 @@ import AgreementView from "features/Settings/AgreementView"
 import DeviceForm from "features/Settings/DeviceForm"
 import DevicesView from "features/Settings/DevicesView"
 import UserManagementView from "features/UserManagement/UserManagementView"
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import { RootState } from './rootReducer'
-import {outhUser,setAuthUser} from 'features/auth/AuthSlice'
+import { outhUser, setAuthUser } from 'features/auth/AuthSlice'
 import './styles.css'
 import VisitorsForm from "features/Settings/VisitorsForm"
 import Notification from "features/Settings/Notification"
 import SiteForm from "features/SalesAndOrganisation/SiteForm"
 import CheckInPointForm from "features/SalesAndOrganisation/CheckInPointForm"
+import { fetchVisitorConfigs } from "features/Settings/visitorConfigSlice"
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -64,7 +65,7 @@ export default function App() {
 
     const dispatch = useDispatch()
 
-    const {isLoggedIn} = useSelector((state: RootState) => state.auth)
+    const { isLoggedIn } = useSelector((state: RootState) => state.auth)
     const { mask } = useSelector((state: RootState) => state.backdrop)
 
     if (!isLoggedIn) {
@@ -72,11 +73,11 @@ export default function App() {
         //localStorage.loginRedirect = rest.location.pathname
         const user = sessionStorage.getItem('authUser');
 
-        if(user){
+        if (user) {
             JSON.parse(user)
             //outhUser(JSON.parse(user));
             dispatch(setAuthUser(JSON.parse(user)))
-        }else{
+        } else {
             //return <Redirect to="/signin" />
         }
     }
@@ -87,37 +88,37 @@ export default function App() {
         </Backdrop>
         <Container maxWidth={"xl"} className={classes.root}>
             {/* <Grid container spacing={3} className={classes.fullHeightContainer}> */}
-                {/* <Grid item> */}
-                    {/* <Box className={classes.paper}> */}
-                        <CustomDrawer/>
-                    {/* </Box> */}
-                {/* </Grid> */}
-                {/* <Grid item> */}
-                    <NavGridContainer>
-                        <Switch>
-                            <Redirect from='/signin' to='/'/>
-                            <Redirect from='/logout' to='/'/>
-                            <Route exact path="/" component={HomeView} />
-                            <Route exact path="/invites" component={InviteView} />
-                            <Route exact path="/visitor" component={VisitorDetailsView} />
-                            <Route path="/visitor/:visitorId" component={VisitorDetailsView} />
-                            <Route path="/employees" component={EmployeesView} />
-                            <Route exact path="/sites" component={SitesView} />
-                            <Route exact path="/sites/add" component={SiteForm} />
-                            <Route exact path="/checkinpoints/add" component={CheckInPointForm} />
-                            <Route exact path="/checkinpoints" component={CheckInPointsView} />
-                            <Route exact path="/devices" component={DevicesView} />
-                            <Route path="/agreement" component={AgreementView} />
-                            <Route path="/invites/visitor" component={InviteForm} />
-                            <Route exact path="/devices/device" component={DeviceForm} />
-                            <Route path="/devices/device/:deviceId" component={DeviceForm} />
-                            <Route path="/user" component={UserManagementView} />
-                            <Route exact path="/visitorsform" component={VisitorsForm} />
-                            <Route exact path="/notification" component={Notification} />
+            {/* <Grid item> */}
+            {/* <Box className={classes.paper}> */}
+            <CustomDrawer />
+            {/* </Box> */}
+            {/* </Grid> */}
+            {/* <Grid item> */}
+            <NavGridContainer>
+                <Switch>
+                    <Redirect from='/signin' to='/' />
+                    <Redirect from='/logout' to='/' />
+                    <Route exact path="/" component={HomeView} />
+                    <Route exact path="/invites" component={InviteView} />
+                    <Route exact path="/visitor" component={VisitorDetailsView} />
+                    <Route path="/visitor/:visitorId" component={VisitorDetailsView} />
+                    <Route path="/employees" component={EmployeesView} />
+                    <Route exact path="/sites" component={SitesView} />
+                    <Route exact path="/sites/add" component={SiteForm} />
+                    <Route exact path="/checkinpoints/add" component={CheckInPointForm} />
+                    <Route exact path="/checkinpoints" component={CheckInPointsView} />
+                    <Route exact path="/devices" component={DevicesView} />
+                    <Route path="/agreement" component={AgreementView} />
+                    <Route path="/invites/visitor" component={InviteForm} />
+                    <Route exact path="/devices/device" component={DeviceForm} />
+                    <Route path="/devices/device/:deviceId" component={DeviceForm} />
+                    <Route path="/user" component={UserManagementView} />
+                    <Route exact path="/visitorsform" component={VisitorsForm} />
+                    <Route exact path="/notification" component={Notification} />
 
-                        </Switch>
-                    </NavGridContainer>
-                {/* </Grid> */}
+                </Switch>
+            </NavGridContainer>
+            {/* </Grid> */}
             {/* </Grid> */}
         </Container>
     </Box>
@@ -127,7 +128,7 @@ export default function App() {
             <CircularProgress color="inherit" />
         </Backdrop>
         <Switch>
-            <Redirect from='/logout' to='/'/>
+            <Redirect from='/logout' to='/' />
             <AuthRoute exact path="/" component={HomeView} />
             <AuthRoute exact path="/invites" component={InviteView} />
             <AuthRoute exact path="/visitor" component={VisitorDetailsView} />
@@ -150,5 +151,8 @@ export default function App() {
         </Switch>
     </Box>
 
+    useEffect(() => {
+        dispatch(fetchVisitorConfigs())
+    }, [dispatch])
     return isLoggedIn ? Routes : AuthRoutes
 }

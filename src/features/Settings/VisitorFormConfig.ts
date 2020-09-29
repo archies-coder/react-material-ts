@@ -15,8 +15,8 @@ export const config = [{
     section:'VI'
 }, {
     name: 'Photo',
-    id:'photo',
-    section:'VI'
+    id:'profilepic',
+    section:''
 }, {
     name: 'Email',
     id:'email',
@@ -24,11 +24,11 @@ export const config = [{
 }, {
     name: 'Address/Locality/City/Country',
     isChecked: false,
-    id:'address',
+    id:'city',
     section:'VI'
 }, {
     name: 'Nationality',
-    id:'nationality',
+    id:'country',
     section:'VI'
 }, {
     name: 'Visitor Company Name',
@@ -40,7 +40,7 @@ export const config = [{
     section:'VI'
 }, {
     name: 'Number Of Visitors',
-    id:'noofvisitor',
+    id:'visitorcount',
     section:'VI'
 }, {
     name: 'Vehicle Number',
