@@ -137,7 +137,7 @@ const InviteView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const [filter,setFilter]=useState({visitor:"",purpose:"",site:""})
+    const [filter,setFilter]=useState({visitor:" ",purpose:" ",site:" "})
     const [rowPerPage,setRowPerPage] = useState(10);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
