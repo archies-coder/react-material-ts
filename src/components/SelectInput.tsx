@@ -53,6 +53,15 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
             color: theme.palette.text.primary,
         }
     },
+    nativeInput: {
+        fontSize: '11.25px',
+        position: 'absolute',
+        top: '15px',
+        left: '15px',
+        alignItems: 'center',
+        paddingTop:'25px!important',
+        color: theme.palette.text.primary,
+    },
     select: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius - 5,
@@ -104,19 +113,19 @@ const SelectInput: FunctionComponent<Props> = (props) => {
     return (
         <div className={classes.inputContainer}>
             <div className={classes.select} {...props}>
-                <InputLabel id="demo-simple-select-label" style={{
+                {/* <InputLabel id="demo-simple-select-label" style={{
                     // padding: '0 10px',
                     // position: 'absolute',
                     // top: '18px',
                     // display: 'flex',
                     // alignItems: 'center',
                     // justifyContent: 'center',
-                }}>{props.value}</InputLabel>
+                }}>{props.value}</InputLabel> */}
                 <Select
                     labelId="demo-simple-select-label"
                     IconComponent={ExpandMore}
                     disableUnderline
-                    value=''
+                    value={props.value}
                     onChange={props.onChange}
                     className={classes.inputRoot}
                     style={{
@@ -141,9 +150,9 @@ const SelectInput: FunctionComponent<Props> = (props) => {
                     }}
                 >
                     {
-                        props.menuOptions ? [<MenuItem value="">
-                        <em>{props.defaultValue}</em>
-                      </MenuItem>,...props.menuOptions.map(item => <MenuItem className={classes.menuItem}
+                        props.menuOptions ? [<MenuItem key={0} value=" ">
+                            <em>{props.defaultValue}</em>
+                        </MenuItem>, ...props.menuOptions.map(item => <MenuItem className={classes.menuItem}
                             value={item.title}
                             key={item.title}
                         >{item.title}</MenuItem>)] : <MenuItem>1</MenuItem>
