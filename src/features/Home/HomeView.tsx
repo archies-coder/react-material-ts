@@ -117,6 +117,7 @@ type Props = OwnProps;
 const HomeView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
+    const [rowPerPage,setRowPerPage] = useState(10);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [filter,setFilter]=useState({visitor:"",purpose:"",site:""})
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -134,7 +135,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
             visitor:visitor1
         } = newFilter
 
-        dispatch(fetchVisitors(0,pageCount,visitor1,purpose1,site1))
+        dispatch(fetchVisitors(0,rowPerPage,visitor1,purpose1,site1))
     }
     const handleClose = () => {
         setAnchorEl(null);
@@ -239,6 +240,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
                 site:site1,
                 visitor:visitor1
             } = filter
+            setRowPerPage(count)
             dispatch(fetchVisitors(page,count,visitor1,purpose1,site1))
         },
         totalCount:pageCount,
