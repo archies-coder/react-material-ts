@@ -114,7 +114,7 @@ const SelectInput: FunctionComponent<Props> = (props) => {
                 }}>{props.value}</InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
-                    IconComponent={() => <ExpandMore />}
+                    IconComponent={ExpandMore}
                     disableUnderline
                     value=''
                     onChange={props.onChange}

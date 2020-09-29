@@ -227,7 +227,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
 
     const TableConfig = {
         columns: columns,
-        isLoading: isLoadingHomeStats,
+        isLoading: isLoadingVisitor,
         data: visitors.map(el => ({
             ...el,
             profilePicPath: <Avatar src={el['profilePicPath']} />
