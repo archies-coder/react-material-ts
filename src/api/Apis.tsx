@@ -4,7 +4,7 @@ import { VisitorInfo } from 'features/Home/visitorSlice';
 
 export const apis = axios.create({
   baseURL: 'http://52.66.55.89:18446',
-  timeout: 5000,
+  timeout: 10000,
   //headers: {'X-Custom-Header': 'foobar'}
 });
 

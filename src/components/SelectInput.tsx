@@ -81,16 +81,21 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     },
     menuItem: {
         backgroundColor: theme.palette.common.white,
+        fontSize: '11.25px',
     },
     menuPapaer: {
         backgroundColor: theme.palette.common.white,
+        fontSize: '11.25px',
         '& .MuiListItem-root.Mui-selected, & .MuiListItem-root.Mui-selected:hover': {
             backgroundColor: 'white !important',
-            padding: theme.spacing(0.5, 1)
+            padding: theme.spacing(0.5, 1),
+            fontSize: '11.25px',
         },
     },
     menuRoot: {
         // backgroundColor: theme.palette.common.white,
+        fontSize: '11.25px',
+
     },
 }))
 
@@ -111,6 +116,7 @@ const SelectInput: FunctionComponent<Props> = (props) => {
                     labelId="demo-simple-select-label"
                     IconComponent={() => <ExpandMore />}
                     disableUnderline
+                    value=''
                     onChange={props.onChange}
                     className={classes.inputRoot}
                     style={{
