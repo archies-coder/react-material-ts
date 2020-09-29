@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { signIn, signUp } from 'api/Apis';
 import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice';
 import { AppThunk } from 'app/store';
+import {roles} from 'app/rolesConfig'
 
 interface ISignInInputState {
     username: string
@@ -20,6 +21,7 @@ interface AuthState {
     userType: string
     isLoggedIn: boolean
     name: string
+    roles: any
     currentSignInInput: ISignInInputState
     currentSignUpInput: ISignUpInputState
 }
@@ -43,6 +45,7 @@ const authInitialState: AuthState = {
     userType: '',
     isLoggedIn: false,
     name: '',
+    roles:{},
     currentSignInInput: InitialSignInState,
     currentSignUpInput: InitialSignUpState
 }
@@ -73,6 +76,8 @@ const AuthSlice = createSlice({
                 state.isLoggedIn = true
                 state.userType = userType
                 state.name = name
+                //@ts-ignore
+                state.roles = roles[userType]
             }
         },
         getSignInSuccess(state: AuthState, { payload }: PayloadAction<any>) {
@@ -84,6 +89,8 @@ const AuthSlice = createSlice({
                 state.isLoggedIn = true
                 state.userType = usertype
                 state.name = name
+                //@ts-ignore
+                state.roles = roles[usertype]
                 sessionStorage.setItem('authUser', JSON.stringify({
                     "token":token,
                     "userType":usertype,
