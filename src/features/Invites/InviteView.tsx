@@ -138,6 +138,7 @@ const InviteView: FunctionComponent<Props> = (props) => {
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [filter,setFilter]=useState({visitor:"",purpose:"",site:""})
+    const [rowPerPage,setRowPerPage] = useState(10);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -206,7 +207,7 @@ const InviteView: FunctionComponent<Props> = (props) => {
             visitor:visitor1
         } = newFilter
 
-        dispatch(fetchInvites(0,10,visitor1,purpose1,site1))
+        dispatch(fetchInvites(0,rowPerPage,visitor1,purpose1,site1))
     }
 
     const TableConfig = {
@@ -223,6 +224,7 @@ const InviteView: FunctionComponent<Props> = (props) => {
                 site:site1,
                 visitor:visitor1
             } = filter
+            setRowPerPage(count)
             dispatch(fetchInvites(page,count,visitor1,purpose1,site1))
         },
         totalCount:pageCount,
