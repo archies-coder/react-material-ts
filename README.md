@@ -1,5 +1,18 @@
 # Create React App example with TypeScript
 
+##Demo
+
+[demo](https://aurochemicals.netlify.app/)
+
+###How to run
+Open link in browser and allow insecure content from the browser site settings
+
+Enter Credentials:
+username: panwar.arjunp@gmail.com
+password: 12345
+
+Design [Mockup](https://drive.google.com/file/d/1Q5noz5kTkKYhGGG5jupBBYl4ZdM9HA4U/view?usp=sharing)
+
 ## How to use
 
 Download the example [or clone the repo](https://github.com/mui-org/material-ui):
