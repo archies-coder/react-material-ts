@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         backgroundColor: '#fff',
         fontSize: '11.25px',
         position: 'absolute',
-        //top: '15px',
-        //left: '15px'
+        //top: 15,
+        //left: 15,
         height:25,
         color: theme.palette.text.primary,
     },
@@ -86,6 +86,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         //padding: 0,
         //borderRadius: theme.shape.borderRadius - 5,
         position: 'relative',
+        textAlign: 'center',
         borderRadius: theme.shape.borderRadius - 5,
         backgroundColor: theme.palette.common.white,
         '&:hover': {
@@ -96,6 +97,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
             borderRadius: theme.shape.borderRadius - 5,
         },
         width: 135,
+        lineHeight:2.5,
         //height: 40,
         //paddingTop: 12,
         '& .MuiSvgIcon-root': {
