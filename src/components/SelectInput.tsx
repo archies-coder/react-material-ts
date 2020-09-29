@@ -13,18 +13,20 @@ interface OwnProps extends React.HTMLAttributes<any> {
     value: string;
     padding?: number;
     menuOptions?: IMenuOptions[];
+    width?: number
+    height?: number
 }
 
 type Props = OwnProps;
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
+const useStyles = makeStyles((theme: Theme) => ({
     root: {
         backgroundColor: '#fff',
         fontSize: '11.25px',
         position: 'absolute',
         //top: 15,
         //left: 15,
-        height:25,
+        // height:25,
         color: theme.palette.text.primary,
     },
     inputContainer: {
@@ -68,7 +70,7 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
         top: 15,
         left: 15,
         alignItems: 'center',
-        paddingTop: 25,
+        // paddingTop: 25,
         textAlign:"justify",
         color: theme.palette.text.primary,
         borderRadius: theme.shape.borderRadius - 5,
@@ -96,7 +98,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
             backgroundColor: theme.palette.common.white,
             borderRadius: theme.shape.borderRadius - 5,
         },
-        width: 135,
+        width: (props: any) => props.width ? `${props.width}px` : 135,
+        // height: (props: any) => props.height ? `${props.height}px` : 38,
         lineHeight:2.5,
         //height: 40,
         //paddingTop: 12,
