@@ -126,7 +126,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
 
     const handleFilterChange= (f:any)=>{
         debugger;
-        const newFilter = {...filter,...f} 
+        const newFilter = {...filter,...f}
         setFilter(newFilter)
         const {
             purpose:purpose1,
@@ -291,7 +291,8 @@ const HomeView: FunctionComponent<Props> = (props) => {
 
                     </Paper>
                 </Grid>
-                <Grid item xs style={{ height: "100%", marginTop: '30px' }}>
+                {/* Old gap 30px */}
+                <Grid item xs style={{ height: "100%", marginTop: '20px' }}>
                     <Paper className={classes.paper} elevation={0}>
                         <Box display="flex" justifyContent="start">
                             <SearchInput style={{marginTop: '33px', marginLeft: '27px'}} onChange = {(e:any)=>{debugger;handleFilterChange({visitor:e.target.value})}} value = {filter.visitor} placeholder="Search visitor" />
