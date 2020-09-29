@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Links } from 'parse-link-header'
 
-import { VisitorsResult, getVisitorInfo, getVisitorData, getPurpose, getInOfficeVisitorData } from 'api/Apis'
+import { VisitorsResult, getVisitorData, getPurpose, getInOfficeVisitorData } from 'api/Apis'
 import { AppThunk } from 'app/store'
 import { fetchSites } from 'features/SalesAndOrganisation/siteSlice'
 

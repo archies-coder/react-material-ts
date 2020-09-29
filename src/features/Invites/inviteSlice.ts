@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Links } from 'parse-link-header'
 
-import { getInvitesData, createInvite } from 'api/Apis'
+import { getInvitesData, createInvite, getPurpose, getInOfficeInviteData } from 'api/Apis'
 import { AppThunk } from 'app/store'
 import {getBackdropStart, getBackdropStop} from 'app/BackdropSlice'
+import { fetchSites } from 'features/SalesAndOrganisation/siteSlice'
+import { getPurposeSuccess } from 'features/Home/visitorSlice'
 
 
 export interface Invite {
@@ -80,13 +82,19 @@ export default invites.reducer
 
 export const fetchInvites = (
     page?: number,
-    count?: number
+    count?: number,
+    visitor?: string,
+    purpose?: string,
+    site?: string
 ): AppThunk => async dispatch => {
     try {
+        dispatch(fetchSites())
         dispatch(getInvitesStart())
-        const invites = await getInvitesData(page,count)
+        const invites = await getInvitesData(page,count,visitor,purpose,site)
 
         dispatch(getInvitesSuccess(invites))
+        const pur = await getPurpose()
+        dispatch(getPurposeSuccess(pur))
     } catch (err) {
         dispatch(getInvitesFailure(err.toString()))
     }
@@ -107,5 +115,23 @@ export const saveInvite = (
     } catch (err) {
         //dispatch(saveInvitesFailure(err.toString()))
         dispatch(getBackdropStop())
+    }
+}
+
+
+export const fetchInOfficeInvites = (
+    page?: number
+    , count?: number
+): AppThunk => async dispatch => {
+    try {
+        dispatch(fetchSites())
+        dispatch(getInvitesStart())
+        const visitors = await getInOfficeInviteData()
+        dispatch(getInvitesSuccess(visitors))
+        
+        const purpose = await getPurpose()
+        dispatch(getPurposeSuccess(purpose))
+    } catch (err) {
+        dispatch(getInvitesFailure(err.toString()))
     }
 }

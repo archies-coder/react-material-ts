@@ -142,32 +142,6 @@ export async function getInOfficeVisitorData(page:number=0,count:number=10) {
   // debugger
 }
 
-export async function getVisitorInfo() {
-  const url = ``
-
-  //const { data } = await apis.post(url)
-  const sample = {
-    avatar: '',
-    name: 'Vijaya Tondon from API',
-    mobileNo: 9754821630,
-    personToMeet: 'Ramesh Chawla',
-    purpose: 'Meeting',
-    inTime: '11:30 am',
-    outTime: '2:30 pm',
-  }
-  let data = []
-  for (let i = 0; i < 10; i++) {
-    let copy: any = sample
-
-    data.push(copy)
-  }
-  return {
-    //pageLinks: '',
-    pageCount: 1,
-    visitors: data
-  }
-}
-
 export async function getHomeStats() {
   const url = `/product/stats/data?page=0&count=10`
 
@@ -175,8 +149,8 @@ export async function getHomeStats() {
   return data
 }
 
-export async function getInvitesData(page:number=0,count:number=10) {
-  const url = `/product/reception/invite/user/data?page=${page}&count=${count}`
+export async function getInvitesData(page:number=0,count:number=10,visitor:String = '',purpose:String = '', site:String='') {
+  const url = `/product/reception/invite/user/data?page=${page}&count=${count}&visitor=${visitor}&purpose=${purpose}&site=${site}`
 
   const { data } = await apis.get(url)
 
@@ -187,6 +161,20 @@ export async function getInvitesData(page:number=0,count:number=10) {
   }
 
 }
+
+export async function getInOfficeInviteData(page:number=0,count:number=10) {
+  const url = `/product/reception/checkin/in/user/data?page=${page}&count=${count}`
+
+  const { data } = await apis.get(url)
+  // debugger
+  return {
+    //pageLinks: '',
+    pageCount: data.totalCount,
+    invites: data.data
+  }
+  // debugger
+}
+
 
 export async function getEmployeesData(page:number=0,count:number=10) {
   const url = `/product/reception/checkin/user/data?page=${page}&count=${count}`

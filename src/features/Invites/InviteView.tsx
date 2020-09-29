@@ -25,7 +25,7 @@ import TableWrapper from "../../components/TableWrapper";
 import SearchInput from "../../components/SearchInput";
 import SelectInput from "../../components/SelectInput";
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchInvites } from 'features/Invites/inviteSlice'
+import { fetchInOfficeInvites, fetchInvites } from 'features/Invites/inviteSlice'
 import { RootState } from 'app/rootReducer'
 import { CustomMenuItem } from 'components/CustomMenuItem';
 import HomeDateDropdown from 'features/Home/HomeDateDropdown';
@@ -137,6 +137,7 @@ const InviteView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [filter,setFilter]=useState({visitor:"",purpose:"",site:""})
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -144,14 +145,16 @@ const InviteView: FunctionComponent<Props> = (props) => {
 
     const handleClose = () => {
         setAnchorEl(null);
-    };
-
-    let tableRows: any = []
-
-    
+    };    
 
     const dispatch = useDispatch()
 
+    const {
+        sites
+    } = useSelector((state: RootState) => state.sites)
+    const {
+        purpose
+    } = useSelector((state: RootState) => state.visitors)
     const {
         invites,
         currentPageInvites,
@@ -193,6 +196,19 @@ const InviteView: FunctionComponent<Props> = (props) => {
         return {...visitor}
     }
 
+    const handleFilterChange= (f:any)=>{
+        debugger;
+        const newFilter = {...filter,...f} 
+        setFilter(newFilter)
+        const {
+            purpose:purpose1,
+            site:site1,
+            visitor:visitor1
+        } = newFilter
+
+        dispatch(fetchInvites(0,10,visitor1,purpose1,site1))
+    }
+
     const TableConfig = {
         columns: columns,
         data: invites.map(el => ({
@@ -202,7 +218,12 @@ const InviteView: FunctionComponent<Props> = (props) => {
         isLoading: isLoadingInvites,
         pagination: true,
         pageChange:(page:number,count:number)=>{
-            dispatch(fetchInvites(page,count))
+            const {
+                purpose:purpose1,
+                site:site1,
+                visitor:visitor1
+            } = filter
+            dispatch(fetchInvites(page,count,visitor1,purpose1,site1))
         },
         totalCount:pageCount,
         menuOptions: [{
@@ -221,10 +242,19 @@ const InviteView: FunctionComponent<Props> = (props) => {
                     <HomeDateDropdown style={{ marginLeft: '37px', marginBottom: '10px'}} />
                 </Box>
                 <Box display="flex" justifyContent="start">
-                    <SearchInput placeholder="Search visitor" style={{marginLeft: '32px'}} />
+                    {/* <SearchInput placeholder="Search visitor" style={{marginLeft: '32px'}} />
                     <SelectInput value="In Office" style={{marginLeft: '50px'}} />
                     <SelectInput value="All Purpose" style={{marginLeft: '50px'}} />
-                    <SelectInput value="All Sites" style={{marginLeft: '50px'}} />
+                    <SelectInput value="All Sites" style={{marginLeft: '50px'}} /> */}
+                    <SearchInput style={{marginTop: '33px', marginLeft: '27px'}} onChange = {(e:any)=>{debugger;handleFilterChange({visitor:e.target.value})}} value = {filter.visitor} placeholder="Search visitor" />
+                            {/* <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="In Office" /> */}
+                            {/* <Button onClick={()=>{setFilter({site:"",purpose:"",visitor:""});dispatch(fetchInOfficeInvites())}}
+                            classes={{
+                                root: classes.buttonRoot, // class name, e.g. `classes-nesting-root-x`
+                                label: classes.label, // class name, e.g. `classes-nesting-label-x`
+                            }} variant="contained" style={{ marginTop: '33px', marginLeft: '27px', height: '40px'}}>In Office</Button> */}
+                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} onChange = {(e:any)=>{debugger; handleFilterChange({purpose:e.target.value})}} menuOptions={purpose.map(item=>({title:item}))} defaultValue="All Purpose" value={filter.purpose}/>
+                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} onChange = {(e:any)=>{debugger; handleFilterChange({site:e.target.value})}} menuOptions={sites.map(item=>({title:item.sitename}))} defaultValue ="All Sites" value={filter.site}/>
                 </Box>
                 <TableWrapper config={TableConfig} style={{ marginTop: '17px', marginLeft: '43px', marginRight: '300px' }} />
             </Paper>

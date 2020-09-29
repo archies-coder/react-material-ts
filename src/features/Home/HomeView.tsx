@@ -234,7 +234,12 @@ const HomeView: FunctionComponent<Props> = (props) => {
         })),
         pagination:true,
         pageChange:(page:number,count:number)=>{
-            dispatch(fetchVisitors(page,count))
+            const {
+                purpose:purpose1,
+                site:site1,
+                visitor:visitor1
+            } = filter
+            dispatch(fetchVisitors(page,count,visitor1,purpose1,site1))
         },
         totalCount:pageCount,
         menuOptions: [{
