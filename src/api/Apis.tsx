@@ -365,7 +365,7 @@ export async function getContractorData(page:number=0,count:number=10,contractor
   // debugger
 }
 
-export async function getInOfficeContractorData(page:number=0,count:number=10) {
+export async function getInOfficeContractorData(page:number=0,count:number=10,contractor:String = '',purpose:String = '', site:String='') {
   const url = `/product/reception/checkin/in/user/data?page=${page}&count=${count}`
 
   const { data } = await apis.get(url)

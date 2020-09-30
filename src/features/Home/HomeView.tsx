@@ -324,7 +324,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
                             <CustomizedSwitch
                                 //@ts-ignore
                                 style={{ marginTop: '33px', marginLeft: '27px', height: '36px' }}
-                                 label={"In Office"} checked={inOffice} onChange={() => { setInOffice1(!inOffice) }} />
+                                 label={"In Office"} checked={inOffice} onChange={() => { setInOffice(!inOffice) }} />
                             {/* <Button onClick={() => { setFilter({ site: "", purpose: "", visitor: "" }); dispatch(fetchInOfficeVisitors()) }}
                                 classes={{
                                     root: classes.buttonRoot, // class name, e.g. `classes-nesting-root-x`
@@ -334,7 +334,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
                             </Button> */}
                             <SelectInput style={{ marginTop: '33px', marginLeft: '27px' }} onChange={(e: any) => { debugger; handleFilterChange({ purpose: e.target.value }) }} menuOptions={purpose.map(item => ({ title: item }))} defaultValue="All Purpose" value={filter.purpose} />
                             <SelectInput style={{ marginTop: '33px', marginLeft: '27px' }} onChange={(e: any) => { debugger; handleFilterChange({ site: e.target.value }) }} menuOptions={sites.map(item => ({ title: item.sitename }))} defaultValue="All Sites" value={filter.site} />
-                            <Button onClick={() => { setInOffice1(false);handleFilterChange({ site: "", purpose: "", visitor: "" }) }}
+                            <Button onClick={() => { setInOffice(false);handleFilterChange({ site: "", purpose: "", visitor: "" }) }}
                                 classes={{
                                     root: classes.buttonRoot, // class name, e.g. `classes-nesting-root-x`
                                     label: classes.label, // class name, e.g. `classes-nesting-label-x`

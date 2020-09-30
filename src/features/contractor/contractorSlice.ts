@@ -172,16 +172,19 @@ export const fetchContractors = (
 
 export const fetchInOfficeContractors = (
     page?: number
-    , count?: number
+    , count?: number,
+    contractor?: string,
+    purpose?: string,
+    site?: string
 ): AppThunk => async dispatch => {
     try {
         dispatch(fetchSites())
         dispatch(getContractorsStart())
-        const contractors = await getInOfficeContractorData()
+        const contractors = await getInOfficeContractorData(page,count,contractor,purpose,site)
         dispatch(getContractorsSuccess(contractors))
 
-        const purpose = await getPurpose()
-        dispatch(getPurposeSuccess(purpose))
+        const pur = await getPurpose()
+        dispatch(getPurposeSuccess(pur))
     } catch (err) {
         dispatch(getContractorsFailure(err.toString()))
     }

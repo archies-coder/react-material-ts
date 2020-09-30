@@ -34,6 +34,7 @@ import { CustomMenuItem } from 'components/CustomMenuItem';
 import Axios from 'axios';
 import { apis, checkout, serverUrl } from 'api/Apis';
 import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice';
+import CustomizedSwitch from 'components/Switch';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -120,11 +121,14 @@ const ContractorView: FunctionComponent<Props> = (props) => {
     const [rowPerPage, setRowPerPage] = useState(10);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [filter, setFilter] = useState({ contractor: "", purpose: "", site: "" })
+    const [inOffice, setInOffice] = useState(false);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
 
-
+    const doFetch=(page=0, count=10, visitor="", purpose="", site="")=>{
+        inOffice? dispatch(fetchInOfficeContractors(page, count, visitor, purpose, site)): dispatch(fetchContractors(page, count, visitor, purpose, site)) 
+    }
     const handleFilterChange = (f: any) => {
         debugger;
         const newFilter = { ...filter, ...f }
@@ -135,7 +139,7 @@ const ContractorView: FunctionComponent<Props> = (props) => {
             contractor: contractor1
         } = newFilter
 
-        dispatch(fetchContractors(0, rowPerPage, contractor1, purpose1, site1))
+        //dispatch(fetchContractors(0, rowPerPage, contractor1, purpose1, site1))
     }
     const handleClose = () => {
         setAnchorEl(null);
@@ -173,8 +177,6 @@ const ContractorView: FunctionComponent<Props> = (props) => {
             isSort: true
         }]
 
-    let tableRows: any = []
-
     const dispatch = useDispatch()
 
     const {
@@ -197,12 +199,23 @@ const ContractorView: FunctionComponent<Props> = (props) => {
         //dispatch(fetchHomeStats())
     }, [dispatch])
 
+    useEffect(() => {
+
+        const {
+            purpose: purpose1,
+            site: site1,
+            contractor: contractor1
+        } = filter
+        doFetch(0, rowPerPage, contractor1, purpose1, site1)
+    }, [inOffice,filter])
+
     const handleCheckOut = async (id: any) => {
         dispatch(getBackdropStart())
         await checkout(id)
             .then(() => {
                 //dispatch(fetchHomeStats())
-                dispatch(fetchContractors(0, 10))
+                //dispatch(fetchContractors(0, 10))
+                doFetch(0, 10)
                 dispatch(getBackdropStop())
             })
             .catch(() => dispatch(getBackdropStop()))
@@ -234,7 +247,7 @@ const ContractorView: FunctionComponent<Props> = (props) => {
                 contractor: contractor1
             } = filter
             setRowPerPage(count)
-            dispatch(fetchContractors(page, count, contractor1, purpose1, site1))
+            doFetch(page, count, contractor1, purpose1, site1)
         },
         totalCount: pageCount,
         menuOptions: [{
@@ -262,14 +275,18 @@ const ContractorView: FunctionComponent<Props> = (props) => {
                 <Box display="flex" justifyContent="start">
                     <SearchInput style={{ marginTop: '33px', marginLeft: '27px' }} onChange={(e: any) => { debugger; handleFilterChange({ contractor: e.target.value }) }} value={filter.contractor} placeholder="Search contractor" />
                     {/* <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="In Office" /> */}
-                    <Button onClick={() => { setFilter({ site: "", purpose: "", contractor: "" }); dispatch(fetchInOfficeContractors()) }}
+                    <CustomizedSwitch
+                                //@ts-ignore
+                                style={{ marginTop: '33px', marginLeft: '27px', height: '36px' }}
+                                 label={"In Office"} checked={inOffice} onChange={() => { setInOffice(!inOffice) }} />
+                    {/* <Button onClick={() => { setFilter({ site: "", purpose: "", contractor: "" }); dispatch(fetchInOfficeContractors()) }}
                         classes={{
                             root: classes.buttonRoot, // class name, e.g. `classes-nesting-root-x`
                             label: classes.label, // class name, e.g. `classes-nesting-label-x`
-                        }} variant="contained" style={{ marginTop: '33px', marginLeft: '27px', height: '40px' }}>In Office</Button>
+                        }} variant="contained" style={{ marginTop: '33px', marginLeft: '27px', height: '40px' }}>In Office</Button> */}
                     <SelectInput style={{ marginTop: '33px', marginLeft: '27px' }} onChange={(e: any) => { debugger; handleFilterChange({ purpose: e.target.value }) }} menuOptions={purpose.map(item => ({ title: item }))} defaultValue="All Purpose" value={filter.purpose} />
                     <SelectInput style={{ marginTop: '33px', marginLeft: '27px' }} onChange={(e: any) => { debugger; handleFilterChange({ site: e.target.value }) }} menuOptions={sites.map(item => ({ title: item.sitename }))} defaultValue="All Sites" value={filter.site} />
-                    <Button onClick={() => { handleFilterChange({ site: "", purpose: "", contractor: "" })}}
+                    <Button onClick={() => { setInOffice(false);handleFilterChange({ site: "", purpose: "", contractor: "" })}}
                         classes={{
                             root: classes.buttonRoot, // class name, e.g. `classes-nesting-root-x`
                             label: classes.label, // class name, e.g. `classes-nesting-label-x`
