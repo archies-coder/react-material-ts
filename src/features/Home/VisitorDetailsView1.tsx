@@ -171,7 +171,6 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
     } = currentVisitor
     const id = props.match.params.visitorId
     useEffect(() => {
-        // debugger
         id != -1 && dispatch(setCurrentVisitor(visitorsById[id] || defaultVisitor));
     }, [id])
 
