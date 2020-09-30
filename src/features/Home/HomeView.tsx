@@ -119,7 +119,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
 
     const [rowPerPage,setRowPerPage] = useState(10);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const [filter,setFilter]=useState({visitor:"",purpose:" ",site:" "})
+    const [filter,setFilter]=useState({visitor:"",purpose:"",site:""})
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
