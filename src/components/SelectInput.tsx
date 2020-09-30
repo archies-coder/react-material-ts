@@ -156,6 +156,7 @@ const SelectInput: FunctionComponent<Props> = (props) => {
                     labelId="demo-simple-select-label"
                     IconComponent={ExpandMore}
                     disableUnderline
+                    displayEmpty
                     value={props.value}
                     onChange={props.onChange}
                     //className={classes.inputRoot}
@@ -181,7 +182,7 @@ const SelectInput: FunctionComponent<Props> = (props) => {
                     }}
                 >
                     {
-                        props.menuOptions ? [<MenuItem classes={menuClasses} key={0} value=" ">
+                        props.menuOptions ? [<MenuItem classes={menuClasses} key={0} value="">
                             {props.defaultValue}
                         </MenuItem>, ...props.menuOptions.map(item => <MenuItem classes={menuClasses}
                             value={item.title}

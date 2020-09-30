@@ -25,12 +25,6 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 )
 
-const data = {
-    port: 'Gate 1',
-    name: 'Pesh Infotech Ph1',
-    device: 'Ipad Mini 78457',
-}
-
 //const columns = ['Check In ports', 'Site name', 'Device']
 const columns = [
 
@@ -56,19 +50,13 @@ const CheckInPointsView: FunctionComponent<Props> = (props) => {
         checkInPoints,
         pageCount,
         pageLinks,
-        isLoading: isLoadingVisitor,
+        isLoading,
         error
     } = useSelector((state: RootState) => state.checkinpoints)
 
-    let tableRows: any = []
-
-    for (let i = 0; i < 10; i++) {
-        let copy: any = tableRows
-        tableRows = [data, ...copy]
-    }
-
     const TableConfig = {
         columns: columns,
+        isLoading: isLoading,
         data: checkInPoints,
         pagination:true,
         pageChange:(page:number,count:number)=>{

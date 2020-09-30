@@ -64,12 +64,13 @@ const SitesView: FunctionComponent<Props> = (props) => {
         sites,
         pageCount,
         pageLinks,
-        isLoading: isLoadingVisitor,
+        isLoading,
         error
     } = useSelector((state: RootState) => state.sites)
 
     const TableConfig = {
         columns: columns,
+        isLoading: isLoading,
         data: sites,
         pagination: true,
         pageChange: (page: number, count: number) => {

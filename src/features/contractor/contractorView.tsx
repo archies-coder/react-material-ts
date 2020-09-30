@@ -119,7 +119,7 @@ const ContractorView: FunctionComponent<Props> = (props) => {
 
     const [rowPerPage, setRowPerPage] = useState(10);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const [filter, setFilter] = useState({ contractor: "", purpose: " ", site: " " })
+    const [filter, setFilter] = useState({ contractor: "", purpose: "", site: "" })
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -269,7 +269,7 @@ const ContractorView: FunctionComponent<Props> = (props) => {
                         }} variant="contained" style={{ marginTop: '33px', marginLeft: '27px', height: '40px' }}>In Office</Button>
                     <SelectInput style={{ marginTop: '33px', marginLeft: '27px' }} onChange={(e: any) => { debugger; handleFilterChange({ purpose: e.target.value }) }} menuOptions={purpose.map(item => ({ title: item }))} defaultValue="All Purpose" value={filter.purpose} />
                     <SelectInput style={{ marginTop: '33px', marginLeft: '27px' }} onChange={(e: any) => { debugger; handleFilterChange({ site: e.target.value }) }} menuOptions={sites.map(item => ({ title: item.sitename }))} defaultValue="All Sites" value={filter.site} />
-                    <Button onClick={() => { setFilter({ site: "", purpose: "", contractor: "" }); dispatch(fetchInOfficeContractors()) }}
+                    <Button onClick={() => { handleFilterChange({ site: "", purpose: "", contractor: "" })}}
                         classes={{
                             root: classes.buttonRoot, // class name, e.g. `classes-nesting-root-x`
                             label: classes.label, // class name, e.g. `classes-nesting-label-x`

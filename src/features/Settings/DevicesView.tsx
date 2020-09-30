@@ -89,15 +89,10 @@ const DevicesView: FunctionComponent<Props> = (props) => {
             </div>
         )
     }
-    let tableRows: any = []
-
-    for (let i = 0; i < 10; i++) {
-        let copy: any = tableRows
-        tableRows = [data, ...copy]
-    }
 
     const TableConfig = {
         columns: columns,
+        isLoading: isLoadingDevice,
         data: devices,
         pagination:true,
         pageChange:(page:number,count:number)=>{
