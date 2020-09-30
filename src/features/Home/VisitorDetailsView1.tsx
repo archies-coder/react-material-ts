@@ -273,7 +273,7 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                                 </Box>
                                 <Box p={1} flexGrow={1} className={classes.imageContainer}>
                                     <div className={classes.imageUpload}>
-                                        {signaturePath || true ?
+                                        {signaturePath ?
                                             <img height={85} width={85} src={serverUrl + signaturePath} />
                                             :
                                             <CameraAlt alignmentBaseline={"central"} color={"disabled"} fontSize={"large"} />}
@@ -291,7 +291,7 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                             </Box>
                         </Grid>
                     </Grid>
-                    <Grid container>
+                    <Grid container style={{width: '1010px'}}>
                         <Grid item xs={6}>
                             <div className={classes.visitorInfo}>
                                 <span className={classes.headerSecondary}>Visitor's information</span>
