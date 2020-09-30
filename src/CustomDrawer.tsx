@@ -179,10 +179,12 @@ const mappableRoutes: MappableRoutesDictionary = {
         }, {
             title: 'Agreement',
             path: '/agreement'
-        }, {
-            title: 'Visitor\'s Form',
-            path: '/visitorsform'
-        }, {
+        },
+        //  {
+        //     title: 'Visitor\'s Form',
+        //     path: '/visitorsform'
+        // }, 
+        {
             title: 'Notification',
             path: '/notification'
         }]
@@ -223,12 +225,12 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
         <Box style={{ height: '112px', paddingTop: '26px', textAlign: 'start', paddingLeft: '38px' }}>
             <img src={logo} style={{ height: '45px', width: '45px' }} />
             <Typography variant="h5" className={classes.logo} noWrap>
-                 AUROCHEMICALS
+                AUROCHEMICALS
             </Typography>
         </Box>
         {/* <Divider /> */}
         <List>
-            {Object.keys(mappableRoutes).filter(r=>(roles[r]===true)).map((key, index) => (
+            {Object.keys(mappableRoutes).filter(r => (roles[r] === true)).map((key, index) => (
                 mappableRoutes[key].children ? (
                     <>
                         {
@@ -268,7 +270,7 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
                         </Collapse>
                     </>
                 ) : (
-                        <ListItem style={{ marginBottom: '7px', paddingLeft: '38px'}} button key={key} component={NavLink} exact className="listItem"
+                        <ListItem style={{ marginBottom: '7px', paddingLeft: '38px' }} button key={key} component={NavLink} exact className="listItem"
                             activeClassName={"active-navlink"} to={mappableRoutes[key].path}>
                             <ListItemIcon className="white-text">{mappableRoutes[key].icon}</ListItemIcon>
                             <ListItemText className={classes.listItemText} primary={key} />
