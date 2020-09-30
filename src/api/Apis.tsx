@@ -114,8 +114,8 @@ export async function getVisitorData(page:number=0,count:number=10,visitor:Strin
   // debugger
 }
 
-export async function getInOfficeVisitorData(page:number=0,count:number=10) {
-  const url = `/product/reception/checkin/in/user/data?page=${page}&count=${count}`
+export async function getInOfficeVisitorData(page:number=0,count:number=10,visitor:String = '',purpose:String = '', site:String='') {
+  const url = `/product/reception/checkin/in/user/data?page=${page}&count=${count}&visitor=${visitor}&purpose=${purpose}&site=${site}`
 
   const { data } = await apis.get(url)
   // debugger

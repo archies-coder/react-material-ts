@@ -146,8 +146,8 @@ export const {
 export default visitors.reducer
 
 export const fetchVisitors = (
-    page?: number
-    , count?: number,
+    page?: number,
+    count?: number,
     visitor?: string,
     purpose?: string,
     site?: string
@@ -166,17 +166,20 @@ export const fetchVisitors = (
 }
 
 export const fetchInOfficeVisitors = (
-    page?: number
-    , count?: number
+    page?: number,
+    count?: number,
+    visitor?: string,
+    purpose?: string,
+    site?: string
 ): AppThunk => async dispatch => {
     try {
         dispatch(fetchSites())
         dispatch(getVisitorsStart())
-        const visitors = await getInOfficeVisitorData()
+        const visitors = await getInOfficeVisitorData(page,count,visitor,purpose,site)
         dispatch(getVisitorsSuccess(visitors))
 
-        const purpose = await getPurpose()
-        dispatch(getPurposeSuccess(purpose))
+        const pur = await getPurpose()
+        dispatch(getPurposeSuccess(pur))
     } catch (err) {
         dispatch(getVisitorsFailure(err.toString()))
     }

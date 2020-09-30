@@ -34,6 +34,7 @@ import { CustomMenuItem } from 'components/CustomMenuItem';
 import Axios from 'axios';
 import { apis, checkout, serverUrl } from 'api/Apis';
 import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice';
+import CustomizedSwitch from 'components/Switch';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -117,25 +118,30 @@ type Props = OwnProps;
 const HomeView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
-    const [rowPerPage,setRowPerPage] = useState(10);
+    const [rowPerPage, setRowPerPage] = useState(10);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const [filter,setFilter]=useState({visitor:"",purpose:"",site:""})
+    const [filter, setFilter] = useState({ visitor: "", purpose: "", site: "" })
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
+    const [inOffice, setInOffice] = useState(false);
 
 
-    const handleFilterChange= (f:any)=>{
+    const doFetch=(page=0, count=10, visitor="", purpose="", site="")=>{
+        inOffice? dispatch(fetchInOfficeVisitors(page, count, visitor, purpose, site)): dispatch(fetchVisitors(page, count, visitor, purpose, site)) 
+    }
+    const handleFilterChange = (f: any) => {
         debugger;
-        const newFilter = {...filter,...f}
+        const newFilter = { ...filter, ...f }
         setFilter(newFilter)
         const {
-            purpose:purpose1,
-            site:site1,
-            visitor:visitor1
+            purpose: purpose1,
+            site: site1,
+            visitor: visitor1
         } = newFilter
 
-        dispatch(fetchVisitors(0,rowPerPage,visitor1,purpose1,site1))
+        //dispatch(fetchVisitors(0, rowPerPage, visitor1, purpose1, site1))
+        doFetch(0, rowPerPage, visitor1, purpose1, site1)
     }
     const handleClose = () => {
         setAnchorEl(null);
@@ -173,7 +179,7 @@ const HomeView: FunctionComponent<Props> = (props) => {
             isSort: true
         }]
 
-    let tableRows: any = []
+
 
     const dispatch = useDispatch()
 
@@ -201,7 +207,8 @@ const HomeView: FunctionComponent<Props> = (props) => {
     } = useSelector((state: RootState) => state.home)
 
     useEffect(() => {
-        dispatch(fetchVisitors(0,10))
+        //dispatch(fetchVisitors(0, 10))
+        doFetch(0, 10)
         dispatch(fetchHomeStats())
     }, [dispatch])
 
@@ -210,7 +217,8 @@ const HomeView: FunctionComponent<Props> = (props) => {
         await checkout(id)
             .then(() => {
                 dispatch(fetchHomeStats())
-                dispatch(fetchVisitors(0,10))
+                //dispatch(fetchVisitors(0, 10))
+                doFetch(0, 10)
                 dispatch(getBackdropStop())
             })
             .catch(() => dispatch(getBackdropStop()))
@@ -231,19 +239,20 @@ const HomeView: FunctionComponent<Props> = (props) => {
         isLoading: isLoadingVisitor,
         data: visitors.map(el => ({
             ...el,
-            profilePicPath: <Avatar src={serverUrl+el['profilePicPath']} />
+            profilePicPath: <Avatar src={serverUrl + el['profilePicPath']} />
         })),
-        pagination:true,
-        pageChange:(page:number,count:number)=>{
+        pagination: true,
+        pageChange: (page: number, count: number) => {
             const {
-                purpose:purpose1,
-                site:site1,
-                visitor:visitor1
+                purpose: purpose1,
+                site: site1,
+                visitor: visitor1
             } = filter
             setRowPerPage(count)
-            dispatch(fetchVisitors(page,count,visitor1,purpose1,site1))
+            //dispatch(fetchVisitors(page, count, visitor1, purpose1, site1))
+            doFetch(page, count, visitor1, purpose1, site1)
         },
-        totalCount:pageCount,
+        totalCount: pageCount,
         menuOptions: [{
             key: 'checkin_id',
             callback: handleCheckOut,
@@ -297,23 +306,30 @@ const HomeView: FunctionComponent<Props> = (props) => {
                 <Grid item xs style={{ height: "100%", marginTop: '20px' }}>
                     <Paper className={classes.paper} elevation={0}>
                         <Box display="flex" justifyContent="start">
-                            <SearchInput style={{marginTop: '33px', marginLeft: '27px'}} onChange = {(e:any)=>{debugger;handleFilterChange({visitor:e.target.value})}} value = {filter.visitor} placeholder="Search visitor" />
+                            <SearchInput style={{ marginTop: '33px', marginLeft: '27px' }} onChange={(e: any) => { debugger; handleFilterChange({ visitor: e.target.value }) }} value={filter.visitor} placeholder="Search visitor" />
                             {/* <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="In Office" /> */}
-                            <Button onClick={()=>{setFilter({site:"",purpose:"",visitor:""});dispatch(fetchInOfficeVisitors())}}
-                            classes={{
-                                root: classes.buttonRoot, // class name, e.g. `classes-nesting-root-x`
-                                label: classes.label, // class name, e.g. `classes-nesting-label-x`
-                            }} variant="contained" style={{ marginTop: '33px', marginLeft: '27px', height: '40px'}}>In Office</Button>
-                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} onChange = {(e:any)=>{debugger; handleFilterChange({purpose:e.target.value})}} menuOptions={purpose.map(item=>({title:item}))} defaultValue="All Purpose" value={filter.purpose}/>
-                            <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} onChange = {(e:any)=>{debugger; handleFilterChange({site:e.target.value})}} menuOptions={sites.map(item=>({title:item.sitename}))} defaultValue ="All Sites" value={filter.site}/>
-                            <Button onClick={() => { handleFilterChange({ site: "", purpose: "", visitor: "" })  }}
+                            <CustomizedSwitch
+                                //@ts-ignore
+                                style={{ marginTop: '33px', marginLeft: '27px', height: '36px' }}
+                                 label={"In Office"} checked={inOffice} onChange={() => { !inOffice ? dispatch(fetchInOfficeVisitors()) : dispatch(fetchVisitors());setInOffice(!inOffice) }} />
+                            {/* <Button onClick={() => { setFilter({ site: "", purpose: "", visitor: "" }); dispatch(fetchInOfficeVisitors()) }}
                                 classes={{
                                     root: classes.buttonRoot, // class name, e.g. `classes-nesting-root-x`
                                     label: classes.label, // class name, e.g. `classes-nesting-label-x`
-                                }} variant="contained" style={{ marginTop: '33px', marginLeft: '27px', height: '40px' } }
-                                >Clear Filter</Button>
+                                }}
+                                variant="contained" style={{ marginTop: '33px', marginLeft: '27px', height: '40px' }}>In Office
+                            </Button> */}
+                            <SelectInput style={{ marginTop: '33px', marginLeft: '27px' }} onChange={(e: any) => { debugger; handleFilterChange({ purpose: e.target.value }) }} menuOptions={purpose.map(item => ({ title: item }))} defaultValue="All Purpose" value={filter.purpose} />
+                            <SelectInput style={{ marginTop: '33px', marginLeft: '27px' }} onChange={(e: any) => { debugger; handleFilterChange({ site: e.target.value }) }} menuOptions={sites.map(item => ({ title: item.sitename }))} defaultValue="All Sites" value={filter.site} />
+                            <Button onClick={() => { handleFilterChange({ site: "", purpose: "", visitor: "" }) }}
+                                classes={{
+                                    root: classes.buttonRoot, // class name, e.g. `classes-nesting-root-x`
+                                    label: classes.label, // class name, e.g. `classes-nesting-label-x`
+                                }} variant="contained" style={{ marginTop: '33px', marginLeft: '27px', height: '40px' }}
+                            >Clear Filter</Button>
+
                         </Box>
-                        <TableWrapper style={{marginTop: '17px', marginLeft: '32px', marginRight: '30px'}} config={TableConfig} />
+                        <TableWrapper style={{ marginTop: '17px', marginLeft: '32px', marginRight: '30px' }} config={TableConfig} />
                     </Paper>
                 </Grid>
             </Grid>
