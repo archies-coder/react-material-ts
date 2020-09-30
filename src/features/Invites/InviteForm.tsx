@@ -5,14 +5,17 @@ import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import { ArrowBackIos } from "@material-ui/icons";
 import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice';
-import React, { FunctionComponent, useState } from 'react';
-import { useDispatch } from "react-redux";
+import React, { FunctionComponent, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import { RouteComponentProps } from 'react-router-dom';
 import { createInvite } from "../../api/Apis";
 import CustomButton from "../../components/Button";
 import TextInput from "../../components/TextInput";
 import DateTimeInput from 'components/DateTimeInput'
 import { saveInvite } from 'features/Invites/inviteSlice'
+import { RootState } from 'app/rootReducer';
+import { CustomAutoComplete } from 'components/CustomAutoComplete';
+import { fetchVisitors } from 'features/Home/visitorSlice';
 const useStyles = makeStyles((theme: Theme) => createStyles({
     paper: {
         backgroundColor: '#E7ECF6',
@@ -99,10 +102,10 @@ const InviteForm: FunctionComponent<Props> = (props) => {
         email: '',
     })
 
-    const handleChange = (e: any) => setInputState({
+    const handleChange = (e: any) => {debugger;setInputState({
         ...inputState,
         [e.target.name]: e.target.value
-    })
+    })}
     const handleDateChange = (date: Date | null) => setInputState({
         ...inputState,
         'time': date
@@ -128,6 +131,8 @@ const InviteForm: FunctionComponent<Props> = (props) => {
         }), () => setInputState(defaultInputState)))
     }
 
+    const {purpose} = useSelector((state: RootState) => state.visitors)
+
     // const {
     //     visitors,
     //     visitorsById,
@@ -137,12 +142,10 @@ const InviteForm: FunctionComponent<Props> = (props) => {
     //
     //
     // const id = props.match.params.visitorId
-    // useEffect(() => {
-    //     if (visitorsById[id]) {
-    //         setInputState(visitorsById[id])
-    //     }
-    //     console.log(visitors, inputState)
-    // }, [id])
+    useEffect(() => {
+        dispatch(fetchVisitors())
+    }, [dispatch])
+
 
     return (
         <Grid item style={{ height: '100%' }}>
@@ -199,8 +202,9 @@ const InviteForm: FunctionComponent<Props> = (props) => {
                                 onChange={handleChange}
                                 name="personToMeet"
                                 value={inputState.personToMeet} />
-                            <TextInput
+                            <CustomAutoComplete
                                 required
+                                options={purpose}
                                 label="Purpose to visit"
                                 name="purpose"
                                 onChange={handleChange}

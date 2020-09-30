@@ -17,28 +17,11 @@ const useStyles = makeStyles(() => createStyles({
 
 }))
 
-const StyledTextInput = withStyles({
-    '& .MuiInputBase-input.MuiInput-input.MuiInputBase-inputAdornedEnd': {
-        paddingTop: '8.5px',
-        paddingBottom: '8.5px',
-    }
-})(TextInput)
-
-const StyledDatePicker = withStyles({
-    '& .MuiInput-underline:before': {
-        borderBottom: 'none'
-    },
-    '& .MuiInputBase-input.MuiInput-input.MuiInputBase-inputAdornedEnd': {
-        paddingTop: '8.5px',
-        paddingBottom: '8.5px',
-    }
-})(KeyboardDateTimePicker)
-
 const DateTimeInput: FunctionComponent<KeyboardDateTimePickerProps> = (props) => {
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
 
-            <StyledDatePicker
+            <KeyboardDateTimePicker
                 TextFieldComponent={TextInput}
                 {...props}
             />
