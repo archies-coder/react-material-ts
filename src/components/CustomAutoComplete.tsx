@@ -41,7 +41,7 @@ export const CustomAutoComplete: React.FC<any> = (props) => {
                 }}
                 inputValue={value}
                 onInputChange={(event, newInputValue) => {
-                    onChange(event);
+                    onChange(newInputValue);
                 }}
                 options={options}
                 id="custom-input-demo"

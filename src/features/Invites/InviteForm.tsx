@@ -98,7 +98,7 @@ const InviteForm: FunctionComponent<Props> = (props) => {
         name: '',
         mobileNo: '',
         personToMeet: '',
-        purpose: '',
+        purpose: 'default',
         email: '',
     })
 
@@ -109,6 +109,10 @@ const InviteForm: FunctionComponent<Props> = (props) => {
     const handleDateChange = (date: Date | null) => setInputState({
         ...inputState,
         'time': date
+    })
+    const handlePurpose = (value: any) => setInputState({
+        ...inputState,
+        purpose: value
     })
 
     const handleSubmit = async (e: any) => {
@@ -207,7 +211,7 @@ const InviteForm: FunctionComponent<Props> = (props) => {
                                 options={purpose}
                                 label="Purpose to visit"
                                 name="purpose"
-                                onChange={handleChange}
+                                onChange={handlePurpose}
                                 value={inputState.purpose} />
                         </Grid>
                     </Grid>

@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Theme } from "@material-ui/core/styles/createMuiTheme";
 import { ArrowBackIos, CameraAlt } from "@material-ui/icons";
 import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice';
-import { setCurrentVisitor, defaultVisitor } from 'features/Home/visitorSlice';
+import { setCurrentVisitor, defaultVisitor, fetchVisitors } from 'features/Home/visitorSlice';
 import React, { FunctionComponent, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { RouteComponentProps } from 'react-router-dom';
@@ -15,6 +15,7 @@ import TextInput from "../../components/TextInput";
 import { config as VisitorFormConfig } from 'features/Settings/VisitorFormConfig';
 import { fetchVisitorConfigs } from "features/Settings/visitorConfigSlice";
 import img from 'assets/logo/logo.png'
+import { fetchSites } from "features/SalesAndOrganisation/siteSlice";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     paper: {
@@ -130,9 +131,13 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
         visitors,
         visitorsById,
         currentVisitor,
+        purpose: purposeOptions,
         isLoading: isLoadingVisitor,
         error
     } = useSelector((state: RootState) => state.visitors)
+    const {
+sites
+    } = useSelector((state: RootState) => state.sites)
     //const inputState = currentVisitor
     const {
         mask
@@ -173,6 +178,11 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
     useEffect(() => {
         id != -1 && dispatch(setCurrentVisitor(visitorsById[id] || defaultVisitor));
     }, [id])
+
+    useEffect(() => {
+        dispatch(fetchVisitors())
+        dispatch(fetchSites())
+    }, [dispatch])
 
     const handleSubmit = async (e: any) => {
         dispatch(getBackdropStart())
@@ -216,6 +226,21 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
             .then(() => dispatch(getBackdropStop())).catch(() => dispatch(getBackdropStop()))
     }
 
+    const handlePurpose = (value: any) => {
+        dispatch(setCurrentVisitor({
+            ...currentVisitor,
+            purpose: value
+        }));
+    }
+
+
+    const handleAutoComplete = (obj: any) => {
+        dispatch(setCurrentVisitor({
+            ...currentVisitor,
+            ...obj
+        }));
+    }
+
     const visitorSectionFields = VisitorFormConfig.
         filter(i => i.section === "VI" && visitorConfigsById[i.id] && visitorConfigsById[i.id].value).
         sort((a, b) => (a.seq - b.seq)).
@@ -227,9 +252,23 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                 {/* <TextInput style={{ width: 446, marginLeft: '64px' }} label={o.name} name={o.id} onChange={handleChange}
                 //@ts-ignore
                 value={currentVisitor[o.id]} /> */}
-                <TextInput style={i % 2 === 0 ? { width: 446, marginLeft: '64px' } : { width: 446, marginLeft: '28px' }} label={o.name} name={o.id} onChange={handleChange}
-                    //@ts-ignore
-                    value={currentVisitor[o.id]} />
+                {o.component ?
+                    o.component({
+                        purpose: {
+                            options: purposeOptions,
+                            onChange: handleAutoComplete,
+                            value: purpose
+                        },
+                        style: {
+                            width: 446,
+                            marginLeft: i % 2 === 0 ? '64px' : '28px'
+                        }
+                    })
+                    :
+                    <TextInput style={i % 2 === 0 ? { width: 446, marginLeft: '64px' } : { width: 446, marginLeft: '28px' }} label={o.name} name={o.id} onChange={handleChange}
+                        //@ts-ignore
+                        value={currentVisitor[o.id]} />
+                }
             </Grid>
         ))
     const appointmentSectionFields = VisitorFormConfig.
@@ -240,9 +279,23 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                 // style={{ marginTop: '52px' }}
                 key={o.id}>
                 {/* {(o.render && o.render(notificationById[i], handleChange, i + "-" + o.key)) || obj[o.key]} */}
-                <TextInput style={i % 2 === 0 ? { width: 446, marginLeft: '64px' } : { width: 446, marginLeft: '28px' }} label={o.name} name={o.id} onChange={handleChange}
-                    //@ts-ignore
-                    value={currentVisitor[o.id]} />
+                {o.component ?
+                    o.component({
+                        site: {
+                            options: sites.map(o => o.sitename), //siteOptions ||
+                            onChange: handleAutoComplete,
+                            value: site
+                        },
+                        style: {
+                            width: 446,
+                            marginLeft: i % 2 === 0 ? '64px' : '28px'
+                        }
+                    })
+                    :
+                    <TextInput style={i % 2 === 0 ? { width: 446, marginLeft: '64px' } : { width: 446, marginLeft: '28px' }} label={o.name} name={o.id} onChange={handleChange}
+                        //@ts-ignore
+                        value={currentVisitor[o.id]} />
+                }
             </Grid>
         ))
 
