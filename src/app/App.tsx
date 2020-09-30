@@ -28,6 +28,7 @@ import Notification from "features/Settings/Notification"
 import SiteForm from "features/SalesAndOrganisation/SiteForm"
 import CheckInPointForm from "features/SalesAndOrganisation/CheckInPointForm"
 import { fetchVisitorConfigs } from "features/Settings/visitorConfigSlice"
+import ContractorView from "features/contractor/contractorView"
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -115,7 +116,7 @@ export default function App() {
                     <Route path="/user" component={UserManagementView} />
                     <Route exact path="/visitorsform" component={VisitorsForm} />
                     <Route exact path="/notification" component={Notification} />
-
+                    <Route exact path="/contractor" component={ContractorView} />
                 </Switch>
             </NavGridContainer>
             {/* </Grid> */}
@@ -147,6 +148,7 @@ export default function App() {
             <AuthRoute exact path="/visitorsform" component={VisitorsForm} />
             <AuthRoute exact path="/notification" component={Notification} />
             <Route exact path="/signin" component={SignIn} />
+            <AuthRoute exact path="/contractor" component={ContractorView} />
             {/* <Route exact path="/signup" component={SignUp} /> */}
         </Switch>
     </Box>

@@ -3,30 +3,13 @@ import parseLink, { Links } from 'parse-link-header'
 import { VisitorInfo } from 'features/Home/visitorSlice';
 import { Tune } from '@material-ui/icons';
 
-export const serverUrl= 'http://52.66.55.89:18446'
+export const serverUrl= 'http://52.66.55.89:18446/'
 export const apis = axios.create({
   baseURL: serverUrl,
   timeout: 10000,
   //headers: {'X-Custom-Header': 'foobar'}
 });
 
-interface CheckinModelOld {
-  name: string,
-  mobile: number,
-  email: string,
-  tomeet: string,
-  purpose: string,
-  gender: string,
-  noofvisitor: number,
-  company: string,
-  country: string,
-  organisation: string,
-  site: string,
-  vehicleno: string,
-  belongings: string,
-  idtype: string,
-  idnumber: string
-}
 interface CheckinModel {
   profilepic: any//""
   idcard: any//""
@@ -365,6 +348,32 @@ export async function getVisitorConfigData() {
     pageCount: 10,//data.totalCount,
     //@ts-ignore
     visitorConfigs: Object.keys(data).map((i:string)=>({key:i,value:data[i]}))//data.data
+  }
+  // debugger
+}
+
+export async function getContractorData(page:number=0,count:number=10,contractor:String = '',purpose:String = '', site:String='') {
+  const url = `/product/reception/checkin/user/data?page=${page}&count=${count}&contractor=${contractor}&purpose=${purpose}&site=${site}`
+
+  const { data } = await apis.get(url)
+  // debugger
+  return {
+    //pageLinks: '',
+    pageCount: data.totalCount,
+    contractors: data.data
+  }
+  // debugger
+}
+
+export async function getInOfficeContractorData(page:number=0,count:number=10) {
+  const url = `/product/reception/checkin/in/user/data?page=${page}&count=${count}`
+
+  const { data } = await apis.get(url)
+  // debugger
+  return {
+    //pageLinks: '',
+    pageCount: data.totalCount,
+    contractors: data.data
   }
   // debugger
 }

@@ -135,6 +135,10 @@ const mappableRoutes: MappableRoutesDictionary = {
         path: '/',
         icon: <HomeSharp className="white-text" />
     },
+    'Contractor': {
+        path: '/contractor',
+        icon: <OrganizationIcon className="white-text" />
+    },
     'Invites': {
         path: '/invites',
         icon: <PersonIcon className="white-text" />
