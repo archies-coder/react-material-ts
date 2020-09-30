@@ -314,12 +314,12 @@ export async function getVisitorConfigData() {
   // debugger
   const data ={
     answer1: true,
-    answer2: false,
-    answer3: false,
-    answer4: false,
-    answer5: false,
-    belongings: false,
-    checkin_id: false,
+    answer2: true,
+    answer3: true,
+    answer4: true,
+    answer5: true,
+    belongings: true,
+    checkin_id: true,
     city: true,
     company: true,
     country: true,

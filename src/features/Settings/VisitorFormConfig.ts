@@ -1,81 +1,109 @@
 export const config = [{
     name: 'Mobile Number',
     id:'mobile',
-    isChecked: true,
-    section:'VI'
+    section:'VI',
+    seq: 3
 }, {
-    name: 'Full Name',
-    isChecked: true,
+    name: 'Visitor Name',
     id:'name',
-    section:'VI'
+    section:'VI',
+    seq: 1
 }, {
     name: 'Gender',
-    isChecked: true,
     id:'gender',
-    section:'VI'
+    section:'VI',
+    seq:2
 }, {
     name: 'Photo',
     id:'profilepic',
-    section:''
+    section:'',
+    seq:1
 }, {
     name: 'Email',
     id:'email',
-    section:'VI'
+    section:'VI',
+    seq:4
 }, {
-    name: 'Address/Locality/City/Country',
+    name: 'Address/Locality/City',
     isChecked: false,
     id:'city',
-    section:'VI'
+    section:'VI',
+    seq:9
 }, {
-    name: 'Nationality',
+    name: 'Country/Nationality',
     id:'country',
-    section:'VI'
+    section:'VI',
+    seq:10
 }, {
-    name: 'Visitor Company Name',
+    name: 'Visitor\'s Company',
     id:'company',
-    section:'VI'
+    section:'VI',
+    seq:8
 }, {
     name: 'Scan Id',
     id: 'scan',
-    section:'VI'
+    section:'',
+    seq:0
 }, {
-    name: 'Number Of Visitors',
-    id:'visitorcount',
-    section:'VI'
+    name: 'No. Of visitors',
+    id:'noofvisitor',
+    section:'VI',
+    seq:7
 }, {
     name: 'Vehicle Number',
     id:'vehicle',
-    section:'VI'
+    section:'',
+    seq:0
 }, {
     name: 'Choose Your Belongings',
     id:'belongings',
-    section:'VI'
+    section:'',
+    seq:0
 }, {
-    name: 'Host Organizations',
+    name: 'Host/Organizations',
     id:'organisation',
-    section:'AR'
+    section:'AR',
+    seq:2
 }, {
-    name: 'Visitee Details',
-    id:'visitee',
-    section:'VI'
+    name: 'Person to visit',
+    id:'tomeet',
+    section:'AR',
+    seq:1
 }, {
-    name: 'Purpose Of Visit',
+    name: 'Purpose of visit',
     id:'purpose',
-    section:'VI'
+    section:'VI',
+    seq:6
 }, {
     name: 'Expected Time Out',
     id:'expectedtimeout',
-    section:'VI'
+    section:'',
+    seq:0
 }, {
     name: 'Remark',
     id:'remark',
-    section:'VI'
+    section:'',
+    seq:0
 }, {
     name: 'Visitor Agreement',
     id:'agreement',
-    section:'VI'
+    section:'',
+    seq:0
 }, {
     name: 'Agreement signature',
     id:'signature',
-    section:'VI'
-},]
+    section:'',
+    seq:0
+},
+{
+    name: 'Visitor Type',
+    section:'VI',
+    seq:5,
+    id:'usertype'
+},
+{
+    name: 'Site',
+    section:'AR',
+    seq:3,
+    id:'site'
+}]

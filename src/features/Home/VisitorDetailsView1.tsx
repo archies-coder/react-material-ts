@@ -217,29 +217,35 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
             .then(() => dispatch(getBackdropStop())).catch(() => dispatch(getBackdropStop()))
     }
 
-    const visitorSectionFields = VisitorFormConfig.filter(i => i.section === "VI" && visitorConfigsById[i.id] && visitorConfigsById[i.id].value).map((o, i) => (
-        <Grid item xs={6}
-            // style={{ marginLeft: '52px' }}
-            key={o.id}>
-            {/* {(o.render && o.render(notificationById[i], handleChange, i + "-" + o.key)) || obj[o.key]} */}
-            {/* <TextInput style={{ width: 446, marginLeft: '64px' }} label={o.name} name={o.id} onChange={handleChange}
+    const visitorSectionFields = VisitorFormConfig.
+        filter(i => i.section === "VI" && visitorConfigsById[i.id] && visitorConfigsById[i.id].value).
+        sort((a, b) => (a.seq - b.seq)).
+        map((o, i) => (
+            <Grid item xs={6}
+                // style={{ marginLeft: '52px' }}
+                key={o.id}>
+                {/* {(o.render && o.render(notificationById[i], handleChange, i + "-" + o.key)) || obj[o.key]} */}
+                {/* <TextInput style={{ width: 446, marginLeft: '64px' }} label={o.name} name={o.id} onChange={handleChange}
                 //@ts-ignore
                 value={currentVisitor[o.id]} /> */}
-            <TextInput style={i % 2 === 0 ? { width: 446, marginLeft: '64px' } : { width: 446, marginLeft: '28px' }} label={o.name} name={o.id} onChange={handleChange}
-                //@ts-ignore
-                value={currentVisitor[o.id]} />
-        </Grid>
-    ))
-    const appointmentSectionFields = VisitorFormConfig.filter(i => i.section === "AR" && visitorConfigsById[i.id] && visitorConfigsById[i.id].value).map((o, i) => (
-        <Grid item xs={6}
-            // style={{ marginTop: '52px' }}
-            key={o.id}>
-            {/* {(o.render && o.render(notificationById[i], handleChange, i + "-" + o.key)) || obj[o.key]} */}
-            <TextInput style={i % 2 === 0 ? { width: 446, marginLeft: '64px' } : { width: 446, marginLeft: '28px' }} label={o.name} name={o.id} onChange={handleChange}
-                //@ts-ignore
-                value={currentVisitor[o.id]} />
-        </Grid>
-    ))
+                <TextInput style={i % 2 === 0 ? { width: 446, marginLeft: '64px' } : { width: 446, marginLeft: '28px' }} label={o.name} name={o.id} onChange={handleChange}
+                    //@ts-ignore
+                    value={currentVisitor[o.id]} />
+            </Grid>
+        ))
+    const appointmentSectionFields = VisitorFormConfig.
+        filter(i => i.section === "AR" && visitorConfigsById[i.id] && visitorConfigsById[i.id].value).
+        sort((a, b) => (a.seq - b.seq)).
+        map((o, i) => (
+            <Grid item xs={6}
+                // style={{ marginTop: '52px' }}
+                key={o.id}>
+                {/* {(o.render && o.render(notificationById[i], handleChange, i + "-" + o.key)) || obj[o.key]} */}
+                <TextInput style={i % 2 === 0 ? { width: 446, marginLeft: '64px' } : { width: 446, marginLeft: '28px' }} label={o.name} name={o.id} onChange={handleChange}
+                    //@ts-ignore
+                    value={currentVisitor[o.id]} />
+            </Grid>
+        ))
 
     useEffect(() => {
         //dispatch(fetchVisitorConfigs())
@@ -259,8 +265,8 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                                     <div className={classes.imageUpload}>
                                         {profilePicPath ?
                                             <img height={85} width={85} src={serverUrl + profilePicPath} />
-                                         :
-                                         <CameraAlt alignmentBaseline={"central"} color={"disabled"} fontSize={"large"} />}
+                                            :
+                                            <CameraAlt alignmentBaseline={"central"} color={"disabled"} fontSize={"large"} />}
                                     </div>
                                 </Box>
                                 <Box p={1} flexGrow={1} className={classes.imageContainer}>
@@ -291,7 +297,7 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                             </Box>
                         </Grid>
                     </Grid>
-                    <Grid container style={{width: '1010px'}}>
+                    <Grid container style={{ width: '1010px' }}>
                         <Grid item xs={6}>
                             <div className={classes.visitorInfo}>
                                 <span className={classes.headerSecondary}>Visitor's information</span>
