@@ -248,7 +248,7 @@ const ContractorView: FunctionComponent<Props> = (props) => {
             }
         }, {
             key: 'checkin_id',
-            item: (id: any) => <CustomMenuItem to={'/contractor/' + id}>
+            item: (id: any) => <CustomMenuItem to={'/visitor/' + id}>
                 View Details
             </CustomMenuItem>
         }]
