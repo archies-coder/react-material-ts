@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
             '& .MuiInput-underline:before, & .MuiInput-underline:after': {
                 borderBottom: 'none !important'
             },
-            '& #date-picker-inline': {
+            '& #date-picker-inline2': {
                 fontWeight: 600,
                 color: theme.palette.text.primary,
                 fontSize: '20px',
@@ -85,7 +85,7 @@ const HomeDateDropdown: FunctionComponent<Props> = (props) => {
                     variant="inline"
                     format="MMM dd, yyyy"
                     margin="normal"
-                    id="date-picker-inline"
+                    id="date-picker-inline2"
                     autoOk
                     value={selectedDate}
                     onChange={handleDateChange}
