@@ -140,7 +140,7 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
 
 
     return (
-        <Grid item style={{ height: '80%', width: '90%' }}>
+        <Grid item xs={12} style={{ marginRight: 30 }}>
             <Paper className={classes.paper}>
                 <form onSubmit={handleSubmit}>
                     <div className={classes.header}>

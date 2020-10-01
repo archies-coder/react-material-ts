@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: '#E7ECF6',
             height: '100%',
             borderRadius: theme.shape.borderRadius - 5,
-            marginRight: 30,
-            paddingRight: 200,
+            // marginRight: 30,
+            // paddingRight: 200,
 
             '&  .MuiTableCell-root': {
                 borderBottom: '1px solid #192949',
@@ -114,7 +114,7 @@ const UserManagementView: FunctionComponent<Props> = (props) => {
     }
 
     return (
-        <Grid item xs style={{height: "100%"}}>
+        <Grid item xs={12} style={{ marginRight: 30 }}>
             <Paper className={classes.paper}>
                 <div className={classes.header}>
                     <ArrowBackIos className={classes.arrowBack} onClick={() => props.history.push('/')}/>
