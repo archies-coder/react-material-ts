@@ -1,12 +1,13 @@
 import React, {FunctionComponent, useEffect} from 'react';
 import TableWrapper from "../../components/TableWrapper";
-import {createStyles, fade, Grid, Paper, Theme} from "@material-ui/core";
+import {Avatar, createStyles, fade, Grid, Paper, Theme} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import SearchInput from "../../components/SearchInput";
 import { RootState } from 'app/rootReducer'
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchEmployees } from 'features/Employees/employeeSlice'
 import { CustomMenuItem } from 'components/CustomMenuItem';
+import { serverUrl } from 'api/Apis';
 interface OwnProps {
 }
 
@@ -32,22 +33,30 @@ const data = {
 }
 
 //const columns = ['Visitor name', 'Mobile No.', 'Email', 'Organization']
+// designation: any,//developer,
+//     email: any,//arjunp@gmail.com,
+//     empid: any,//002,
+//     fname: any,//arjun,
+//     lname: any,//pan,
+//     mname: any,//test,
+//     mobile: any,//1any,//2345678,
+//     profilepicpath:
 const columns = [
     {
+        id: "profilepicpath",
+        label: ''
+    },
+    {
         id: "name",
-        label: 'Visitor name'
+        label: 'Name'
+    },
+    {
+        id: "email",
+        label: 'Email'
     },
     {
         id: "mobile",
         label: 'Mobile No.'
-    },
-    {
-        id: "tomeet",
-        label: 'Email'
-    },
-    {
-        id: "purpose",
-        label: 'Organization'
     }]
 const EmployeesView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
@@ -78,18 +87,15 @@ const EmployeesView: FunctionComponent<Props> = (props) => {
         )
     }
 
-    let tableRows: any = []
-
-    for (let i = 0; i < 10; i++) {
-        let copy: any = tableRows
-
-        tableRows = [data, ...copy]
-    }
+    
 
 
     const TableConfig = {
         columns: columns,
-        data: employees,
+        data: employees.map(el => ({
+            ...el,
+            profilepicpath: <Avatar src={serverUrl + el['profilepicpath']} />
+        })),
         isLoading: isLoadingEmployee,
         pagination:true,
         pageChange:(page:number,count:number)=>{

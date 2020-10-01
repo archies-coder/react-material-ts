@@ -6,14 +6,17 @@ import { AppThunk } from 'app/store'
 
 
 export interface Employee {
-    email: any //"admin@gmail.com",
-    intime: any //"2020-09-14 20:28:34",
-    employee_id: any //"arj1600095514",
-    mobileno: any //"123456789",
-    name: any //"arjunp",
-    purpose: any //"tomeet",
-    scheduletime: any //"2020-09-12 15:00"
-    tomeet: any //"arjun2"
+    createdOn: any,//2020-09-30 13: 14: 38,
+    designation: any,//developer,
+    email: any,//arjunp@gmail.com,
+    empid: any,//002,
+    fname: any,//arjun,
+    lname: any,//pan,
+    mname: any,//test,
+    mobile: any,//1any,//2345678,
+    profilepicpath: any,//uploads/images/arj_pic_1601471678_arjun_pass.JPG,
+    updatedOn: any,//2020-09-30 13: 14: 38
+    name:any
 }
 export interface EmployeesResult {
     //pageLinks: Links | null
@@ -61,9 +64,9 @@ const employees = createSlice({
             state.pageCount = pageCount
             state.isLoading = false
             state.error = null
-            state.employees = employees
+            state.employees = employees.map(e=>({...e,name:e.fname+' '+e.mname+' '+e.lname}))
             // @ts-ignore
-            state.employees.map(employee => (state.employeesById[employee.employee_id]=employee))
+            state.employees.map(employee => (state.employeesById[employee.empid]=employee))
         },
         getEmployeesFailure: loadingFailed,
     }

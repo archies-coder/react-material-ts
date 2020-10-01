@@ -162,7 +162,7 @@ export async function getInOfficeInviteData(page:number=0,count:number=10) {
 
 
 export async function getEmployeesData(page:number=0,count:number=10) {
-  const url = `/product/reception/checkin/user/data?page=${page}&count=${count}`
+  const url = `/product/employee/data?page=${page}&count=${count}`
 
   const { data } = await apis.get(url)
 
