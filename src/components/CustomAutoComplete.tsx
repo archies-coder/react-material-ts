@@ -31,7 +31,7 @@ export const CustomAutoComplete: React.FC<any> = (props) => {
 
     const { value, onChange, options, label, name } = props
 
-    const [ value1, setValue1] = React.useState(options[0]);
+    const [ value1, setValue1] = React.useState(null);
 
         return (
             <Autocomplete
