@@ -59,6 +59,10 @@ const columns = [
     {
         id: "checkinpoint",
         label: 'Check In Ports'
+    },
+    {
+        id: "pincode",
+        label: 'Pin Code'
     }]
 const DevicesView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
