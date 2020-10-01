@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
         paper: {
             backgroundColor: '#E7ECF6',
             borderRadius: theme.shape.borderRadius - 5,
-            marginRight: 30,
+            // marginRight: 30,
             paddingRight: 150
         },
     })
@@ -85,7 +85,7 @@ const CheckInPointsView: FunctionComponent<Props> = (props) => {
     }, [dispatch])
 
     return (
-        <Grid item xs style={{height: "100%"}}>
+        <Grid item xs={12} style={{ marginRight: 30}}>
             <Paper className={classes.paper}>
                 <Box display="flex" justifyContent="space-between" style={{ paddingTop: '37px', paddingLeft: '30px', paddingBottom: '25.5px'}} >
                     <SearchInput hidden placeholder="Search Employees by name, email or mobile" width={353} />
