@@ -8,6 +8,7 @@ import { CustomMenuItem } from 'components/CustomMenuItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'app/rootReducer';
 import { fetchCheckInPoints } from './checkInPointSlice';
+import CustomButton from 'components/Button';
 
 interface OwnProps {}
 
@@ -18,21 +19,15 @@ const useStyles = makeStyles((theme: Theme) =>
         paper: {
             backgroundColor: '#E7ECF6',
             borderRadius: theme.shape.borderRadius - 5,
-            marginRight: 30,
+            // marginRight: 30,
             paddingRight: 150
         },
     })
 )
 
-const data = {
-    port: 'Gate 1',
-    name: 'Pesh Infotech Ph1',
-    device: 'Ipad Mini 78457',
-}
-
 //const columns = ['Check In ports', 'Site name', 'Device']
 const columns = [
-    
+
     {
         id: "checkinpoint",
         label: 'Check In Point'
@@ -55,30 +50,34 @@ const CheckInPointsView: FunctionComponent<Props> = (props) => {
         checkInPoints,
         pageCount,
         pageLinks,
-        isLoading: isLoadingVisitor,
+        isLoading,
         error
     } = useSelector((state: RootState) => state.checkinpoints)
 
-    let tableRows: any = []
-
-    for (let i = 0; i < 10; i++) {
-        let copy: any = tableRows
-        tableRows = [data, ...copy]
-    }
-
     const TableConfig = {
         columns: columns,
+        isLoading: isLoading,
         data: checkInPoints,
         pagination:true,
         pageChange:(page:number,count:number)=>{
             dispatch(fetchCheckInPoints(page,count))
         },
         totalCount:pageCount,
-        menuOptions: [{
-            item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
-                Check Out
-            </CustomMenuItem>
-        }]
+        // menuOptions: [{
+        //     item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+        //         Delete
+        //     </CustomMenuItem>
+        // },
+        // {
+        //     item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+        //         Disable
+        //     </CustomMenuItem>
+        // },
+        // {
+        //     item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+        //         View Details
+        //     </CustomMenuItem>
+        // }]
     }
 
     useEffect(() => {
@@ -86,14 +85,20 @@ const CheckInPointsView: FunctionComponent<Props> = (props) => {
     }, [dispatch])
 
     return (
-        <Grid item xs style={{height: "100%", marginTop: '22px'}}>
+        <Grid item xs={12} style={{ marginRight: 30}}>
             <Paper className={classes.paper}>
-                <Box display="flex" justifyContent="space-between">
-                    <SearchInput placeholder="Search Employees by name, email or mobile" width={500}/>
-                    <SelectInput value="Action" />
+                <Box display="flex" justifyContent="space-between" style={{ paddingTop: '37px', paddingLeft: '30px', paddingBottom: '25.5px'}} >
+                    <SearchInput hidden placeholder="Search Employees by name, email or mobile" width={353} />
+                    <div style={{width:353}}/>
+                    {/* <SelectInput value="Action" /> */}
+                    <CustomMenuItem to='/checkinpoints/add'>
+                        <CustomButton style={{ width: '150px', fontSize: '12px', height: '39px', padding: 0 }}>
+                            Add Check in point
+                        </CustomButton>
+                    </CustomMenuItem>
                 </Box>
 
-                <TableWrapper config={TableConfig}/>
+                <TableWrapper style={{paddingLeft: '66px'}} config={TableConfig}/>
             </Paper>
         </Grid>
     );

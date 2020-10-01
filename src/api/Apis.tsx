@@ -1,30 +1,15 @@
 import axios from 'axios'
 import parseLink, { Links } from 'parse-link-header'
 import { VisitorInfo } from 'features/Home/visitorSlice';
+import { Tune } from '@material-ui/icons';
 
+export const serverUrl= 'http://52.66.55.89:18446/'
 export const apis = axios.create({
-  baseURL: 'http://52.66.55.89:18446',
-  timeout: 5000,
+  baseURL: serverUrl,
+  timeout: 10000,
   //headers: {'X-Custom-Header': 'foobar'}
 });
 
-interface CheckinModelOld {
-  name: string,
-  mobile: number,
-  email: string,
-  tomeet: string,
-  purpose: string,
-  gender: string,
-  noofvisitor: number,
-  company: string,
-  country: string,
-  organisation: string,
-  site: string,
-  vehicleno: string,
-  belongings: string,
-  idtype: string,
-  idnumber: string
-}
 interface CheckinModel {
   profilepic: any//""
   idcard: any//""
@@ -116,8 +101,8 @@ interface VisitorModel {
   "vehicleno": any//"vehicleno"
 }
 
-export async function getVisitorData(page:number=0,count:number=10) {
-  const url = `/product/reception/checkin/user/data?page=${page}&count=${count}`
+export async function getVisitorData(page:number=0,count:number=10,visitor:String = '',purpose:String = '', site:String='') {
+  const url = `/product/reception/checkin/user/data?page=${page}&count=${count}&visitor=${visitor}&purpose=${purpose}&site=${site}`
 
   const { data } = await apis.get(url)
   // debugger
@@ -129,30 +114,17 @@ export async function getVisitorData(page:number=0,count:number=10) {
   // debugger
 }
 
-export async function getVisitorInfo() {
-  const url = ``
+export async function getInOfficeVisitorData(page:number=0,count:number=10,visitor:String = '',purpose:String = '', site:String='') {
+  const url = `/product/reception/checkin/in/user/data?page=${page}&count=${count}&visitor=${visitor}&purpose=${purpose}&site=${site}`
 
-  //const { data } = await apis.post(url)
-  const sample = {
-    avatar: '',
-    name: 'Vijaya Tondon from API',
-    mobileNo: 9754821630,
-    personToMeet: 'Ramesh Chawla',
-    purpose: 'Meeting',
-    inTime: '11:30 am',
-    outTime: '2:30 pm',
-  }
-  let data = []
-  for (let i = 0; i < 10; i++) {
-    let copy: any = sample
-
-    data.push(copy)
-  }
+  const { data } = await apis.get(url)
+  // debugger
   return {
     //pageLinks: '',
-    pageCount: 1,
-    visitors: data
+    pageCount: data.totalCount,
+    visitors: data.data
   }
+  // debugger
 }
 
 export async function getHomeStats() {
@@ -162,8 +134,8 @@ export async function getHomeStats() {
   return data
 }
 
-export async function getInvitesData(page:number=0,count:number=10) {
-  const url = `/product/reception/invite/user/data?page=${page}&count=${count}`
+export async function getInvitesData(page:number=0,count:number=10,visitor:String = '',purpose:String = '', site:String='') {
+  const url = `/product/reception/invite/user/data?page=${page}&count=${count}&visitor=${visitor}&purpose=${purpose}&site=${site}`
 
   const { data } = await apis.get(url)
 
@@ -175,8 +147,22 @@ export async function getInvitesData(page:number=0,count:number=10) {
 
 }
 
-export async function getEmployeesData(page:number=0,count:number=10) {
-  const url = `/product/reception/checkin/user/data?page=${page}&count=${count}`
+export async function getInOfficeInviteData(page:number=0,count:number=10) {
+  const url = `/product/reception/checkin/in/user/data?page=${page}&count=${count}`
+
+  const { data } = await apis.get(url)
+  // debugger
+  return {
+    //pageLinks: '',
+    pageCount: data.totalCount,
+    invites: data.data
+  }
+  // debugger
+}
+
+
+export async function getEmployeesData(page:number=0,count:number=10,filter:string='') {
+  const url = `/product/employee/data?page=${page}&count=${count}&keyword=${filter}`
 
   const { data } = await apis.get(url)
 
@@ -226,6 +212,19 @@ export async function getDevicesData(page:number=0,count:number=10) {
 
 }
 
+export async function getPurpose(page:number=0,count:number=10) {
+  const url = `/product/reception/meeting/purpose/data?page=${page}&count=${count}`
+
+  const { data } = await apis.get(url)
+  // debugger
+  return {
+    //pageLinks: '',
+    pageCount: data.totalCount || 20,
+    purpose: data.data
+  }
+
+}
+
 export async function getUsersData() {
   const url = `/product/device/data?page=0&count=10`
 
@@ -265,6 +264,30 @@ export async function createDevice(json: string) {
     },
   })
 }
+export async function createEmployee(formData: any) {
+  return await apis.post('/product/employee/register', formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      // "Content-Length": 2617
+    },
+  })
+}
+export async function createSite(json: string) {
+  return await apis.post('/product/register/site', json, {
+    headers: {
+      "Content-Type": "application/json",
+      // "Content-Length": 2617
+    },
+  })
+}
+export async function createCheckInPoint(json: string) {
+  return await apis.post('/product/register/checkinpoint', json, {
+    headers: {
+      "Content-Type": "application/json",
+      // "Content-Length": 2617
+    },
+  })
+}
 
 export async function signIn(username: string, password: string) {
   return await apis.post('/product/login', JSON.stringify({
@@ -290,4 +313,75 @@ export async function signUp(username: string, password: string, name: string, u
       'Content-type': 'application/json'
     }
   })
+}
+
+export async function getVisitorConfigData() {
+  //const url = `/product/reception/checkin/user/data?page=${page}&count=${count}&visitor=${visitor}&purpose=${purpose}&site=${site}`
+
+  //const { data } = await apis.get(url)
+  // debugger
+  const data ={
+    answer1: true,
+    answer2: true,
+    answer3: true,
+    answer4: true,
+    answer5: true,
+    belongings: true,
+    checkin_id: true,
+    city: true,
+    company: true,
+    country: true,
+    email: true,
+    gender: true,
+    idCardImagePath: true,
+    idtype: true,
+    intime: true,
+    mobile: true,
+    name: true,
+    ndastatus: true,
+    noofvisitor: true,
+    organisation: true,
+    outime: true,
+    policycheckstatus: true,
+    profilePicPath: true,
+    purpose: true,
+    signaturePath: true,
+    site: true,
+    tomeet: true,
+    usertype: true,
+    vehicleno: true
+  }
+  return {
+    //pageLinks: '',
+    pageCount: 10,//data.totalCount,
+    //@ts-ignore
+    visitorConfigs: Object.keys(data).map((i:string)=>({key:i,value:data[i]}))//data.data
+  }
+  // debugger
+}
+
+export async function getContractorData(page:number=0,count:number=10,contractor:String = '',purpose:String = '', site:String='') {
+  const url = `/product/reception/checkin/user/data?page=${page}&count=${count}&contractor=${contractor}&purpose=${purpose}&site=${site}`
+
+  const { data } = await apis.get(url)
+  // debugger
+  return {
+    //pageLinks: '',
+    pageCount: data.totalCount,
+    contractors: data.data
+  }
+  // debugger
+}
+
+export async function getInOfficeContractorData(page:number=0,count:number=10,contractor:String = '',purpose:String = '', site:String='') {
+  const url = `/product/reception/checkin/in/user/data?page=${page}&count=${count}`
+
+  const { data } = await apis.get(url)
+  // debugger
+  return {
+    //pageLinks: '',
+    pageCount: data.totalCount,
+    contractors: data.data
+  }
+  // debugger
 }

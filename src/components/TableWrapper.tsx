@@ -278,7 +278,7 @@ export const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => 
     const [orderBy, setOrderBy] = React.useState<string>('id');
     const rows = [...config.data]
     const columns = [...config.columns]
-    const menuOptions = [...config.menuOptions]
+    const menuOptions = config.menuOptions?[...config.menuOptions]:null
     const pageChange = config.pageChange
     const totalCount = config.totalCount || rows.length
     const handleRequestSort = (event: React.MouseEvent<unknown>, property: string) => {
@@ -379,7 +379,7 @@ export const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => 
                     {
                         columns.map((col: any, j: number) => <TableCell key={i + '' + j}>{row[col.id]}</TableCell>)
                     }
-                    <TableCell key={i + "-c"} className={classes.cell} align="left">
+                    {menuOptions && <TableCell key={i + "-c"} className={classes.cell} align="left">
                         <Button aria-controls="simple-menu" aria-haspopup="true" onClick={(e) => {
                             handleClick(e, i + "-c")
                         }}>
@@ -406,7 +406,7 @@ export const TableWrapper: FunctionComponent<Props> = ({ config, ...props }) => 
                                 )
                             })}
                         </StyledMenu>
-                    </TableCell>
+                    </TableCell>}
                 </TableRow>
             ))
         }

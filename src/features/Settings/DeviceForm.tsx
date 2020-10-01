@@ -13,6 +13,8 @@ import CustomButton from "components/Button";
 import TextInput from "components/TextInput";
 import { saveDevice, setCurrentDevice } from './deviceSlice';
 import { RootState } from 'app/rootReducer';
+import { CustomAutoComplete } from 'components/CustomAutoComplete';
+import { fetchCheckInPoints } from 'features/SalesAndOrganisation/checkInPointSlice';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     paper: {
@@ -80,6 +82,9 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
         devicesById,
         error
     } = useSelector((state: RootState) => state.devices)
+    const {
+        checkInPoints
+    } = useSelector((state: RootState) => state.checkinpoints)
 
     const {
         devicename,
@@ -104,6 +109,11 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
         }
     }, [id])
 
+    useEffect(() => {
+        dispatch(fetchCheckInPoints())
+    }, [dispatch])
+
+
     const handleChange = (e: any) => setInputState({
         ...inputState,
         [e.target.name]: e.target.value
@@ -121,9 +131,16 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
         }), () => setInputState(defaultInputState)))
     }
 
+    const handleCheckInPointChange = (checkinPointname: string) => {
+        setInputState({
+            ...inputState,
+            checkinpoint: checkinPointname
+        });
+    }
+
 
     return (
-        <Grid item style={{ height: '80%', width: '90%' }}>
+        <Grid item xs={12} style={{ marginRight: 30 }}>
             <Paper className={classes.paper}>
                 <form onSubmit={handleSubmit}>
                     <div className={classes.header}>
@@ -132,7 +149,7 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
                     </div>
                     <Box display="flex" justifyContent="flex-end">
                         <Box className={classes.button}>
-                            <CustomButton style={{ height: '45px', width: '168px', marginTop: '1px' }} type="submit">Save</CustomButton>
+                            <CustomButton style={{ height: '45px', width: '168px', marginTop: '1px', padding: 0 }} type="submit">Save</CustomButton>
                         </Box>
                     </Box>
                     <Grid className={classes.inputGrid} container>
@@ -172,16 +189,23 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
                                 name="udid"
                                 value={udid} />
 
-                            <TextInput
+                            {/* <TextInput
                                 required
                                 label="checkinpoint"
                                 onChange={handleChange}
                                 name="checkinpoint"
+                                value={checkinpoint} /> */}
+                            <CustomAutoComplete
+                                style={{
+                                    // width: 452,
+                                    // marginLeft: i % 2 === 0 ? '64px' : '28px'
+                                }}
+                                required
+                                options={checkInPoints.map(o => o.checkinpoint)}
+                                label="checkinpoint"
+                                name="checkinpoint"
+                                onChange={(value: any) => handleCheckInPointChange(value)}
                                 value={checkinpoint} />
-                        </Grid>
-                    </Grid>
-                    <Grid container>
-                        <Grid item xs={6} style={{ marginTop: '52px' }}>
                         </Grid>
                     </Grid>
                 </form>

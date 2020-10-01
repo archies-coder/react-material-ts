@@ -25,7 +25,7 @@ import TableWrapper from "../../components/TableWrapper";
 import SearchInput from "../../components/SearchInput";
 import SelectInput from "../../components/SelectInput";
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchInvites } from 'features/Invites/inviteSlice'
+import { fetchInOfficeInvites, fetchInvites } from 'features/Invites/inviteSlice'
 import { RootState } from 'app/rootReducer'
 import { CustomMenuItem } from 'components/CustomMenuItem';
 import HomeDateDropdown from 'features/Home/HomeDateDropdown';
@@ -97,6 +97,14 @@ const useStyles = makeStyles((theme: Theme) =>
                 },
             },
         },
+        label: {
+            textTransform: 'capitalize'
+        },
+        buttonRoot: {
+            backgroundColor: 'white',
+            boxShadow: 'none',
+            borderRadius: theme.shape.borderRadius - 5
+        }
     })
 )
 
@@ -137,6 +145,8 @@ const InviteView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [filter, setFilter] = useState({ visitor: "", purpose: "", site: "" })
+    const [rowPerPage, setRowPerPage] = useState(10);
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -146,12 +156,14 @@ const InviteView: FunctionComponent<Props> = (props) => {
         setAnchorEl(null);
     };
 
-    let tableRows: any = []
-
-    
-
     const dispatch = useDispatch()
 
+    const {
+        sites
+    } = useSelector((state: RootState) => state.sites)
+    const {
+        purpose
+    } = useSelector((state: RootState) => state.visitors)
     const {
         invites,
         currentPageInvites,
@@ -176,13 +188,13 @@ const InviteView: FunctionComponent<Props> = (props) => {
         )
     }
 
-    const toVisitor = (id:any)=>{
-        const visitor = {...mapVisitorFromInvite(id)}
+    const toVisitor = (id: any) => {
+        const visitor = { ...mapVisitorFromInvite(id) }
         dispatch(setCurrentVisitor(visitor))
     }
-    const mapVisitorFromInvite: (id:any)=>VisitorInfo = (id:any)=>{
-        
-        let visitor: VisitorInfo = {...defaultVisitor}
+    const mapVisitorFromInvite: (id: any) => VisitorInfo = (id: any) => {
+
+        let visitor: VisitorInfo = { ...defaultVisitor }
         const invite = invitesById[id]
         visitor.email = invite.email
         //visitor.intime = invite.intime
@@ -190,7 +202,20 @@ const InviteView: FunctionComponent<Props> = (props) => {
         visitor.name = invite.name
         visitor.purpose = invite.purpose
         visitor.tomeet = invite.tomeet
-        return {...visitor}
+        return { ...visitor }
+    }
+
+    const handleFilterChange = (f: any) => {
+        debugger;
+        const newFilter = { ...filter, ...f }
+        setFilter(newFilter)
+        const {
+            purpose: purpose1,
+            site: site1,
+            visitor: visitor1
+        } = newFilter
+
+        dispatch(fetchInvites(0, rowPerPage, visitor1, purpose1, site1))
     }
 
     const TableConfig = {
@@ -201,10 +226,16 @@ const InviteView: FunctionComponent<Props> = (props) => {
         })),
         isLoading: isLoadingInvites,
         pagination: true,
-        pageChange:(page:number,count:number)=>{
-            dispatch(fetchInvites(page,count))
+        pageChange: (page: number, count: number) => {
+            const {
+                purpose: purpose1,
+                site: site1,
+                visitor: visitor1
+            } = filter
+            setRowPerPage(count)
+            dispatch(fetchInvites(page, count, visitor1, purpose1, site1))
         },
-        totalCount:pageCount,
+        totalCount: pageCount,
         menuOptions: [{
             key: 'invite_id',
             callback: toVisitor,
@@ -217,14 +248,29 @@ const InviteView: FunctionComponent<Props> = (props) => {
     return (
         <Grid item xs={12} style={{ height: '100%' }}>
             <Paper className={classes.paper}>
-                <Box style={{ paddingTop: '5px', paddingBottom: '5px'}}>
-                    <HomeDateDropdown style={{ marginLeft: '37px', marginBottom: '10px'}} />
+                <Box style={{ paddingTop: '5px', paddingBottom: '5px' }}>
+                    <HomeDateDropdown style={{ marginLeft: '37px', marginBottom: '10px' }} />
                 </Box>
                 <Box display="flex" justifyContent="start">
-                    <SearchInput placeholder="Search visitor" style={{marginLeft: '32px'}} />
+                    {/* <SearchInput placeholder="Search visitor" style={{marginLeft: '32px'}} />
                     <SelectInput value="In Office" style={{marginLeft: '50px'}} />
                     <SelectInput value="All Purpose" style={{marginLeft: '50px'}} />
-                    <SelectInput value="All Sites" style={{marginLeft: '50px'}} />
+                    <SelectInput value="All Sites" style={{marginLeft: '50px'}} /> */}
+                    <SearchInput style={{ marginLeft: '27px', height: '38px' }} onChange={(e: any) => { debugger; handleFilterChange({ visitor: e.target.value }) }} value={filter.visitor} placeholder="Search visitor" />
+                    {/* <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="In Office" /> */}
+                    {/* <Button onClick={()=>{setFilter({site:"",purpose:"",visitor:""});dispatch(fetchInOfficeInvites())}}
+                            classes={{
+                                root: classes.buttonRoot, // class name, e.g. `classes-nesting-root-x`
+                                label: classes.label, // class name, e.g. `classes-nesting-label-x`
+                            }} variant="contained" style={{ marginTop: '33px', marginLeft: '27px', height: '40px'}}>In Office</Button> */}
+                    <SelectInput style={{ marginLeft: '27px' }} onChange={(e: any) => { debugger; handleFilterChange({ purpose: e.target.value }) }} menuOptions={purpose.map(item => ({ title: item }))} defaultValue="All Purpose" value={filter.purpose} />
+                    {/* <SelectInput style={{ marginLeft: '27px' }} onChange={(e: any) => { debugger; handleFilterChange({ site: e.target.value }) }} menuOptions={sites.map(item => ({ title: item.sitename }))} defaultValue="All Sites" value={filter.site} /> */}
+                    <Button onClick={() => {  handleFilterChange({ site: "", purpose: "", visitor: "" }) }}
+                        classes={{
+                            root: classes.buttonRoot, // class name, e.g. `classes-nesting-root-x`
+                            label: classes.label, // class name, e.g. `classes-nesting-label-x`
+                        }} variant="contained" style={{ marginLeft: '27px', height: '40px' }}
+                    >Clear Filter</Button>
                 </Box>
                 <TableWrapper config={TableConfig} style={{ marginTop: '17px', marginLeft: '43px', marginRight: '300px' }} />
             </Paper>

@@ -1,15 +1,16 @@
-import React, { FunctionComponent, useEffect } from 'react';
-import {Box, createStyles, Grid, Paper, Theme} from "@material-ui/core";
-import SearchInput from "../../components/SearchInput";
-import TableWrapper from "../../components/TableWrapper";
-import {makeStyles} from "@material-ui/core/styles";
-import SelectInput from "../../components/SelectInput";
-import { CustomMenuItem } from 'components/CustomMenuItem';
-import { useDispatch, useSelector } from 'react-redux';
+import { Box, createStyles, Grid, Paper, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import { RootState } from 'app/rootReducer';
+import CustomButton from "components/Button";
+import { CustomMenuItem } from 'components/CustomMenuItem';
+import React, { FunctionComponent, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import SearchInput from "../../components/SearchInput";
+import SelectInput from "../../components/SelectInput";
+import TableWrapper from "../../components/TableWrapper";
 import { fetchSites } from './siteSlice';
 
-interface OwnProps {}
+interface OwnProps { }
 
 type Props = OwnProps;
 
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
         paper: {
             backgroundColor: '#E7ECF6',
             borderRadius: theme.shape.borderRadius - 5,
-            marginRight: 30,
+            // marginRight: 30,
             paddingRight: 150
         },
     })
@@ -63,41 +64,57 @@ const SitesView: FunctionComponent<Props> = (props) => {
         sites,
         pageCount,
         pageLinks,
-        isLoading: isLoadingVisitor,
+        isLoading,
         error
     } = useSelector((state: RootState) => state.sites)
 
     const TableConfig = {
         columns: columns,
+        isLoading: isLoading,
         data: sites,
-        pagination:true,
-        pageChange:(page:number,count:number)=>{
-            dispatch(fetchSites(page,count))
+        pagination: true,
+        pageChange: (page: number, count: number) => {
+            dispatch(fetchSites(page, count))
         },
-        totalCount:pageCount,
+        totalCount: pageCount,
         menuOptions: [{
             item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
-                Check Out
+                Delete
+            </CustomMenuItem>
+        },
+        {
+            item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+                Disable
+            </CustomMenuItem>
+        },
+        {
+            item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+                View Details
             </CustomMenuItem>
         }]
     }
 
     useEffect(() => {
-        dispatch(fetchSites(0,10))
+        dispatch(fetchSites(0, 10))
     }, [dispatch])
 
     return (
-      <Grid item xs style={{height: "100%", marginTop: '22px'}}>
-          <Paper className={classes.paper}>
-              <Box display="flex" justifyContent="space-between" style={{ paddingTop: '38px', paddingBottom: '26px' }}>
-                  <SearchInput placeholder="Search Employees by name, email or mobile" width={354} style={{paddingLeft: '30px'}} />
-                    <SelectInput value="Action" menuOptions={selectInputMenu} style={{width: '122px'}} />
-              </Box>
+        <Grid item xs={12} style={{ marginRight: '30px' }}>
+            <Paper className={classes.paper}>
+                <Box display="flex" justifyContent="space-between" style={{ paddingTop: '38px', paddingBottom: '26px' }}>
+                    <SearchInput placeholder="Search Employees by name, email or mobile" width={354} style={{ paddingLeft: '30px' }} />
+                    {/* <SelectInput value="Action" menuOptions={selectInputMenu} style={{ width: '122px' }} /> */}
+                    <CustomMenuItem to='/sites/add'>
+                        <CustomButton style={{ width: '122px', fontSize: '12px', height: '39px', padding: 0 }}>
+                            Add Site
+                        </CustomButton>
+                    </CustomMenuItem>
+                </Box>
 
-              <TableWrapper config={TableConfig} style={{width: '870px', paddingLeft: '60px'}} />
-          </Paper>
-      </Grid>
-  );
+                <TableWrapper config={TableConfig} style={{ width: '870px', paddingLeft: '60px' }} />
+            </Paper>
+        </Grid>
+    );
 };
 
 export default SitesView;

@@ -1,19 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Links } from 'parse-link-header'
 
-import { getEmployeesData } from 'api/Apis'
+import { createEmployee, getEmployeesData } from 'api/Apis'
 import { AppThunk } from 'app/store'
-
+import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice'
 
 export interface Employee {
-    email: any //"admin@gmail.com",
-    intime: any //"2020-09-14 20:28:34",
-    employee_id: any //"arj1600095514",
-    mobileno: any //"123456789",
-    name: any //"arjunp",
-    purpose: any //"tomeet",
-    scheduletime: any //"2020-09-12 15:00"
-    tomeet: any //"arjun2"
+    createdOn: any,//2020-09-30 13: 14: 38,
+    designation: any,//developer,
+    email: any,//arjunp@gmail.com,
+    empid: any,//002,
+    fname: any,//arjun,
+    lname: any,//pan,
+    mname: any,//test,
+    mobile: any,//1any,//2345678,
+    profilepicpath: any,//uploads/images/arj_pic_1601471678_arjun_pass.JPG,
+    updatedOn: any,//2020-09-30 13: 14: 38
+    name:any
 }
 export interface EmployeesResult {
     //pageLinks: Links | null
@@ -21,6 +24,25 @@ export interface EmployeesResult {
     employees: Employee[]
 }
 
+export interface EmployeeInputState {
+    fname: string,
+    mname: string,
+    lname: string,
+    mobile: string,
+    email: string,
+    empid: string,
+    designation: string,
+}
+
+export const defaultInputState: EmployeeInputState = {
+    fname: '',
+    mname: '',
+    lname: '',
+    mobile: '',
+    email: '',
+    empid: '',
+    designation: '',
+}
 interface EmployeeState {
     employees: Employee[]
     employeesById: Record<string, Employee>
@@ -29,6 +51,7 @@ interface EmployeeState {
     pageLinks: Links | null
     isLoading: boolean
     error: string | null
+    currentEmployee: EmployeeInputState
 }
 
 const employeesInitialState: EmployeeState = {
@@ -38,7 +61,8 @@ const employeesInitialState: EmployeeState = {
     pageCount: 0,
     pageLinks: {},
     isLoading: false,
-    error: null
+    error: null,
+    currentEmployee: defaultInputState
 }
 
 function startLoading(state: EmployeeState) {
@@ -61,33 +85,54 @@ const employees = createSlice({
             state.pageCount = pageCount
             state.isLoading = false
             state.error = null
-            state.employees = employees
+            state.employees = employees.map(e=>({...e,name:e.fname+' '+e.mname+' '+e.lname}))
             // @ts-ignore
-            state.employees.map(employee => (state.employeesById[employee.employee_id]=employee))
+            state.employees.map(employee => (state.employeesById[employee.empid]=employee))
         },
         getEmployeesFailure: loadingFailed,
+        setCurrentEmployee(state, { payload }: PayloadAction<any>) {
+            state.currentEmployee = payload
+        }
     }
 })
 
 export const {
     getEmployeesStart,
     getEmployeesSuccess,
-    getEmployeesFailure
+    getEmployeesFailure,
+    setCurrentEmployee
 } = employees.actions
 
 export default employees.reducer
 
 export const fetchEmployees = (
     page?: number
-    , count?: number
+    , count?: number,
+    filter?:string
 ): AppThunk => async dispatch => {
     try {
         dispatch(getEmployeesStart())
-        const employees = await getEmployeesData(page,count)
+        const employees = await getEmployeesData(page,count,filter)
 
         dispatch(getEmployeesSuccess(employees))
     } catch (err) {
         dispatch(getEmployeesFailure(err.toString()))
+    }
+}
+
+export const saveEmployee = (
+    employeeFormData: any,
+    callback?: (() => void)
+): AppThunk => async dispatch => {
+    try {
+        dispatch(getBackdropStart())
+        await createEmployee(employeeFormData)
+            .then(() => dispatch(getBackdropStop())).catch(() => dispatch(getBackdropStop()))
+        //return setInputState(defaultInputState)
+        callback && callback();
+        //dispatch(saveInvitesSuccess(invites))
+    } catch (err) {
+        dispatch(getBackdropStop())
     }
 }
 

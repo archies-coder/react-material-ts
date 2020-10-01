@@ -18,8 +18,8 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: '#E7ECF6',
             height: '100%',
             borderRadius: theme.shape.borderRadius - 5,
-            marginRight: 30,
-            paddingRight: 200,
+            // marginRight: 30,
+            // paddingRight: 200,
 
             '&  .MuiTableCell-root': {
                 borderBottom: '1px solid #192949',
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
         footer: {
             fontSize: '22px',
             fontWeight: 'bold',
-            padding: theme.spacing(6, 0, 0, 4),
+            padding: theme.spacing(5, 0, 0, 4),
             // paddingTop: '100px',
             color: theme.palette.text.primary
         },
@@ -106,15 +106,15 @@ const UserManagementView: FunctionComponent<Props> = (props) => {
             role: 'HR',
             status: 'Assigned'
         }],
-        menuOptions: [{
-            item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
-                Check Out
-            </CustomMenuItem>
-        }]
+        // menuOptions: [{
+        //     item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+        //         Check Out
+        //     </CustomMenuItem>
+        // }]
     }
 
     return (
-        <Grid item xs style={{height: "calc(100vh - 100px)"}}>
+        <Grid item xs={12} style={{ marginRight: 30 }}>
             <Paper className={classes.paper}>
                 <div className={classes.header}>
                     <ArrowBackIos className={classes.arrowBack} onClick={() => props.history.push('/')}/>
