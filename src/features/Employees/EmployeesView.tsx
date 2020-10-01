@@ -1,7 +1,7 @@
-import React, {FunctionComponent, useEffect} from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import TableWrapper from "../../components/TableWrapper";
-import {Avatar, createStyles, fade, Grid, Paper, Theme} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
+import { Avatar, createStyles, fade, Grid, Paper, Theme } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import SearchInput from "../../components/SearchInput";
 import { RootState } from 'app/rootReducer'
 import { useSelector, useDispatch } from 'react-redux';
@@ -42,22 +42,39 @@ const data = {
 //     mobile: any,//1any,//2345678,
 //     profilepicpath:
 const columns = [
+
     {
-        id: "profilepicpath",
-        label: ''
+        id: "fname",
+        label: 'First name'
     },
     {
-        id: "name",
-        label: 'Name'
+        id: "mname",
+        label: 'Middle name'
     },
     {
-        id: "email",
-        label: 'Email'
+        id: "lname",
+        label: 'Last name'
     },
     {
         id: "mobile",
-        label: 'Mobile No.'
-    }]
+        label: 'Mobile no.'
+    },
+    {
+        id: "email",
+        label: 'Email id'
+    },
+    {
+        id: "designation",
+        label: 'Designation'
+    },
+    {
+        id: "empid",
+        label: 'Employee id'
+    },
+    {
+        id: "profilepicpath",
+        label: ''
+    },]
 const EmployeesView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
@@ -87,7 +104,7 @@ const EmployeesView: FunctionComponent<Props> = (props) => {
         )
     }
 
-    
+
 
 
     const TableConfig = {
@@ -97,23 +114,26 @@ const EmployeesView: FunctionComponent<Props> = (props) => {
             profilepicpath: <Avatar src={serverUrl + el['profilepicpath']} />
         })),
         isLoading: isLoadingEmployee,
-        pagination:true,
-        pageChange:(page:number,count:number)=>{
-            dispatch(fetchEmployees(page,count))
+        pagination: true,
+        pageChange: (page: number, count: number) => {
+            dispatch(fetchEmployees(page, count))
         },
-        totalCount:pageCount,
-        menuOptions: [{
-            item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
-                Check Out
-            </CustomMenuItem>
-        }]
+        totalCount: pageCount,
+        //@ts-ignore
+        // menuOptions: [
+        //     {
+        //         item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+        //             Check Out
+        //         </CustomMenuItem>
+        //     }
+        // ]
     }
 
     return (
-        <Grid item xs style={{height: "100%"}}>
+        <Grid item xs style={{ height: "100%" }}>
             <Paper className={classes.paper}>
-            <SearchInput style={{margin: '0 23px 30px', paddingTop: '37px'}} placeholder="Search Employees by name, email or mobile" width={500}/>
-                <TableWrapper style={{marginLeft: '54px'}} config={TableConfig}/>
+                <SearchInput style={{ margin: '0 23px 30px', paddingTop: '37px' }} placeholder="Search Employees by name, email or mobile" width={500} />
+                <TableWrapper style={{ marginLeft: '54px' }} config={TableConfig} />
             </Paper>
         </Grid>
     );

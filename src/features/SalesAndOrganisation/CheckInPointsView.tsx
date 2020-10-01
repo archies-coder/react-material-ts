@@ -63,11 +63,21 @@ const CheckInPointsView: FunctionComponent<Props> = (props) => {
             dispatch(fetchCheckInPoints(page,count))
         },
         totalCount:pageCount,
-        menuOptions: [{
-            item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
-                Check Out
-            </CustomMenuItem>
-        }]
+        // menuOptions: [{
+        //     item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+        //         Delete
+        //     </CustomMenuItem>
+        // },
+        // {
+        //     item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+        //         Disable
+        //     </CustomMenuItem>
+        // },
+        // {
+        //     item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+        //         View Details
+        //     </CustomMenuItem>
+        // }]
     }
 
     useEffect(() => {
@@ -78,8 +88,9 @@ const CheckInPointsView: FunctionComponent<Props> = (props) => {
         <Grid item xs style={{height: "100%"}}>
             <Paper className={classes.paper}>
                 <Box display="flex" justifyContent="space-between" style={{ paddingTop: '37px', paddingLeft: '30px', paddingBottom: '25.5px'}} >
-                    <SearchInput placeholder="Search Employees by name, email or mobile" width={353} />
-                    <SelectInput value="Action" />
+                    <SearchInput hidden placeholder="Search Employees by name, email or mobile" width={353} />
+                    <div style={{width:353}}/>
+                    {/* <SelectInput value="Action" /> */}
                     <CustomMenuItem to='/checkinpoints/add'>
                         <CustomButton style={{ width: '150px', fontSize: '12px', height: '39px', padding: 0 }}>
                             Add Checkin point

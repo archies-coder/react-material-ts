@@ -79,7 +79,17 @@ const SitesView: FunctionComponent<Props> = (props) => {
         totalCount: pageCount,
         menuOptions: [{
             item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
-                Check Out
+                Delete
+            </CustomMenuItem>
+        },
+        {
+            item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+                Disable
+            </CustomMenuItem>
+        },
+        {
+            item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+                View Details
             </CustomMenuItem>
         }]
     }
@@ -93,7 +103,7 @@ const SitesView: FunctionComponent<Props> = (props) => {
             <Paper className={classes.paper}>
                 <Box display="flex" justifyContent="space-between" style={{ paddingTop: '38px', paddingBottom: '26px' }}>
                     <SearchInput placeholder="Search Employees by name, email or mobile" width={354} style={{ paddingLeft: '30px' }} />
-                    <SelectInput value="Action" menuOptions={selectInputMenu} style={{ width: '122px' }} />
+                    {/* <SelectInput value="Action" menuOptions={selectInputMenu} style={{ width: '122px' }} /> */}
                     <CustomMenuItem to='/sites/add'>
                         <CustomButton style={{ width: '122px', fontSize: '12px', height: '39px', padding: 0 }}>
                             Add Site
