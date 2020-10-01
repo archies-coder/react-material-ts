@@ -13,6 +13,8 @@ import CustomButton from "components/Button";
 import TextInput from "components/TextInput";
 import { saveDevice, setCurrentDevice } from './deviceSlice';
 import { RootState } from 'app/rootReducer';
+import { CustomAutoComplete } from 'components/CustomAutoComplete';
+import { fetchCheckInPoints } from 'features/SalesAndOrganisation/checkInPointSlice';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     paper: {
@@ -80,6 +82,9 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
         devicesById,
         error
     } = useSelector((state: RootState) => state.devices)
+    const {
+        checkInPoints
+    } = useSelector((state: RootState) => state.checkinpoints)
 
     const {
         devicename,
@@ -104,6 +109,11 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
         }
     }, [id])
 
+    useEffect(() => {
+        dispatch(fetchCheckInPoints())
+    }, [dispatch])
+
+
     const handleChange = (e: any) => setInputState({
         ...inputState,
         [e.target.name]: e.target.value
@@ -119,6 +129,13 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
             "email": email,
             "udid": udid
         }), () => setInputState(defaultInputState)))
+    }
+
+    const handleCheckInPointChange = (checkinPointname: string) => {
+        setInputState({
+            ...inputState,
+            checkinpoint: checkinPointname
+        });
     }
 
 
@@ -172,11 +189,22 @@ const DeviceForm: FunctionComponent<Props> = (props) => {
                                 name="udid"
                                 value={udid} />
 
-                            <TextInput
+                            {/* <TextInput
                                 required
                                 label="checkinpoint"
                                 onChange={handleChange}
                                 name="checkinpoint"
+                                value={checkinpoint} /> */}
+                            <CustomAutoComplete
+                                style={{
+                                    // width: 452,
+                                    // marginLeft: i % 2 === 0 ? '64px' : '28px'
+                                }}
+                                required
+                                options={checkInPoints.map(o => o.checkinpoint)}
+                                label="checkinpoint"
+                                name="checkinpoint"
+                                onChange={(value: any) => handleCheckInPointChange(value)}
                                 value={checkinpoint} />
                         </Grid>
                     </Grid>

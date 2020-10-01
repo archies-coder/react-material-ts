@@ -1,6 +1,6 @@
 import classes from '*.module.css';
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
-import { Autocomplete } from '@material-ui/lab';
+import { Autocomplete, createFilterOptions } from '@material-ui/lab';
 import { RootState } from 'app/rootReducer';
 import * as React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,6 +23,8 @@ const useStyles = makeStyles((theme: Theme) => createStyles({
     }
 }))
 
+const filter = createFilterOptions<any>();
+
 export const CustomAutoComplete: React.FC<any> = (props) => {
 
     const classes = useStyles()
@@ -42,6 +44,32 @@ export const CustomAutoComplete: React.FC<any> = (props) => {
                 inputValue={value}
                 onInputChange={(event, newInputValue) => {
                     onChange(newInputValue);
+                }}
+                clearOnBlur
+                selectOnFocus
+                handleHomeEndKeys
+                filterOptions={(options: any, params: any) => {
+                    const filtered = filter(options, params);
+                    // Suggest the creation of a new value
+                    if (params.inputValue !== '') {
+                        filtered.push({
+                            inputValue: params.inputValue,
+                            title: `Add "${params.inputValue}"`,
+                        });
+                    }
+                    return filtered;
+                }}
+                getOptionLabel={(option: any) => {
+                    // Value selected with enter, right from the input
+                    if (typeof option === 'string') {
+                        return option;
+                    }
+                    // Add "xxx" option created dynamically
+                    if (option.inputValue) {
+                        return option.inputValue;
+                    }
+                    // Regular option
+                    return option.title;
                 }}
                 options={options}
                 id="custom-input-demo"
