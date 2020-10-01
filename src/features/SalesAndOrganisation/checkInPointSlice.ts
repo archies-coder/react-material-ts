@@ -4,6 +4,7 @@ import { Links } from 'parse-link-header'
 import { createCheckInPoint, getCheckInPointsData } from 'api/Apis'
 import { AppThunk } from 'app/store'
 import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice'
+import { startSnackbar } from 'app/SnackbarSlice'
 
 
 export interface CheckInPoint {
@@ -112,11 +113,19 @@ export const saveCheckInPoint = (
     try {
         dispatch(getBackdropStart())
         await createCheckInPoint(site)
-            .then(() => dispatch(getBackdropStop())).catch(() => dispatch(getBackdropStop()))
+            .then(() => {
+                dispatch(getBackdropStop())
+                dispatch(startSnackbar({ message: 'Check In Point created' }))
+            })
+            .catch(() => {
+                dispatch(getBackdropStop())
+                dispatch(startSnackbar({ message: 'Something went wrong' }))
+            })
         //return setInputState(defaultInputState)
         callback && callback();
         //dispatch(saveInvitesSuccess(invites))
     } catch (err) {
         dispatch(getBackdropStop())
+        dispatch(startSnackbar({ message: 'Something went wrong' }))
     }
 }

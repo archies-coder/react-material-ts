@@ -4,6 +4,7 @@ import { Links } from 'parse-link-header'
 import { createDevice, getDevicesData } from 'api/Apis'
 import { AppThunk } from 'app/store'
 import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice'
+import { startSnackbar } from 'app/SnackbarSlice'
 
 
 export interface Device {
@@ -104,11 +105,18 @@ export const saveDevice = (
     try {
         dispatch(getBackdropStart())
         await createDevice(device)
-            .then(() => dispatch(getBackdropStop())).catch(() => dispatch(getBackdropStop()))
-        //return setInputState(defaultInputState)
-        callback && callback();
-        //dispatch(saveInvitesSuccess(invites))
-    } catch (err) {
-        dispatch(getBackdropStop())
+            .then(() => {
+                dispatch(getBackdropStop())
+                dispatch(startSnackbar({message: 'Device created'}))
+            }).catch(() => {
+                dispatch(getBackdropStop())
+                dispatch(startSnackbar({ message: 'Something went wrong'}))
+            })
+            //return setInputState(defaultInputState)
+            callback && callback();
+            //dispatch(saveInvitesSuccess(invites))
+        } catch (err) {
+            dispatch(getBackdropStop())
+            dispatch(startSnackbar({ message: 'Something went wrong'}))
     }
 }

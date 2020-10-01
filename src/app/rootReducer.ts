@@ -3,6 +3,7 @@ import { combineReducers } from '@reduxjs/toolkit'
 
 import homeReducer from 'features/Home/homeSlice'
 import backDropReducer from 'app/BackdropSlice'
+import snackBarReducer from 'app/SnackbarSlice'
 import visitorReducer from 'features/Home/visitorSlice'
 import inviteReducer from 'features/Invites/inviteSlice'
 import employeeReducer from 'features/Employees/employeeSlice'
@@ -17,6 +18,7 @@ import contractorReducer from 'features/contractor/contractorSlice'
 
 const rootReducer = combineReducers({
   backdrop: backDropReducer,
+  snackbar: snackBarReducer,
   home: homeReducer,
   visitors: visitorReducer,
   invites: inviteReducer,

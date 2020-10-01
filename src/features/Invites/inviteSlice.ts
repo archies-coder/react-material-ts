@@ -6,6 +6,7 @@ import { AppThunk } from 'app/store'
 import {getBackdropStart, getBackdropStop} from 'app/BackdropSlice'
 import { fetchSites } from 'features/SalesAndOrganisation/siteSlice'
 import { getPurposeSuccess } from 'features/Home/visitorSlice'
+import { startSnackbar } from 'app/SnackbarSlice'
 
 
 export interface Invite {
@@ -108,13 +109,21 @@ export const saveInvite = (
         //dispatch(saveInviteStart())
         dispatch(getBackdropStart())
         await createInvite(invite)
-            .then(() => dispatch(getBackdropStop())).catch(() => dispatch(getBackdropStop()))
+            .then(() => {
+                dispatch(getBackdropStop())
+                dispatch(startSnackbar({message: 'Your invitee has been invited'}))
+            })
+            .catch(() => {
+                dispatch(getBackdropStop())
+                dispatch(startSnackbar({ message: 'Something went wrong' }))
+            })
         //return setInputState(defaultInputState)
         callback && callback();
         //dispatch(saveInvitesSuccess(invites))
     } catch (err) {
         //dispatch(saveInvitesFailure(err.toString()))
         dispatch(getBackdropStop())
+        dispatch(startSnackbar({ message: 'Something went wrong' }))
     }
 }
 
@@ -128,7 +137,7 @@ export const fetchInOfficeInvites = (
         dispatch(getInvitesStart())
         const visitors = await getInOfficeInviteData()
         dispatch(getInvitesSuccess(visitors))
-        
+
         const purpose = await getPurpose()
         dispatch(getPurposeSuccess(purpose))
     } catch (err) {

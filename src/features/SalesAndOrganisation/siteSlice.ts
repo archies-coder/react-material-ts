@@ -4,6 +4,7 @@ import { Links } from 'parse-link-header'
 import { createSite, getSitesData } from 'api/Apis'
 import { AppThunk } from 'app/store'
 import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice'
+import { startSnackbar } from 'app/SnackbarSlice'
 
 
 export interface Site {
@@ -113,12 +114,20 @@ export const saveSite = (
     try {
         dispatch(getBackdropStart())
         await createSite(site)
-            .then(() => dispatch(getBackdropStop())).catch(() => dispatch(getBackdropStop()))
+            .then(() => {
+                dispatch(getBackdropStop())
+                dispatch(startSnackbar({ message: 'Site created' }))
+            })
+            .catch(() => {
+                dispatch(getBackdropStop())
+                dispatch(startSnackbar({ message: 'Something went wrong' }))
+            })
         //return setInputState(defaultInputState)
         callback && callback();
         //dispatch(saveInvitesSuccess(invites))
     } catch (err) {
         dispatch(getBackdropStop())
+        dispatch(startSnackbar({ message: 'Something went wrong' }))
     }
 }
 
