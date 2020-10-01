@@ -77,21 +77,21 @@ const SitesView: FunctionComponent<Props> = (props) => {
             dispatch(fetchSites(page, count))
         },
         totalCount: pageCount,
-        menuOptions: [{
-            item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
-                Delete
-            </CustomMenuItem>
-        },
-        {
-            item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
-                Disable
-            </CustomMenuItem>
-        },
-        {
-            item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
-                View Details
-            </CustomMenuItem>
-        }]
+        // menuOptions: [{
+        //     item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+        //         Delete
+        //     </CustomMenuItem>
+        // },
+        // {
+        //     item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+        //         Disable
+        //     </CustomMenuItem>
+        // },
+        // {
+        //     item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+        //         View Details
+        //     </CustomMenuItem>
+        // }]
     }
 
     useEffect(() => {
@@ -102,7 +102,8 @@ const SitesView: FunctionComponent<Props> = (props) => {
         <Grid item xs={12} style={{ marginRight: '30px' }}>
             <Paper className={classes.paper}>
                 <Box display="flex" justifyContent="space-between" style={{ paddingTop: '38px', paddingBottom: '26px' }}>
-                    <SearchInput placeholder="Search Employees by name, email or mobile" width={354} style={{ paddingLeft: '30px' }} />
+                    <SearchInput hidden placeholder="Search Site by name" width={354} style={{ paddingLeft: '30px' }} /> 
+                    <div style={{width:353}}/>
                     {/* <SelectInput value="Action" menuOptions={selectInputMenu} style={{ width: '122px' }} /> */}
                     <CustomMenuItem to='/sites/add'>
                         <CustomButton style={{ width: '122px', fontSize: '12px', height: '39px', padding: 0 }}>

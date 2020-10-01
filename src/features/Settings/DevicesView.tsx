@@ -115,7 +115,8 @@ const DevicesView: FunctionComponent<Props> = (props) => {
         <Grid item xs style={{ height: "100%" }}>
             <Paper className={classes.paper}>
                 <Box display="flex" justifyContent="space-between" style={{ paddingTop: '37.5px', paddingBottom: '24px' }}>
-                    <SearchInput style={{ marginLeft: '28.5px', height: '39px' }} placeholder="Search Devices" width={400} />
+                    <SearchInput hidden style={{ marginLeft: '28.5px', height: '39px' }} placeholder="Search Devices" width={400} />
+                    <div style={{width:353}}/>
                     <Box display="flex">
                         {/* <SelectInput style={{ marginRight: '26px', width: '122px', height: '39px' }} value = {""} defaultValue="All Sites" menuOptions={[]} /> */}
                         {/* <SelectInput style={{ marginRight: '26px', width: '122px', height: '39px' }} value = {""} defaultValue="All Status" menuOptions={[]} /> */}

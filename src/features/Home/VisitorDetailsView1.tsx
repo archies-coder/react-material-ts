@@ -17,6 +17,7 @@ import { fetchVisitorConfigs } from "features/Settings/visitorConfigSlice";
 import img from 'assets/logo/logo.png'
 import { fetchSites } from "features/SalesAndOrganisation/siteSlice";
 import { fetchEmployees } from "features/Employees/employeeSlice";
+import { startSnackbar } from "app/SnackbarSlice";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     paper: {
@@ -228,7 +229,13 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
                 "Content-Length": 2617
             },
         })
-            .then(() => dispatch(getBackdropStop())).catch(() => dispatch(getBackdropStop()))
+            .then(() => {
+                dispatch(getBackdropStop())
+                dispatch(startSnackbar({message: 'Visitor checked in'}))
+            }).catch(() => {
+                dispatch(getBackdropStop())
+                dispatch(startSnackbar({ message: 'Something went wrong'}))
+            })
     }
 
     const handlePurpose = (value: any) => {

@@ -1,4 +1,4 @@
-import { Backdrop, Box, CircularProgress, createStyles, Grid, Theme } from "@material-ui/core"
+import { Backdrop, Box, CircularProgress, createStyles, Grid, Snackbar, Theme } from "@material-ui/core"
 import Container from '@material-ui/core/Container'
 import { makeStyles } from "@material-ui/core/styles"
 import { AuthRoute } from 'app/AuthRoute'
@@ -30,6 +30,7 @@ import CheckInPointForm from "features/SalesAndOrganisation/CheckInPointForm"
 import { fetchVisitorConfigs } from "features/Settings/visitorConfigSlice"
 import ContractorView from "features/contractor/contractorView"
 import EmployeeForm from "features/Employees/EmployeeForm"
+import { startSnackbar, stopSnackbar } from "./SnackbarSlice"
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -69,6 +70,7 @@ export default function App() {
 
     const { isLoggedIn } = useSelector((state: RootState) => state.auth)
     const { mask } = useSelector((state: RootState) => state.backdrop)
+    const { open, vertical, horizontal, message } = useSelector((state: RootState) => state.snackbar)
 
     if (!isLoggedIn) {
         // debugger
@@ -88,6 +90,14 @@ export default function App() {
         <Backdrop className={classes.backdrop} open={mask}>
             <CircularProgress color="inherit" />
         </Backdrop>
+        <Snackbar
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            open={open}
+            autoHideDuration={5000}
+            onClose={() => dispatch(stopSnackbar())}
+            message={message}
+            key={vertical + horizontal}
+        />
         <Container maxWidth={"xl"} className={classes.root}>
             {/* <Grid container spacing={3} className={classes.fullHeightContainer}> */}
             {/* <Grid item> */}

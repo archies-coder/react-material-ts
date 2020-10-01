@@ -4,6 +4,7 @@ import { Links } from 'parse-link-header'
 import { createEmployee, getEmployeesData } from 'api/Apis'
 import { AppThunk } from 'app/store'
 import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice'
+import { startSnackbar } from 'app/SnackbarSlice'
 
 export interface Employee {
     createdOn: any,//2020-09-30 13: 14: 38,
@@ -127,12 +128,20 @@ export const saveEmployee = (
     try {
         dispatch(getBackdropStart())
         await createEmployee(employeeFormData)
-            .then(() => dispatch(getBackdropStop())).catch(() => dispatch(getBackdropStop()))
+            .then(() => {
+                dispatch(getBackdropStop())
+                dispatch(startSnackbar({ message: 'Employee created' }))
+            })
+            .catch(() => {
+                dispatch(getBackdropStop())
+                dispatch(startSnackbar({ message: 'Something went wrong' }))
+            })
         //return setInputState(defaultInputState)
         callback && callback();
         //dispatch(saveInvitesSuccess(invites))
     } catch (err) {
         dispatch(getBackdropStop())
+        dispatch(startSnackbar({ message: 'Something went wrong' }))
     }
 }
 
