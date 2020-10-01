@@ -45,7 +45,7 @@ const Notification: FunctionComponent<Props> = (props) => {
     return (
         <Grid item xs style={{ height: "100%" }}>
             <Paper className={classes.paper}>
-                <Grid container>
+                <Grid container style={{fontWeight: 'bold', marginBottom: '20px'}}>
                     {headConfig.map(o => (
                         <Grid item xs={o.breakPoint} key={o.key}>{o.label}</Grid>
                     ))}
@@ -54,6 +54,7 @@ const Notification: FunctionComponent<Props> = (props) => {
                     {dataConfig.map((obj: any, i:any) => {
                         return headConfig.map(o => (
                             <Grid item xs={o.breakPoint}
+                            style={{marginBottom: '25px'}}
                                 key={o.key + i}>
                                 {(o.render && o.render(notificationById[i], handleChange, i + "-" + o.key)) || obj[o.key]}
                             </Grid>
