@@ -29,6 +29,7 @@ import SiteForm from "features/SalesAndOrganisation/SiteForm"
 import CheckInPointForm from "features/SalesAndOrganisation/CheckInPointForm"
 import { fetchVisitorConfigs } from "features/Settings/visitorConfigSlice"
 import ContractorView from "features/contractor/contractorView"
+import EmployeeForm from "features/Employees/EmployeeForm"
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -103,7 +104,8 @@ export default function App() {
                     <Route exact path="/invites" component={InviteView} />
                     <Route exact path="/visitor" component={VisitorDetailsView} />
                     <Route path="/visitor/:visitorId" component={VisitorDetailsView} />
-                    <Route path="/employees" component={EmployeesView} />
+                    <Route exact path="/employees" component={EmployeesView} />
+                    <Route exact path="/employee/add" component={EmployeeForm} />
                     <Route exact path="/sites" component={SitesView} />
                     <Route exact path="/sites/add" component={SiteForm} />
                     <Route exact path="/checkinpoints/add" component={CheckInPointForm} />
@@ -135,6 +137,7 @@ export default function App() {
             <AuthRoute exact path="/visitor" component={VisitorDetailsView} />
             <AuthRoute exact path="/visitor/:visitorId" component={VisitorDetailsView} />
             <AuthRoute exact path="/employees" component={EmployeesView} />
+            <AuthRoute exact path="/employee/add" component={EmployeeForm} />
             <AuthRoute exact path="/sites" component={SitesView} />
             <AuthRoute exact path="/sites/add" component={SiteForm} />
             <AuthRoute exact path="/checkinpoints" component={CheckInPointsView} />

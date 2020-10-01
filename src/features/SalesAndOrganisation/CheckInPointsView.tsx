@@ -93,7 +93,7 @@ const CheckInPointsView: FunctionComponent<Props> = (props) => {
                     {/* <SelectInput value="Action" /> */}
                     <CustomMenuItem to='/checkinpoints/add'>
                         <CustomButton style={{ width: '150px', fontSize: '12px', height: '39px', padding: 0 }}>
-                            Add Checkin point
+                            Add Check in point
                         </CustomButton>
                     </CustomMenuItem>
                 </Box>

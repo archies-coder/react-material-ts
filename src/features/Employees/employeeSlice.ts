@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Links } from 'parse-link-header'
 
-import { getEmployeesData } from 'api/Apis'
+import { createEmployee, getEmployeesData } from 'api/Apis'
 import { AppThunk } from 'app/store'
-
+import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice'
 
 export interface Employee {
     createdOn: any,//2020-09-30 13: 14: 38,
@@ -24,6 +24,25 @@ export interface EmployeesResult {
     employees: Employee[]
 }
 
+export interface EmployeeInputState {
+    fname: string,
+    mname: string,
+    lname: string,
+    mobile: string,
+    email: string,
+    empid: string,
+    designation: string,
+}
+
+export const defaultInputState: EmployeeInputState = {
+    fname: '',
+    mname: '',
+    lname: '',
+    mobile: '',
+    email: '',
+    empid: '',
+    designation: '',
+}
 interface EmployeeState {
     employees: Employee[]
     employeesById: Record<string, Employee>
@@ -32,6 +51,7 @@ interface EmployeeState {
     pageLinks: Links | null
     isLoading: boolean
     error: string | null
+    currentEmployee: EmployeeInputState
 }
 
 const employeesInitialState: EmployeeState = {
@@ -41,7 +61,8 @@ const employeesInitialState: EmployeeState = {
     pageCount: 0,
     pageLinks: {},
     isLoading: false,
-    error: null
+    error: null,
+    currentEmployee: defaultInputState
 }
 
 function startLoading(state: EmployeeState) {
@@ -69,13 +90,17 @@ const employees = createSlice({
             state.employees.map(employee => (state.employeesById[employee.empid]=employee))
         },
         getEmployeesFailure: loadingFailed,
+        setCurrentEmployee(state, { payload }: PayloadAction<any>) {
+            state.currentEmployee = payload
+        }
     }
 })
 
 export const {
     getEmployeesStart,
     getEmployeesSuccess,
-    getEmployeesFailure
+    getEmployeesFailure,
+    setCurrentEmployee
 } = employees.actions
 
 export default employees.reducer
@@ -91,6 +116,22 @@ export const fetchEmployees = (
         dispatch(getEmployeesSuccess(employees))
     } catch (err) {
         dispatch(getEmployeesFailure(err.toString()))
+    }
+}
+
+export const saveEmployee = (
+    employeeFormData: any,
+    callback?: (() => void)
+): AppThunk => async dispatch => {
+    try {
+        dispatch(getBackdropStart())
+        await createEmployee(employeeFormData)
+            .then(() => dispatch(getBackdropStop())).catch(() => dispatch(getBackdropStop()))
+        //return setInputState(defaultInputState)
+        callback && callback();
+        //dispatch(saveInvitesSuccess(invites))
+    } catch (err) {
+        dispatch(getBackdropStop())
     }
 }
 

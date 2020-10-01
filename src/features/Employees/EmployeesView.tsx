@@ -105,9 +105,6 @@ const EmployeesView: FunctionComponent<Props> = (props) => {
         )
     }
 
-
-
-
     const TableConfig = {
         columns: columns,
         data: employees.map(el => ({
@@ -133,7 +130,7 @@ const EmployeesView: FunctionComponent<Props> = (props) => {
     return (
         <Grid item xs style={{ height: "100%" }}>
             <Paper className={classes.paper}>
-                
+
                 <Box display="flex" justifyContent="space-between" style={{ paddingTop: '37px', paddingLeft: '30px', paddingBottom: '25.5px'}} >
                 <SearchInput /*style={{ margin: '0 23px 30px', paddingTop: '37px' }}*/ placeholder="Search Employees by name, email or mobile" width={500} />
                  {/* <SelectInput value="Action" /> */}

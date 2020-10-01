@@ -264,6 +264,14 @@ export async function createDevice(json: string) {
     },
   })
 }
+export async function createEmployee(formData: any) {
+  return await apis.post('/product/employee/register', formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      // "Content-Length": 2617
+    },
+  })
+}
 export async function createSite(json: string) {
   return await apis.post('/product/register/site', json, {
     headers: {

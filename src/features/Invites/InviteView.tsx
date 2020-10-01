@@ -248,15 +248,15 @@ const InviteView: FunctionComponent<Props> = (props) => {
                     <SelectInput value="In Office" style={{marginLeft: '50px'}} />
                     <SelectInput value="All Purpose" style={{marginLeft: '50px'}} />
                     <SelectInput value="All Sites" style={{marginLeft: '50px'}} /> */}
-                    <SearchInput style={{ marginTop: '33px', marginLeft: '27px' }} onChange={(e: any) => { debugger; handleFilterChange({ visitor: e.target.value }) }} value={filter.visitor} placeholder="Search visitor" />
+                    <SearchInput style={{ marginLeft: '27px', height: '38px' }} onChange={(e: any) => { debugger; handleFilterChange({ visitor: e.target.value }) }} value={filter.visitor} placeholder="Search visitor" />
                     {/* <SelectInput style={{marginTop: '33px', marginLeft: '27px'}} value="In Office" /> */}
                     {/* <Button onClick={()=>{setFilter({site:"",purpose:"",visitor:""});dispatch(fetchInOfficeInvites())}}
                             classes={{
                                 root: classes.buttonRoot, // class name, e.g. `classes-nesting-root-x`
                                 label: classes.label, // class name, e.g. `classes-nesting-label-x`
                             }} variant="contained" style={{ marginTop: '33px', marginLeft: '27px', height: '40px'}}>In Office</Button> */}
-                    <SelectInput style={{ marginTop: '33px', marginLeft: '27px' }} onChange={(e: any) => { debugger; handleFilterChange({ purpose: e.target.value }) }} menuOptions={purpose.map(item => ({ title: item }))} defaultValue="All Purpose" value={filter.purpose} />
-                    <SelectInput style={{ marginTop: '33px', marginLeft: '27px' }} onChange={(e: any) => { debugger; handleFilterChange({ site: e.target.value }) }} menuOptions={sites.map(item => ({ title: item.sitename }))} defaultValue="All Sites" value={filter.site} />
+                    <SelectInput style={{ marginLeft: '27px' }} onChange={(e: any) => { debugger; handleFilterChange({ purpose: e.target.value }) }} menuOptions={purpose.map(item => ({ title: item }))} defaultValue="All Purpose" value={filter.purpose} />
+                    <SelectInput style={{ marginLeft: '27px' }} onChange={(e: any) => { debugger; handleFilterChange({ site: e.target.value }) }} menuOptions={sites.map(item => ({ title: item.sitename }))} defaultValue="All Sites" value={filter.site} />
                 </Box>
                 <TableWrapper config={TableConfig} style={{ marginTop: '17px', marginLeft: '43px', marginRight: '300px' }} />
             </Paper>

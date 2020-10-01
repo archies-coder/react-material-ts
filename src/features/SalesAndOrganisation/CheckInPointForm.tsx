@@ -108,7 +108,7 @@ const CheckInPointForm: FunctionComponent<Props> = (props) => {
                 <form onSubmit={handleSubmit}>
                     <div className={classes.header}>
                         <ArrowBackIos className={classes.arrowBack} onClick={() => props.history.push('/checkInPoints')} />
-                        <span> CheckInPoint details</span>
+                        <span> Add Check in point</span>
                     </div>
                     <Box display="flex" justifyContent="flex-end">
                         <Box className={classes.button}>
