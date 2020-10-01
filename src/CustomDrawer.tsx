@@ -157,9 +157,11 @@ const mappableRoutes: MappableRoutesDictionary = {
         }, {
             title: 'Check in points',
             path: '/checkinpoints'
-        }, {
-            title: 'organisations'
-        }]
+        },
+            // {
+            //     title: 'organisations'
+            // }
+        ]
     },
     'Reports': {
         path: '/reports',
