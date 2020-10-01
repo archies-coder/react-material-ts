@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect } from 'react';
 import TableWrapper from "../../components/TableWrapper";
-import { Avatar, createStyles, fade, Grid, Paper, Theme } from "@material-ui/core";
+import { Avatar, Box, createStyles, fade, Grid, Paper, Theme } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import SearchInput from "../../components/SearchInput";
 import { RootState } from 'app/rootReducer'
@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchEmployees } from 'features/Employees/employeeSlice'
 import { CustomMenuItem } from 'components/CustomMenuItem';
 import { serverUrl } from 'api/Apis';
+import CustomButton from 'components/Button';
 interface OwnProps {
 }
 
@@ -42,7 +43,10 @@ const data = {
 //     mobile: any,//1any,//2345678,
 //     profilepicpath:
 const columns = [
-
+    {
+        id: "profilepicpath",
+        label: ''
+    },
     {
         id: "fname",
         label: 'First name'
@@ -70,11 +74,8 @@ const columns = [
     {
         id: "empid",
         label: 'Employee id'
-    },
-    {
-        id: "profilepicpath",
-        label: ''
-    },]
+    }
+]
 const EmployeesView: FunctionComponent<Props> = (props) => {
     const classes = useStyles()
 
@@ -132,7 +133,16 @@ const EmployeesView: FunctionComponent<Props> = (props) => {
     return (
         <Grid item xs style={{ height: "100%" }}>
             <Paper className={classes.paper}>
-                <SearchInput style={{ margin: '0 23px 30px', paddingTop: '37px' }} placeholder="Search Employees by name, email or mobile" width={500} />
+                
+                <Box display="flex" justifyContent="space-between" style={{ paddingTop: '37px', paddingLeft: '30px', paddingBottom: '25.5px'}} >
+                <SearchInput /*style={{ margin: '0 23px 30px', paddingTop: '37px' }}*/ placeholder="Search Employees by name, email or mobile" width={500} />
+                 {/* <SelectInput value="Action" /> */}
+                    <CustomMenuItem to='/employee/add'>
+                        <CustomButton style={{ width: '150px', fontSize: '12px', height: '39px', padding: 0 }}>
+                            Add
+                        </CustomButton>
+                    </CustomMenuItem>
+                </Box>
                 <TableWrapper style={{ marginLeft: '54px' }} config={TableConfig} />
             </Paper>
         </Grid>
