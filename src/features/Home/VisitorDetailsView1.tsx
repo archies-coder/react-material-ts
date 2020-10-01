@@ -16,6 +16,7 @@ import { config as VisitorFormConfig } from 'features/Settings/VisitorFormConfig
 import { fetchVisitorConfigs } from "features/Settings/visitorConfigSlice";
 import img from 'assets/logo/logo.png'
 import { fetchSites } from "features/SalesAndOrganisation/siteSlice";
+import { fetchEmployees } from "features/Employees/employeeSlice";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     paper: {
@@ -138,6 +139,9 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
     const {
 sites
     } = useSelector((state: RootState) => state.sites)
+    const {
+employees
+    } = useSelector((state: RootState) => state.employees)
     //const inputState = currentVisitor
     const {
         mask
@@ -182,6 +186,7 @@ sites
     useEffect(() => {
         dispatch(fetchVisitors())
         dispatch(fetchSites())
+        dispatch(fetchEmployees())
     }, [dispatch])
 
     const handleSubmit = async (e: any) => {
@@ -259,6 +264,11 @@ sites
                             onChange: handleAutoComplete,
                             value: purpose
                         },
+                        visitors: {
+                            options: ['0','1','2','3','4','5','6','7','8','9','10'],
+                            onChange: handleAutoComplete,
+                            value: noofvisitor
+                        },
                         style: {
                             width: 446,
                             marginLeft: i % 2 === 0 ? '64px' : '28px'
@@ -285,6 +295,11 @@ sites
                             options: sites.map(o => o.sitename), //siteOptions ||
                             onChange: handleAutoComplete,
                             value: site
+                        },
+                        person: {
+                            options: employees.map(o => o.fname + o.lname), //siteOptions ||
+                            onChange: handleAutoComplete,
+                            value: tomeet
                         },
                         style: {
                             width: 446,

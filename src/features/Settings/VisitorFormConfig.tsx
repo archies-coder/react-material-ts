@@ -50,7 +50,17 @@ export const config = [{
     name: 'No. Of visitors',
     id: 'noofvisitor',
     section: 'VI',
-    seq: 7
+    seq: 7,
+        component: ({ visitors, style }: any) => <CustomAutoComplete
+            style={style}
+            required
+            options={visitors.options}
+            label="no of visitors"
+            name="noofvisitor"
+            onChange={(value: any) => visitors.onChange({
+                noofvisitor: value
+            })}
+            value={visitors.value} />
 }, {
     name: 'Vehicle Number',
     id: 'vehicle',
@@ -70,7 +80,17 @@ export const config = [{
     name: 'Person to visit',
     id: 'tomeet',
     section: 'AR',
-    seq: 1
+    seq: 1,
+        component: ({ person, style }: any) => <CustomAutoComplete
+            style={style}
+            required
+            options={person.options}
+            label="Person"
+            name="person"
+            onChange={(value: any) => person.onChange({
+                tomeet: value
+            })}
+            value={person.value} />
 }, {
     name: 'Purpose of visit',
     id: 'purpose',
