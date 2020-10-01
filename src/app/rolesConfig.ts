@@ -4,7 +4,7 @@ export const roles = {
     admin:{
         Home:true,
         Invites:true,
-        Contractor:true,
+        Contractor:false,
         Employees:true,
         Master:true,
         Reports:true,
