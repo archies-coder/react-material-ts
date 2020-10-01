@@ -264,7 +264,7 @@ const InviteView: FunctionComponent<Props> = (props) => {
                                 label: classes.label, // class name, e.g. `classes-nesting-label-x`
                             }} variant="contained" style={{ marginTop: '33px', marginLeft: '27px', height: '40px'}}>In Office</Button> */}
                     <SelectInput style={{ marginLeft: '27px' }} onChange={(e: any) => { debugger; handleFilterChange({ purpose: e.target.value }) }} menuOptions={purpose.map(item => ({ title: item }))} defaultValue="All Purpose" value={filter.purpose} />
-                    <SelectInput style={{ marginLeft: '27px' }} onChange={(e: any) => { debugger; handleFilterChange({ site: e.target.value }) }} menuOptions={sites.map(item => ({ title: item.sitename }))} defaultValue="All Sites" value={filter.site} />
+                    {/* <SelectInput style={{ marginLeft: '27px' }} onChange={(e: any) => { debugger; handleFilterChange({ site: e.target.value }) }} menuOptions={sites.map(item => ({ title: item.sitename }))} defaultValue="All Sites" value={filter.site} /> */}
                     <Button onClick={() => {  handleFilterChange({ site: "", purpose: "", visitor: "" }) }}
                         classes={{
                             root: classes.buttonRoot, // class name, e.g. `classes-nesting-root-x`

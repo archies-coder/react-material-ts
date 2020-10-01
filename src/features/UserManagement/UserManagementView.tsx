@@ -106,11 +106,11 @@ const UserManagementView: FunctionComponent<Props> = (props) => {
             role: 'HR',
             status: 'Assigned'
         }],
-        menuOptions: [{
-            item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
-                Check Out
-            </CustomMenuItem>
-        }]
+        // menuOptions: [{
+        //     item: (id: any) => <CustomMenuItem to='/' onClick={() => console.log('check out ' + id)}>
+        //         Check Out
+        //     </CustomMenuItem>
+        // }]
     }
 
     return (
