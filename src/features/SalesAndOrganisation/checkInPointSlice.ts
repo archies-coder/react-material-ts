@@ -76,7 +76,7 @@ const checkInPoint = createSlice({
             state.checkInPoints.map(checkInPoint => (state.checkInPointsById[checkInPoint.checkInPoint_id] = checkInPoint))
         },
         getCheckInPointsFailure: loadingFailed,
-        setCurrentCheckInPoint(state, { payload }: PayloadAction<any>) {
+        setCurrentCheckInPoint(state, { payload }: PayloadAction<CheckInPointInputState>) {
             state.currentCheckInPoint = payload
         }
     }

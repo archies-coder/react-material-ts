@@ -5,11 +5,13 @@ import { ArrowBackIos } from "@material-ui/icons";
 // import { saveCheckInPoint, setCurrentCheckInPoint } from './checkInPointSlice';
 import { RootState } from 'app/rootReducer';
 import CustomButton from "components/Button";
+import { CustomAutoComplete } from "components/CustomAutoComplete";
 import TextInput from "components/TextInput";
 import React, { FunctionComponent, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { RouteComponentProps } from 'react-router-dom';
-import { defaultInputState, saveCheckInPoint, setCurrentCheckInPoint } from './checkInPointSlice';
+import { CheckInPointInputState, defaultInputState, saveCheckInPoint, setCurrentCheckInPoint } from './checkInPointSlice';
+import { fetchSites } from "./siteSlice";
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
     paper: {
@@ -66,6 +68,8 @@ const CheckInPointForm: FunctionComponent<Props> = (props) => {
         error
     } = useSelector((state: RootState) => state.checkinpoints)
 
+    const {sites} = useSelector((state: RootState) => state.sites)
+
     const {
         sitename,
         device,
@@ -73,19 +77,10 @@ const CheckInPointForm: FunctionComponent<Props> = (props) => {
     } = currentCheckInPoint
     const inputState = currentCheckInPoint;
 
-    const setInputState = (checkInPoint: any) => {
+    const setInputState = (checkInPoint: CheckInPointInputState) => {
         dispatch(setCurrentCheckInPoint(checkInPoint));
     }
 
-    // const id = props.match.params.checkInPointId
-    // // debugger;
-    // useEffect(() => {
-    //     // if (checkInPointsById[id]) {
-    //     //     const tempId = checkInPointsById[id]
-    //     //     //setInputState(tempId)
-    //     //     dispatch(setCurrentCheckInPoint(tempId));
-    //     // }
-    // }, [id])
 
     const handleChange = (e: any) => setInputState({
         ...inputState,
@@ -101,9 +96,19 @@ const CheckInPointForm: FunctionComponent<Props> = (props) => {
         }), () => setInputState(defaultInputState)))
     }
 
+    const handleSiteChange = (sitename: string) => {
+        setInputState({
+            ...inputState,
+            sitename: sitename
+        });
+    }
+
+    useEffect(() => {
+        dispatch(fetchSites())
+    }, [dispatch])
 
     return (
-        <Grid item style={{ height: '80%', width: '90%' }}>
+        <Grid item xs={12} style={{ marginRight: 30 }}>
             <Paper className={classes.paper}>
                 <form onSubmit={handleSubmit}>
                     <div className={classes.header}>
@@ -118,10 +123,21 @@ const CheckInPointForm: FunctionComponent<Props> = (props) => {
                     <Grid className={classes.inputGrid} container>
                         <Grid item xs={6}>
                             {/*<div>*/}
-                            <TextInput label="CheckInPoint Name"
+                            {/* <TextInput label="Site Name"
                                 required
                                 name="sitename"
                                 onChange={handleChange}
+                                value={sitename} /> */}
+                            <CustomAutoComplete
+                                style={{
+                                    // width: 452,
+                                    // marginLeft: i % 2 === 0 ? '64px' : '28px'
+                                }}
+                                required
+                                options={sites.map(o => o.sitename)}
+                                label="Site"
+                                name="sitename"
+                                onChange={(value: any) => handleSiteChange(value)}
                                 value={sitename} />
                             <TextInput
                                 required
