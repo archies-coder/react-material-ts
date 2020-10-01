@@ -24,7 +24,7 @@ export const roles = {
     reception:{
         Home:true,
         Invites:true,
-        Contractor: true,
+        Contractor: false,
         Employees:true,
         Master:false,
         Reports:true,
