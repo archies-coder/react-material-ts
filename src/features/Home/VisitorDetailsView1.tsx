@@ -137,10 +137,10 @@ const VisitorDetailsView: FunctionComponent<Props> = (props) => {
         error
     } = useSelector((state: RootState) => state.visitors)
     const {
-sites
+        sites
     } = useSelector((state: RootState) => state.sites)
     const {
-employees
+        employees
     } = useSelector((state: RootState) => state.employees)
     //const inputState = currentVisitor
     const {
@@ -265,7 +265,7 @@ employees
                             value: purpose
                         },
                         visitors: {
-                            options: ['0','1','2','3','4','5','6','7','8','9','10'],
+                            options: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
                             onChange: handleAutoComplete,
                             value: noofvisitor
                         },
@@ -297,7 +297,7 @@ employees
                             value: site
                         },
                         person: {
-                            options: employees.map(o => o.fname + o.lname), //siteOptions ||
+                            options: employees.map(o => o.fname + " " + o.lname), //siteOptions ||
                             onChange: handleAutoComplete,
                             value: tomeet
                         },

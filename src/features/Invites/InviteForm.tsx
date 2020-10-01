@@ -16,6 +16,7 @@ import { saveInvite } from 'features/Invites/inviteSlice'
 import { RootState } from 'app/rootReducer';
 import { CustomAutoComplete } from 'components/CustomAutoComplete';
 import { fetchVisitors } from 'features/Home/visitorSlice';
+import { fetchEmployees } from 'features/Employees/employeeSlice';
 const useStyles = makeStyles((theme: Theme) => createStyles({
     paper: {
         backgroundColor: '#E7ECF6',
@@ -135,6 +136,9 @@ const InviteForm: FunctionComponent<Props> = (props) => {
         }), () => setInputState(defaultInputState)))
     }
 
+    const {
+        employees
+    } = useSelector((state: RootState) => state.employees)
     const {purpose} = useSelector((state: RootState) => state.visitors)
 
     // const {
@@ -148,6 +152,7 @@ const InviteForm: FunctionComponent<Props> = (props) => {
     // const id = props.match.params.visitorId
     useEffect(() => {
         dispatch(fetchVisitors())
+        dispatch(fetchEmployees(0,9999999))
     }, [dispatch])
 
 
@@ -200,12 +205,22 @@ const InviteForm: FunctionComponent<Props> = (props) => {
                                 onChange={handleChange}
                                 name="email"
                                 value={inputState.email} />
-                            <TextInput
+                            {/* <TextInput
                                 required
                                 label="Person To Meet"
                                 onChange={handleChange}
                                 name="personToMeet"
-                                value={inputState.personToMeet} />
+                                value={inputState.personToMeet} /> */}
+                            <CustomAutoComplete
+                                 required
+                                 options={employees.map(o => o.fname + " " + o.lname)}
+                                 label="Person To Meet"
+                                 onChange={(val:any)=>setInputState({
+                                    ...inputState,
+                                    personToMeet:val
+                                })}
+                                 name="personToMeet"
+                                 value={inputState.personToMeet} />
                             <CustomAutoComplete
                                 required
                                 options={purpose}
