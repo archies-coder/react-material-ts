@@ -117,8 +117,8 @@ const DevicesView: FunctionComponent<Props> = (props) => {
                 <Box display="flex" justifyContent="space-between" style={{ paddingTop: '37.5px', paddingBottom: '24px' }}>
                     <SearchInput style={{ marginLeft: '28.5px', height: '39px' }} placeholder="Search Devices" width={400} />
                     <Box display="flex">
-                        <SelectInput style={{ marginRight: '26px', width: '122px', height: '39px' }} value = {""} defaultValue="All Sites" menuOptions={[]} />
-                        <SelectInput style={{ marginRight: '26px', width: '122px', height: '39px' }} value = {""} defaultValue="All Status" menuOptions={[]} />
+                        {/* <SelectInput style={{ marginRight: '26px', width: '122px', height: '39px' }} value = {""} defaultValue="All Sites" menuOptions={[]} /> */}
+                        {/* <SelectInput style={{ marginRight: '26px', width: '122px', height: '39px' }} value = {""} defaultValue="All Status" menuOptions={[]} /> */}
                         <CustomMenuItem to='/devices/device'>
                             <CustomButton style={{ marginRight: '63px', width: '116px', fontSize: '12px', height: '39px', padding: 0, marginTop: '2px' }}>
                                 Add Device
