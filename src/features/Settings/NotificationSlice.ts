@@ -21,10 +21,10 @@ export interface NotificationsResult {
 }
 
 interface NotificationState {
-    notifications: Notification[]
-    notificationById: Record<any, Notification>
-    isLoading: boolean
-    error: string | null
+    notifications: Notification[],
+    notificationById: Record<any, Notification>,
+    isLoading: boolean,
+    error: string | null,
 }
 
 const notificationsInitialState: NotificationState = {

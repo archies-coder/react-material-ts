@@ -3,36 +3,36 @@ import { Links } from 'parse-link-header'
 
 import { getInvitesData, createInvite, getPurpose, getInOfficeInviteData } from 'api/Apis'
 import { AppThunk } from 'app/store'
-import {getBackdropStart, getBackdropStop} from 'app/BackdropSlice'
+import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice'
 import { fetchSites } from 'features/SalesAndOrganisation/siteSlice'
 import { getPurposeSuccess } from 'features/Home/visitorSlice'
 import { startSnackbar } from 'app/SnackbarSlice'
 
 
 export interface Invite {
-    email: any //"admin@gmail.com",
-    intime: any //"2020-09-14 20:28:34",
-    invite_id: any //"arj1600095514",
-    mobileno: any //"123456789",
-    name: any //"arjunp",
-    purpose: any //"tomeet",
-    scheduletime: any //"2020-09-12 15:00"
+    email: any, //"admin@gmail.com",
+    intime: any, //"2020-09-14 20:28:34",
+    invite_id: any,//"arj1600095514",
+    mobileno: any, //"123456789",
+    name: any, //"arjunp",
+    purpose: any, //"tomeet",
+    scheduletime: any, //"2020-09-12 15:00"
     tomeet: any //"arjun2"
 }
 export interface InvitesResult {
     //pageLinks: Links | null
-    pageCount: number
-    invites: Invite[]
+    pageCount: number,
+    invites: Invite[],
 }
 
 interface InviteState {
-    invites: Invite[]
-    invitesById: Record<string, Invite>
-    currentPageInvites: number[]
-    pageCount: number
-    pageLinks: Links | null
-    isLoading: boolean
-    error: string | null
+    invites: Invite[],
+    invitesById: Record<string, Invite>,
+    currentPageInvites: number[],
+    pageCount: number,
+    pageLinks: Links | null,
+    isLoading: boolean,
+    error: string | null,
 }
 
 const invitesInitialState: InviteState = {
@@ -61,13 +61,13 @@ const invites = createSlice({
 
         getInvitesStart: startLoading,
         getInvitesSuccess(state, { payload }: PayloadAction<InvitesResult>) {
-            const { pageCount, invites  } = payload
+            const { pageCount, invites } = payload
             state.pageCount = pageCount
             state.isLoading = false
             state.error = null
             state.invites = invites
             // @ts-ignore
-            state.invites.map(invite => (state.invitesById[invite.invite_id]=invite))
+            state.invites.map(invite => (state.invitesById[invite.invite_id] = invite))
         },
         getInvitesFailure: loadingFailed,
     }
@@ -91,7 +91,7 @@ export const fetchInvites = (
     try {
         dispatch(fetchSites())
         dispatch(getInvitesStart())
-        const invites = await getInvitesData(page,count,visitor,purpose,site)
+        const invites = await getInvitesData(page, count, visitor, purpose, site)
 
         dispatch(getInvitesSuccess(invites))
         const pur = await getPurpose()
@@ -103,7 +103,7 @@ export const fetchInvites = (
 
 export const saveInvite = (
     invite: any,
-    callback?:Function
+    callback?: Function
 ): AppThunk => async dispatch => {
     try {
         //dispatch(saveInviteStart())
@@ -111,7 +111,7 @@ export const saveInvite = (
         await createInvite(invite)
             .then(() => {
                 dispatch(getBackdropStop())
-                dispatch(startSnackbar({message: 'Your invitee has been invited'}))
+                dispatch(startSnackbar({ message: 'Your invitee has been invited' }))
             })
             .catch(() => {
                 dispatch(getBackdropStop())

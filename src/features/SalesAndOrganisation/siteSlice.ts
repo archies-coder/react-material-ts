@@ -15,14 +15,14 @@ export interface Site {
 }
 export interface SitesResult {
     //pageLinks: Links | null
-    pageCount: number
-    sites: Site[]
+    pageCount: number,
+    sites: Site[],
 }
 
 export interface SiteInputState {
-    sitename: string
-    address: string
-    checkinpoint: string
+    sitename: string,
+    address: string,
+    checkinpoint: string,
 }
 
 export const defaultInputState: SiteInputState = {
@@ -32,14 +32,14 @@ export const defaultInputState: SiteInputState = {
 }
 
 interface SiteState {
-    sites: Site[]
-    sitesById: Record<string, Site>
-    currentPageSites: number[]
-    pageCount: number
-    pageLinks: Links | null
-    isLoading: boolean
-    error: string | null
-    currentSite: SiteInputState
+    sites: Site[],
+    sitesById: Record<string, Site>,
+    currentPageSites: number[],
+    pageCount: number,
+    pageLinks: Links | null,
+    isLoading: boolean,
+    error: string | null,
+    currentSite: SiteInputState,
 }
 
 const sitesInitialState: SiteState = {
@@ -105,7 +105,7 @@ export const fetchSites = (
     } catch (err) {
         dispatch(getSitesFailure(err.toString()))
     }
-    }
+}
 
 export const saveSite = (
     site: any,

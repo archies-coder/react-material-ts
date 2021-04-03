@@ -12,16 +12,16 @@ export interface VisitorConfig {
 }
 export interface VisitorConfigResult {
     //pageLinks: Links | null
-    pageCount: number
+    pageCount: number,
     visitorConfigs: VisitorConfig[],
 }
 
 interface VisitorConfigState {
-    visitorConfigs: VisitorConfig[]
-    visitorConfigsById: Record<string, VisitorConfig>
-    pageCount: number
-    isLoading: boolean
-    error: string | null
+    visitorConfigs: VisitorConfig[],
+    visitorConfigsById: Record<string, VisitorConfig>,
+    pageCount: number,
+    isLoading: boolean,
+    error: string | null,
 }
 
 const visitorConfigsInitialState: VisitorConfigState = {
@@ -59,7 +59,7 @@ const visitorConfig = createSlice({
         getVisitorConfigsFailure: loadingFailed,
         setVisitorConfig(state, { payload }: PayloadAction<any>) {
             const { key, value } = payload
-            state.visitorConfigs.find(i => i.key === key)?state.visitorConfigs.find(i => i.key === key).value = value:state.visitorConfigs.push({key:key,value:value})
+            state.visitorConfigs.find(i => i.key === key) ? state.visitorConfigs.find(i => i.key === key).value = value : state.visitorConfigs.push({ key: key, value: value })
             state.visitorConfigs.map(visitorConfig => (state.visitorConfigsById[visitorConfig.key] = visitorConfig))
         }
     }
@@ -80,7 +80,7 @@ export const fetchVisitorConfigs = (
         dispatch(getVisitorConfigsStart())
         const visitorConfigs = await getVisitorConfigData()
 
-        dispatch(getVisitorConfigsSuccess(visitorConfigs))
+        // dispatch(getVisitorConfigsSuccess(visitorConfigs))
     } catch (err) {
         dispatch(getVisitorConfigsFailure(err.toString()))
     }

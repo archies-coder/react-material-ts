@@ -7,9 +7,9 @@ import { fetchSites } from 'features/SalesAndOrganisation/siteSlice'
 
 export interface ContractorsResult {
     //pageLinks: Links | null
-    pageCount: number
-    contractors: ContractorInfo[]
-  }
+    pageCount: number;
+    contractors: ContractorInfo[];
+}
 export interface ContractorInfo {
     answer1: any,
     answer2: any,
@@ -75,16 +75,16 @@ export const defaultContractor: ContractorInfo = {
 }
 
 interface ContractorState {
-    contractors: ContractorInfo[]
+    contractors: ContractorInfo[],
     contractorsById: any,
-    currentContractor: ContractorInfo
-    currentPageContractors: number[]
-    pageCount: number
-    pageLinks: Links | null
-    isLoading: boolean
-    error: string | null
+    currentContractor: ContractorInfo,
+    currentPageContractors: number[],
+    pageCount: number,
+    pageLinks: Links | null,
+    isLoading: boolean,
+    error: string | null,
     purpose: any[],
-    filter:any
+    filter: any,
 }
 
 const contractorsInitialState: ContractorState = {
@@ -97,7 +97,7 @@ const contractorsInitialState: ContractorState = {
     isLoading: false,
     error: null,
     purpose: [],
-    filter:{contractor:"",purpose:"All Purpose",site:"All Sites"}
+    filter: { contractor: "", purpose: "All Purpose", site: "All Sites" }
 }
 
 function startLoading(state: ContractorState) {
@@ -125,7 +125,7 @@ const contractors = createSlice({
             state.contractors.map(contractor => (state.contractorsById[contractor.checkin_id] = contractor))
             //state.contractorsById = state.contractors.map(contractor => ({ ...contractor, id: contractor.id }))
         },
-        getPurposeSuccess(state,{payload}: PayloadAction<any>){
+        getPurposeSuccess(state, { payload }: PayloadAction<any>) {
             const { purpose } = payload
             state.purpose = purpose
         },
@@ -133,8 +133,8 @@ const contractors = createSlice({
         setCurrentContractor(state, { payload }: PayloadAction<ContractorInfo>) {
             state.currentContractor = payload
         },
-        setFilter(state,{payload}: PayloadAction<any>){
-            state.filter = {...state.filter, ...payload}
+        setFilter(state, { payload }: PayloadAction<any>) {
+            state.filter = { ...state.filter, ...payload }
         }
     }
 })
@@ -160,7 +160,7 @@ export const fetchContractors = (
     try {
         dispatch(fetchSites())
         dispatch(getContractorsStart())
-        const contractors = await getContractorData(page,count,contractor,purpose,site)
+        const contractors = await getContractorData(page, count, contractor, purpose, site)
         dispatch(getContractorsSuccess(contractors))
 
         const pur = await getPurpose()
@@ -180,7 +180,7 @@ export const fetchInOfficeContractors = (
     try {
         dispatch(fetchSites())
         dispatch(getContractorsStart())
-        const contractors = await getInOfficeContractorData(page,count,contractor,purpose,site)
+        const contractors = await getInOfficeContractorData(page, count, contractor, purpose, site)
         dispatch(getContractorsSuccess(contractors))
 
         const pur = await getPurpose()

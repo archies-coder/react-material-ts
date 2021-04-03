@@ -15,13 +15,13 @@ export interface CheckInPoint {
 }
 export interface CheckInPointsResult {
     //pageLinks: Links | null
-    pageCount: number
-    checkInPoints: CheckInPoint[]
+    pageCount: number,
+    checkInPoints: CheckInPoint[],
 }
 export interface CheckInPointInputState {
-    sitename: string
-    device: string
-    checkinpoint: string
+    sitename: string,
+    device: string,
+    checkinpoint: string,
 }
 export const defaultInputState: CheckInPointInputState = {
     sitename: '',
@@ -30,13 +30,13 @@ export const defaultInputState: CheckInPointInputState = {
 }
 
 interface CheckInPointState {
-    checkInPoints: CheckInPoint[]
-    checkInPointsById: Record<string, CheckInPoint>
-    currentPageCheckInPoints: number[]
-    pageCount: number
-    pageLinks: Links | null
-    isLoading: boolean
-    error: string | null
+    checkInPoints: CheckInPoint[],
+    checkInPointsById: Record<string, CheckInPoint>,
+    currentPageCheckInPoints: number[],
+    pageCount: number,
+    pageLinks: Links | null,
+    isLoading: boolean,
+    error: string | null,
     currentCheckInPoint: CheckInPointInputState
 
 }

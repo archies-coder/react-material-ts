@@ -3,9 +3,9 @@ import React, { ChangeEvent } from "react"
 import { Notification } from "./NotificationSlice"
 
 interface IHeadConfigObj {
-    key: string
-    label: string
-    breakPoint: boolean | 1 | 2 | "auto" | 5 | 4 | 3 | 8 | 6 | 7 | 9 | 10 | 11 | 12
+    key: string,
+    label: string,
+    breakPoint: boolean | 1 | 2 | "auto" | 5 | 4 | 3 | 8 | 6 | 7 | 9 | 10 | 11 | 12,
     render?: (value: Notification, onChangeHandle: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void, name: any) => JSX.Element
 }
 

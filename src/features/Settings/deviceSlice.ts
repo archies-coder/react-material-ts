@@ -11,26 +11,26 @@ export interface Device {
     createdOn: any,
     devicename: any,
     iosversion: any,
-    appversion:any,
-    checkinpoint:any,
+    appversion: any,
+    checkinpoint: any,
     pincode: any,
     udid: any
 }
 export interface DevicesResult {
     //pageLinks: Links | null
-    pageCount: number
+    pageCount: number,
     devices: Device[],
 }
 
 interface DeviceState {
-    devices: Device[]
-    devicesById: Record<string, Device>
-    currentDevice: any
-    currentPageDevices: number[]
-    pageCount: number
-    pageLinks: Links | null
-    isLoading: boolean
-    error: string | null
+    devices: Device[],
+    devicesById: Record<string, Device>,
+    currentDevice: any,
+    currentPageDevices: number[],
+    pageCount: number,
+    pageLinks: Links | null,
+    isLoading: boolean,
+    error: string | null,
 }
 
 const devicesInitialState: DeviceState = {
@@ -69,7 +69,7 @@ const devices = createSlice({
             state.devices.map(device => (state.devicesById[device.udid] = device))
         },
         getDevicesFailure: loadingFailed,
-        setCurrentDevice(state, { payload }: PayloadAction<any>){
+        setCurrentDevice(state, { payload }: PayloadAction<any>) {
             state.currentDevice = payload
         }
     }
@@ -90,7 +90,7 @@ export const fetchDevices = (
 ): AppThunk => async dispatch => {
     try {
         dispatch(getDevicesStart())
-        const devices = await getDevicesData(page,count)
+        const devices = await getDevicesData(page, count)
 
         dispatch(getDevicesSuccess(devices))
     } catch (err) {
@@ -107,16 +107,16 @@ export const saveDevice = (
         await createDevice(device)
             .then(() => {
                 dispatch(getBackdropStop())
-                dispatch(startSnackbar({message: 'Device created'}))
+                dispatch(startSnackbar({ message: 'Device created' }))
             }).catch(() => {
                 dispatch(getBackdropStop())
-                dispatch(startSnackbar({ message: 'Something went wrong'}))
+                dispatch(startSnackbar({ message: 'Something went wrong' }))
             })
-            //return setInputState(defaultInputState)
-            callback && callback();
-            //dispatch(saveInvitesSuccess(invites))
-        } catch (err) {
-            dispatch(getBackdropStop())
-            dispatch(startSnackbar({ message: 'Something went wrong'}))
+        //return setInputState(defaultInputState)
+        callback && callback();
+        //dispatch(saveInvitesSuccess(invites))
+    } catch (err) {
+        dispatch(getBackdropStop())
+        dispatch(startSnackbar({ message: 'Something went wrong' }))
     }
 }

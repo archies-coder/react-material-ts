@@ -185,7 +185,7 @@ const mappableRoutes: MappableRoutesDictionary = {
         //  {
         //     title: 'Visitor\'s Form',
         //     path: '/visitorsform'
-        // }, 
+        // },
         {
             title: 'Notification',
             path: '/notification'
@@ -232,7 +232,7 @@ const CustomDrawer: FunctionComponent<Props> = (props) => {
         </Box>
         {/* <Divider /> */}
         <List>
-            {Object.keys(mappableRoutes).filter(r => (roles[r] === true)).map((key, index) => (
+            {Object.keys(mappableRoutes).map((key, index) => (
                 mappableRoutes[key].children ? (
                     <>
                         {

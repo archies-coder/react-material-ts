@@ -70,16 +70,16 @@ export const defaultVisitor: VisitorInfo = {
 }
 
 interface VisitorState {
-    visitors: VisitorInfo[]
+    visitors: VisitorInfo[],
     visitorsById: any,
-    currentVisitor: VisitorInfo
-    currentPageVisitors: number[]
-    pageCount: number
-    pageLinks: Links | null
-    isLoading: boolean
-    error: string | null
+    currentVisitor: VisitorInfo,
+    currentPageVisitors: number[],
+    pageCount: number,
+    pageLinks: Links | null,
+    isLoading: boolean,
+    error: string | null,
     purpose: any[],
-    filter:any
+    filter: any,
 }
 
 const visitorsInitialState: VisitorState = {
@@ -92,7 +92,7 @@ const visitorsInitialState: VisitorState = {
     isLoading: false,
     error: null,
     purpose: [],
-    filter:{visitor:"",purpose:"All Purpose",site:"All Sites"}
+    filter: { visitor: "", purpose: "All Purpose", site: "All Sites" }
 }
 
 function startLoading(state: VisitorState) {
@@ -120,7 +120,7 @@ const visitors = createSlice({
             state.visitors.map(visitor => (state.visitorsById[visitor.checkin_id] = visitor))
             //state.visitorsById = state.visitors.map(visitor => ({ ...visitor, id: visitor.id }))
         },
-        getPurposeSuccess(state,{payload}: PayloadAction<any>){
+        getPurposeSuccess(state, { payload }: PayloadAction<any>) {
             const { purpose } = payload
             state.purpose = purpose
         },
@@ -128,8 +128,8 @@ const visitors = createSlice({
         setCurrentVisitor(state, { payload }: PayloadAction<VisitorInfo>) {
             state.currentVisitor = payload
         },
-        setFilter(state,{payload}: PayloadAction<any>){
-            state.filter = {...state.filter, ...payload}
+        setFilter(state, { payload }: PayloadAction<any>) {
+            state.filter = { ...state.filter, ...payload }
         }
     }
 })
@@ -155,7 +155,7 @@ export const fetchVisitors = (
     try {
         dispatch(fetchSites())
         dispatch(getVisitorsStart())
-        const visitors = await getVisitorData(page,count,visitor,purpose,site)
+        const visitors = await getVisitorData(page, count, visitor, purpose, site)
         dispatch(getVisitorsSuccess(visitors))
 
         const pur = await getPurpose()
@@ -175,7 +175,7 @@ export const fetchInOfficeVisitors = (
     try {
         dispatch(fetchSites())
         dispatch(getVisitorsStart())
-        const visitors = await getInOfficeVisitorData(page,count,visitor,purpose,site)
+        const visitors = await getInOfficeVisitorData(page, count, visitor, purpose, site)
         dispatch(getVisitorsSuccess(visitors))
 
         const pur = await getPurpose()

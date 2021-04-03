@@ -13,8 +13,8 @@ interface OwnProps extends React.HTMLAttributes<any> {
     value: string;
     padding?: number;
     menuOptions?: IMenuOptions[];
-    width?: number
-    height?: number
+    width?: number;
+    height?: number;
 }
 
 type Props = OwnProps;
@@ -71,11 +71,11 @@ const useStyles = makeStyles((theme: Theme) => ({
         left: 15,
         alignItems: 'center',
         // paddingTop: 25,
-        textAlign:"justify",
+        textAlign: "justify",
         color: theme.palette.text.primary,
         borderRadius: theme.shape.borderRadius - 5,
     },
-    selectMenu:{
+    selectMenu: {
         position: 'relative',
         borderRadius: theme.shape.borderRadius - 5,
         backgroundColor: theme.palette.common.white,
@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         },
         width: (props: any) => props.width ? `${props.width}px` : 135,
         // height: (props: any) => props.height ? `${props.height}px` : 38,
-        lineHeight:2.5,
+        lineHeight: 2.5,
         //height: 40,
         //paddingTop: 12,
         '& .MuiSvgIcon-root': {

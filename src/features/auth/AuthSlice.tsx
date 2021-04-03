@@ -2,28 +2,28 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { signIn, signUp } from 'api/Apis';
 import { getBackdropStart, getBackdropStop } from 'app/BackdropSlice';
 import { AppThunk } from 'app/store';
-import {roles} from 'app/rolesConfig'
+import { roles } from 'app/rolesConfig'
 
 interface ISignInInputState {
-    username: string
-    password: string
+    username: string;
+    password: string;
 }
 interface ISignUpInputState {
-    name: string
-    username: string
-    userType: string
-    password: string
+    name: string,
+    username: string,
+    userType: string,
+    password: string,
 }
 interface AuthState {
-    error: string | null
-    isLoading: boolean
-    token: string
-    userType: string
-    isLoggedIn: boolean
-    name: string
-    roles: any
-    currentSignInInput: ISignInInputState
-    currentSignUpInput: ISignUpInputState
+    error: string | null,
+    isLoading: boolean,
+    token: string,
+    userType: string,
+    isLoggedIn: boolean,
+    name: string,
+    roles: any,
+    currentSignInInput: ISignInInputState,
+    currentSignUpInput: ISignUpInputState,
 }
 
 const InitialSignUpState: ISignUpInputState = {
@@ -45,7 +45,7 @@ const authInitialState: AuthState = {
     userType: '',
     isLoggedIn: false,
     name: '',
-    roles:{},
+    roles: {},
     currentSignInInput: InitialSignInState,
     currentSignUpInput: InitialSignUpState
 }
@@ -62,13 +62,13 @@ const AuthSlice = createSlice({
     initialState: authInitialState,
     reducers: {
         getAuthStart: startLoading,
-        getAuthStatus(state: AuthState){
+        getAuthStatus(state: AuthState) {
             if (localStorage.token) state.isLoggedIn = true
         },
         getSignUpSuccess(state: AuthState, { payload }: PayloadAction<any>) {
             console.log(payload)
         },
-        setAuthUser(state: AuthState, { payload }: PayloadAction<any>){
+        setAuthUser(state: AuthState, { payload }: PayloadAction<any>) {
             const { token, userType, name } = payload
             if (token) {
                 state.token = token
@@ -92,17 +92,17 @@ const AuthSlice = createSlice({
                 //@ts-ignore
                 state.roles = roles[usertype]
                 sessionStorage.setItem('authUser', JSON.stringify({
-                    "token":token,
-                    "userType":usertype,
-                    "name":name
+                    "token": token,
+                    "userType": usertype,
+                    "name": name
                 }));
             }
         },
         getAuthFailure: stopLoading,
-        setCurrentSignUpInput(state: AuthState, {payload}: PayloadAction<ISignUpInputState>) {
+        setCurrentSignUpInput(state: AuthState, { payload }: PayloadAction<ISignUpInputState>) {
             state.currentSignUpInput = payload
         },
-        setCurrentSignInInput(state, {payload}: PayloadAction<ISignInInputState>) {
+        setCurrentSignInInput(state, { payload }: PayloadAction<ISignInInputState>) {
             state.currentSignInInput = payload
         },
         resetSignUpInput(state: AuthState) {
